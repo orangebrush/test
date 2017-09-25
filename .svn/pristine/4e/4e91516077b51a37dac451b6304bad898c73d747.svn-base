@@ -1,0 +1,67 @@
+//
+//  NewsModel.swift
+//  NetWorkSDK
+//
+//  Created by X Young. on 2017/9/22.
+//  Copyright © 2017年 XinRui. All rights reserved.
+//
+
+/*
+ //// 数据结构
+ /** 政策新闻PolicyNews */
+ {
+ id: <long>, // 政策新闻ID
+ title: <String>,  // 政策新闻标题
+ pic: <String>, // 政策新闻配图URL
+ summary: <String>, // 政策新闻摘要
+ url: <String>, // 政策新闻Markdown链接
+ update: <DateTime> // 政策最后更新时间
+ }
+ 
+ 
+ //// API
+ /**
+ * 获取所有政策新闻
+ * @param page <int>(可选)页码，默认为1
+ * @param pageSize <int>(可选)每页记录数，默认8
+ * @return JSON 政策新闻对象数组
+ */
+ ajax.get('/news?page=:page&pageSize=:pageSize');
+ return
+ {
+ totalCount: <long>, // 政策新闻总数
+ page: <int>, // 当前页码
+ totalPage: <int>, // 总页数
+ results: [{
+ // 参见"政策新闻PolicyNews"
+ }, ...]
+ }
+ */
+import Foundation
+//请求参数
+public class NewsPageParams: NSObject{
+    public var page: Int?
+    public var pageSize: Int?
+    public override init() {
+        super.init()
+    }
+}
+
+//返回数据
+public class NewsPageModel: NSObject {
+    public var totalCount: Int?
+    public var page: Int?
+    public var totalPage: Int?
+    public var newsModelList: [NewsModel]?
+}
+
+//新闻内容
+public class NewsModel: NSObject {
+    public var id: Int?
+    public var title: String?
+    public var picUrl: URL?
+    public var summary: String?
+    public var contentUrl: URL?
+    public var lastDate: Date?
+}
+

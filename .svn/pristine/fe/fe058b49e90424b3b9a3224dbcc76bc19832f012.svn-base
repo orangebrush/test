@@ -1,0 +1,3 @@
+[submodule "HandyJSON"]
+	path = HandyJSON
+	url = https://github.com/alibaba/HandyJSON.git

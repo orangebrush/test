@@ -1,0 +1,104 @@
+//
+//  Group3Editor.swift
+//  government_park
+//
+//  Created by YiGan on 21/09/2017.
+//  Copyright © 2017 YiGan. All rights reserved.
+//
+
+import UIKit
+class Group3Editor: UIViewController {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    fileprivate var selectorIndex: Int?
+    
+    var maxCount = 10
+    var data = [UIImage]()
+    
+    
+    
+    //MARK:- init-----------------------------------------------------
+    override func viewDidLoad() {
+        
+        config()
+        createContents()
+    }
+    
+    private func config(){
+        
+    }
+    
+    private func createContents(){
+        
+    }
+    
+    //MARK: 删除已有图片
+    @IBAction func deleteSelectedPhoto(_ sender: Any) {
+        
+        guard let index = selectorIndex, index < maxCount else {
+            return
+        }
+        
+        data.remove(at: index)
+    }
+}
+
+//MARK:- collection delegate
+extension Group3Editor: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if data.count < maxCount {
+            return data.count + 1
+        }
+        return data.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let id = "cell"
+        let row = indexPath.row
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: id, for: indexPath) as! Group3CollectionCell
+        if row + 1 < data.count {
+            
+        }
+        cell.imageView.image = data[row]
+        return cell
+    }
+    
+    //MARK: 点击展开图片
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+    //MARK: 定义尺寸
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        //返回等同于窗口大小的尺寸
+        let length = view_size.width / 3
+        return CGSize(width: length, height: length)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+}

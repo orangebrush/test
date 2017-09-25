@@ -1,0 +1,47 @@
+//
+//  Field5Editor.swift
+//  government_park
+//
+//  Created by YiGan on 20/09/2017.
+//  Copyright © 2017 YiGan. All rights reserved.
+//联动编辑器
+
+import UIKit
+class Field5Editor: UIViewController {
+    
+    fileprivate var selectedData: String?
+    
+    var dataList = [[String]]()
+    
+    //MARK:- init----------------------------------------
+    override func viewDidLoad() {
+        
+        config()
+        createContents()
+    }
+    
+    private func config(){
+        
+    }
+    
+    private func createContents(){
+        
+        //创建条目
+        for (index, datas) in dataList.enumerated(){
+            let buttonFrame = CGRect(x: .edge16, y: CGFloat(index) * (.buttonHeight + .edge8), width: view_size.width - .edge16 - .edge8, height: .buttonHeight)
+            let button = UIButton(frame: buttonFrame)
+            
+            view.addSubview(button)
+        }
+    }
+    
+    //MARK: 保存选择
+    @IBAction func save(_ sender: Any) {
+        
+        guard let selData = selectedData else {
+            return
+        }
+    }
+}
+
+

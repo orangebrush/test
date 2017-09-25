@@ -1,0 +1,25 @@
+//
+//  ShortTextModel.swift
+//  NetWorkSDK
+//
+//  Created by X Young. on 2017/9/19.
+//  Copyright © 2017年 XinRui. All rights reserved.
+//
+
+import UIKit
+
+public class ShortTextModel: NSObject {
+
+    // 纯数字Or通用
+    var isAllNum : Bool?
+    
+    // 后缀[%时有小数点 其余没有]
+    var suffix : String?
+    
+    // 字段名
+    var title : String!
+    
+    // id
+    var id : String!
+    
+}

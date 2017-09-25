@@ -1,0 +1,72 @@
+//
+//  NewV.swift
+//  government_park
+//
+//  Created by YiGan on 19/09/2017.
+//  Copyright © 2017 YiGan. All rights reserved.
+//
+
+import UIKit
+class NewV: UIView {
+    
+    var closure: ((Int)->())?
+    
+    private var id: Int!
+    private var tap: UITapGestureRecognizer?
+    
+    //MARK:- init---------------------------
+    init(withId id: Int) {
+        let frame = CGRect(origin: .zero, size: new_size)
+        super.init(frame: frame)
+        
+        self.id = id
+        
+        config()
+        createContents()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        if let t = tap {
+            removeGestureRecognizer(t)
+        }
+    }
+    
+    private func config(){
+        
+        isUserInteractionEnabled = true
+        
+        //添加手势
+        if tap == nil {
+            tap = UITapGestureRecognizer(target: self, action: #selector(click(tapGesture:)))
+            tap?.numberOfTapsRequired = 1
+            tap?.numberOfTouchesRequired = 1
+            addGestureRecognizer(tap!)
+        }
+    }
+    
+    private func createContents(){
+     
+        //添加图片
+        let length = frame.size.width - CGFloat.edge8 * 2
+        let imageViewFrame = CGRect(x: .edge8, y: .edge8, width: length, height: length)
+        let imageView = UIImageView(frame: imageViewFrame)
+        imageView.isUserInteractionEnabled = false
+        addSubview(imageView)
+        
+        //添加标签
+        let labelFrame = CGRect(x: .edge8, y: length + .edge8 * 2, width: length, height: 21)
+        let label = UILabel(frame: labelFrame)
+        label.isUserInteractionEnabled = false
+        label.font = .small
+        addSubview(label)
+    }
+    
+    //MARK:- 点击事件
+    @objc private func click(tapGesture: UITapGestureRecognizer){
+        closure?(id)
+    }
+}

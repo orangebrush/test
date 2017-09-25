@@ -1,0 +1,97 @@
+//
+//  Navigation+Extension.swift
+//  government_park
+//
+//  Created by YiGan on 18/09/2017.
+//  Copyright © 2017 YiGan. All rights reserved.
+//
+
+import UIKit
+extension UINavigationController {
+    open override func awakeFromNib() {
+        delegate = self
+        
+        //初始化存储navigation高度
+        if navigation_height == nil{
+            navigation_height = navigationBar.frame.height
+        }
+        
+        //设置title
+        navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.middle, NSForegroundColorAttributeName: UIColor.black]
+        
+        //navigationBar.backgroundColor = defaultColor
+        
+        //let image = UIImage(named: "resource/navigation_back")?.transfromImage(size: CGSize(width: view_size.width, height: navigation_height! + 64))
+        //navigationBar.setBackgroundImage(image, for: .default)
+        //navigationBar.shadowImage = UIImage()
+    }
+
+    
+    //MARK:- 控制navigation显示与隐藏
+    public func setNavigation(hidden flag: Bool){
+        var image: UIImage!
+        if flag {
+            //设置navigation透明
+            image = UIImage(named: "resource/navigation_alpha")
+            navigationBar.backgroundColor = nil
+        }else{
+            //设置为不透明
+            image = UIImage(named: "resource/navigation_back")?.transfromImage(size: CGSize(width: view_size.width, height: navigation_height! + 64))
+            navigationBar.backgroundColor = .clear
+        }
+        navigationBar.setBackgroundImage(image, for: .default)
+    }
+    
+    public func setNavigationOpacity(opacity flag: Bool){
+        if flag{
+            navigationBar.tintColor = UIColor.black
+            navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.middle, NSForegroundColorAttributeName: UIColor.black]
+            navigationBar.setBackgroundImage(nil, for: .default)
+            setNavigation(hidden: false)
+        }else{
+            navigationBar.tintColor = .white
+            navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.small, NSForegroundColorAttributeName: UIColor.white]
+            setNavigation(hidden: true)
+        }
+    }
+    
+    //MARK:- 控制tabbar显示与隐藏
+    public func setTabbar(hidden flag: Bool){
+        
+        guard var tabbarFrame = tabBarController?.tabBar.frame else {
+            return
+        }
+        
+        if flag {
+            //隐藏tabbar
+            if tabbarFrame.origin.y < view_size.height {
+                
+                let offsetY:CGFloat = tabbarFrame.height + view_size.width * 0.06
+                let duration: TimeInterval = 0.2
+                UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut, animations: {
+                    self.tabBarController?.tabBar.frame = tabbarFrame.offsetBy(dx: 0, dy: offsetY)
+                }, completion: nil)
+            }
+        }else{
+            //显示tabbar
+            
+            if tabbarFrame.origin.y >= view_size.height{
+                
+                tabbarFrame.origin.y = view_size.height - tabbarFrame.height
+                let duration: TimeInterval = 0.2
+                UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut, animations: {
+                    self.tabBarController?.tabBar.frame = tabbarFrame
+                }, completion: nil)
+            }
+        }
+    }
+}
+
+//MARK:- navigation delegate
+extension UINavigationController: UINavigationControllerDelegate {
+    
+    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        
+        setTabbar(hidden: viewControllers.count != 1)
+    }
+}
