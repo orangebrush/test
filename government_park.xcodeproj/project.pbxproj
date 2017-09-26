@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		321114E01F790175005EA426 /* MeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321114DF1F790174005EA426 /* MeCell.swift */; };
+		321115C01F7928A8005EA426 /* Finished.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 321115BF1F7928A8005EA426 /* Finished.storyboard */; };
+		321115C21F7928CF005EA426 /* FinishedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321115C11F7928CF005EA426 /* FinishedVC.swift */; };
+		321115C51F792D41005EA426 /* 0fflineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321115C41F792D41005EA426 /* 0fflineVC.swift */; };
+		321115C71F792D7E005EA426 /* Status.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 321115C61F792D7D005EA426 /* Status.storyboard */; };
+		321115C91F7A28B0005EA426 /* AuditingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321115C81F7A28B0005EA426 /* AuditingVC.swift */; };
 		321FE4FD1F73C7C3002FA78B /* Field6EditorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321FE4FC1F73C7C3002FA78B /* Field6EditorCell.swift */; };
 		324A91A11F73DBFF00A1F721 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A01F73DBFF00A1F721 /* Timer.swift */; };
 		324A91A31F73DD4600A1F721 /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */; };
@@ -63,8 +68,6 @@
 		32EE31ED1F711CBF00939EE8 /* Field0Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EE31EC1F711CBF00939EE8 /* Field0Cell.swift */; };
 		32EE31F01F7120BF00939EE8 /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EE31EF1F7120BF00939EE8 /* EditVC.swift */; };
 		32EE31F21F7120CF00939EE8 /* Edit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32EE31F11F7120CF00939EE8 /* Edit.storyboard */; };
-		32F613761F75222800F72FB7 /* government_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F613751F75222800F72FB7 /* government_sdk.framework */; };
-		32F613771F75222800F72FB7 /* government_sdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 32F613751F75222800F72FB7 /* government_sdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		32F6137A1F752E4400F72FB7 /* NewsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F613791F752E4400F72FB7 /* NewsVC.swift */; };
 		32F6137C1F753FC700F72FB7 /* Tabbar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F6137B1F753FC700F72FB7 /* Tabbar+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -86,22 +89,13 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		32F613781F75222800F72FB7 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				32F613771F75222800F72FB7 /* government_sdk.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		321114DF1F790174005EA426 /* MeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeCell.swift; sourceTree = "<group>"; };
+		321115BF1F7928A8005EA426 /* Finished.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Finished.storyboard; sourceTree = "<group>"; };
+		321115C11F7928CF005EA426 /* FinishedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedVC.swift; sourceTree = "<group>"; };
+		321115C41F792D41005EA426 /* 0fflineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 0fflineVC.swift; sourceTree = "<group>"; };
+		321115C61F792D7D005EA426 /* Status.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Status.storyboard; sourceTree = "<group>"; };
+		321115C81F7A28B0005EA426 /* AuditingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditingVC.swift; sourceTree = "<group>"; };
 		321FE4FC1F73C7C3002FA78B /* Field6EditorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field6EditorCell.swift; sourceTree = "<group>"; };
 		324A91A01F73DBFF00A1F721 /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -163,7 +157,6 @@
 		32EE31EC1F711CBF00939EE8 /* Field0Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field0Cell.swift; sourceTree = "<group>"; };
 		32EE31EF1F7120BF00939EE8 /* EditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
 		32EE31F11F7120CF00939EE8 /* Edit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Edit.storyboard; sourceTree = "<group>"; };
-		32F613751F75222800F72FB7 /* government_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = government_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F613791F752E4400F72FB7 /* NewsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsVC.swift; sourceTree = "<group>"; };
 		32F6137B1F753FC700F72FB7 /* Tabbar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tabbar+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -173,7 +166,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32F613761F75222800F72FB7 /* government_sdk.framework in Frameworks */,
 				329D883F1F6F707E00D304FF /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,9 +204,27 @@
 		321114DE1F78FF69005EA426 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				32F613751F75222800F72FB7 /* government_sdk.framework */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		321115BE1F79288C005EA426 /* 已完结 */ = {
+			isa = PBXGroup;
+			children = (
+				321115BF1F7928A8005EA426 /* Finished.storyboard */,
+				321115C11F7928CF005EA426 /* FinishedVC.swift */,
+			);
+			name = "已完结";
+			sourceTree = "<group>";
+		};
+		321115C31F792D14005EA426 /* 线下、申请状态页 */ = {
+			isa = PBXGroup;
+			children = (
+				321115C61F792D7D005EA426 /* Status.storyboard */,
+				321115C41F792D41005EA426 /* 0fflineVC.swift */,
+				321115C81F7A28B0005EA426 /* AuditingVC.swift */,
+			);
+			name = "线下、申请状态页";
 			sourceTree = "<group>";
 		};
 		3293399F1F72071B00D3D88B /* 查看政策页 */ = {
@@ -378,6 +388,8 @@
 				329D884B1F6FA00E00D304FF /* MeVC.swift */,
 				321114DF1F790174005EA426 /* MeCell.swift */,
 				321114DB1F78ED40005EA426 /* 登陆注册、验证 */,
+				321115BE1F79288C005EA426 /* 已完结 */,
+				321115C31F792D14005EA426 /* 线下、申请状态页 */,
 			);
 			name = "我";
 			sourceTree = "<group>";
@@ -436,7 +448,6 @@
 				329D88021F6F6F7A00D304FF /* Sources */,
 				329D88031F6F6F7A00D304FF /* Frameworks */,
 				329D88041F6F6F7A00D304FF /* Resources */,
-				32F613781F75222800F72FB7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -538,6 +549,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				329D88461F6F7BE200D304FF /* Contents.storyboard in Resources */,
+				321115C01F7928A8005EA426 /* Finished.storyboard in Resources */,
 				329D88171F6F6F7A00D304FF /* LaunchScreen.storyboard in Resources */,
 				32EE31E51F70FA8900939EE8 /* Policy.storyboard in Resources */,
 				329D88481F6F7BEB00D304FF /* Me.storyboard in Resources */,
@@ -545,6 +557,7 @@
 				329D880F1F6F6F7A00D304FF /* Root.storyboard in Resources */,
 				32EE31F21F7120CF00939EE8 /* Edit.storyboard in Resources */,
 				329339EB1F7241B700D3D88B /* Editor.storyboard in Resources */,
+				321115C71F792D7E005EA426 /* Status.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,8 +596,11 @@
 				329339F51F72476000D3D88B /* FieldVC.swift in Sources */,
 				329B127A1F6FB2040061C38E /* SecondCell.swift in Sources */,
 				329D88531F6FA63800D304FF /* Image+Extension.swift in Sources */,
+				321115C21F7928CF005EA426 /* FinishedVC.swift in Sources */,
 				321FE4FD1F73C7C3002FA78B /* Field6EditorCell.swift in Sources */,
 				32EE31E71F70FB5800939EE8 /* PolicyVC.swift in Sources */,
+				321115C51F792D41005EA426 /* 0fflineVC.swift in Sources */,
+				321115C91F7A28B0005EA426 /* AuditingVC.swift in Sources */,
 				32933A171F726B4200D3D88B /* Field6Editor.swift in Sources */,
 				32933A051F724A0C00D3D88B /* Field4Cell.swift in Sources */,
 				32EE31EB1F711CB300939EE8 /* GroupCell.swift in Sources */,
@@ -782,6 +798,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NWGF84NL9Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/government_park",
+				);
 				INFOPLIST_FILE = government_park/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -796,6 +816,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NWGF84NL9Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/government_park",
+				);
 				INFOPLIST_FILE = government_park/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

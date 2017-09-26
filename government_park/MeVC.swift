@@ -69,6 +69,8 @@ extension MeVC: UITableViewDelegate, UITableViewDataSource{
             let cell1 = tableView.dequeueReusableCell(withIdentifier: identifier) as! MeCell1
             cell1.closure = {
                 //点击查看已完结回调
+                let finishedVC = UIStoryboard(name: "Finished", bundle: Bundle.main).instantiateViewController(withIdentifier: "finished")
+                self.navigationController?.show(finishedVC, sender: nil)
             }
             cell = cell1
         default:
@@ -80,6 +82,37 @@ extension MeVC: UITableViewDelegate, UITableViewDataSource{
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        let progressType = ProgressType(rawValue: section)! //ProgressType.editing
+        
+        switch progressType {
+        case .offline:
+            //跳转到线下页(offline)
+            let offlineVC = UIStoryboard(name: "Status", bundle: Bundle.main).instantiateViewController(withIdentifier: "offline") as! OfflineVC
+            navigationController?.show(offlineVC, sender: nil)
+        case .auditing:
+            //跳转到申请状态页(auditing)
+            let auditingVC = UIStoryboard(name: "Status", bundle: Bundle.main).instantiateViewController(withIdentifier: "auditing") as! AuditingVC
+            navigationController?.show(auditingVC, sender: nil)
+        case .editing:
+            //跳转到申请编辑器(editing)
+            let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit")
+            navigationController?.show(editVC, sender: nil)
+        case .collected:
+            //跳转到政策详情页(collected)
+            let policyVC = UIStoryboard(name: "Policy", bundle: Bundle.main).instantiateViewController(withIdentifier: "policy")
+            navigationController?.show(policyVC, sender: nil)
+        default:
+            //已完结 通过button回调实现
+            break
+        }
+        
+        
     }
 }
 

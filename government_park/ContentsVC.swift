@@ -50,6 +50,8 @@ class ContentsVC: UIViewController {
                 self.newsPageModel = newsPageModel
             }
         }
+        
+        
     }
     
     private func config() {
