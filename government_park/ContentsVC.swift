@@ -22,7 +22,11 @@ class ContentsVC: UIViewController {
     }
     
     //second测试数据
-    fileprivate var secondDataList = [false, false, false, false, false, false, false]
+    fileprivate var homepagePolicyModelList = [(isOpen: Bool, model: HomepagePolicyModel)](){
+        didSet{
+            tableView.reloadData()
+        }
+    }
     
     
     
@@ -51,7 +55,25 @@ class ContentsVC: UIViewController {
             }
         }
         
-        
+        Handler.getAllHomepagePolicy{
+            resultCode, message, homepagePolicyModelList in
+            
+            guard resultCode == .success else{
+                return
+            }
+            
+            DispatchQueue.main.async {
+                print("homepagePolicyModelList: \(homepagePolicyModelList)")
+                
+                guard let list = homepagePolicyModelList else{
+                    return
+                }
+                
+                for model in list{
+                    self.homepagePolicyModelList.append((false, model))
+                }
+            }
+        }
     }
     
     private func config() {
@@ -75,7 +97,7 @@ extension ContentsVC: UITableViewDelegate, UITableViewDataSource {
             return 1
         }
         
-        return secondDataList.count
+        return homepagePolicyModelList.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -107,9 +129,21 @@ extension ContentsVC: UITableViewDelegate, UITableViewDataSource {
             return new_size.height + .edge8 * 2
         }
         
-        let data = secondDataList[indexPath.row]
-        let contentHeight: CGFloat = 100
-        return (view_size.width - .edge8 * 2) * 9 / 16 + 21 + 8 * 3 + (data ? contentHeight : 0)
+        let tuple = homepagePolicyModelList[indexPath.row]
+        
+        var text = ""
+        for applyto in tuple.model.applyTo{
+
+            text += "扶持对象  \(applyto.target!)\n\(applyto.description!)\n"
+        }
+        text += "\nzhan wei"
+        
+        let width = view_size.width - .edge8 * 3 - .buttonHeight * 3
+        let size = CGSize(width: width, height: width * 10)
+        let rect = NSString(string: text).boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.small], context: nil)
+    
+        let contentHeight: CGFloat = rect.height
+        return (view_size.width - .edge8 * 2) * 9 / 16 + 30 + 8 * 3 + (tuple.isOpen ? contentHeight : 0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -135,11 +169,12 @@ extension ContentsVC: UITableViewDelegate, UITableViewDataSource {
             id = "second"
             
             let secondCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! SecondCell
-            secondCell.id = row
-            secondCell.data = secondDataList[row]
+            secondCell.index = row
+            secondCell.data = homepagePolicyModelList[row]
             secondCell.closure = {
                 id in
-                self.secondDataList[id] = !self.secondDataList[id]
+
+                self.homepagePolicyModelList[id].isOpen = !(self.homepagePolicyModelList[id].isOpen)
                 tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
             }
             cell = secondCell
@@ -154,7 +189,10 @@ extension ContentsVC: UITableViewDelegate, UITableViewDataSource {
         if section == 0 {       //政策解读 sel
             
         }else {                 //马上开始申报资金 sel
-            let policyVC = UIStoryboard(name: "Policy", bundle: Bundle.main).instantiateViewController(withIdentifier: "policy")
+            let model = homepagePolicyModelList[row].model
+            let policyVC = UIStoryboard(name: "Policy", bundle: Bundle.main).instantiateViewController(withIdentifier: "policy") as! PolicyVC
+            policyVC.id = model.id
+            policyVC.navigationItem.title = model.shortTitle
             navigationController?.show(policyVC, sender: nil)
         }
     }

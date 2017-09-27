@@ -1,0 +1,11 @@
+framework module government_sdk {
+  umbrella header "government_sdk.h"
+
+  export *
+  module * { export * }
+}
+
+module government_sdk.Swift {
+    header "government_sdk-Swift.h"
+    requires objc
+}

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import government_sdk
 class EditVC: UIViewController {
     
     @IBOutlet weak var topView: UIView!
@@ -18,7 +19,7 @@ class EditVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var isRootEdit = true
-    
+    var applyId = 0
     var policyContents: String?
     
     //MARK:- init-------------------------------------------------
@@ -39,6 +40,8 @@ class EditVC: UIViewController {
         }
         
         topView.layer.cornerRadius = .cornerRadius
+        
+        //请求
     }
     
     private func config(){
@@ -72,7 +75,11 @@ extension EditVC: UIActionSheetDelegate{
     func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int) {
         switch buttonIndex {
         case 0:
-            print("取消这个申请")
+            //取消这个申请
+            Handler.CancelApply(withApplyId: applyId){
+                resultCode, message in
+                
+            }
         case 1:
             print("关闭")
         case 2:

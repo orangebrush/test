@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import government_sdk
 class SecondCell: UITableViewCell {
     
     @IBOutlet weak var backImageView: UIImageView!
@@ -15,12 +16,8 @@ class SecondCell: UITableViewCell {
     @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var checkButton: UIButton!
     
-    var id: Int = 0
-    var data: Bool = false{
-        didSet{
-            
-        }
-    }
+    var index: Int = 0
+    var data: (isOpen: Bool, model: HomepagePolicyModel)?
     
     var closure: ((Int)->())?
     
@@ -32,19 +29,47 @@ class SecondCell: UITableViewCell {
     }
     
     override func draw(_ rect: CGRect) {
-        //checkButton.setTitle(data ? "收起" : "展开", for: .normal)
+        guard let d = data else{
+            return
+        }
         
-        if data {
+        if d.isOpen {
             let oldButtonFrame = buttonView.frame
             buttonView.frame.origin = CGPoint(x: oldButtonFrame.origin.x, y: rect.height - oldButtonFrame.height - .edge8)
         }
-        checkButton.isSelected = data
+        checkButton.isSelected = d.isOpen
+        
+        //更新内容
+        let model = d.model
+        if let url = URL(string: model.smallPic){
+            do{
+                let imageData = try Data(contentsOf: url)
+                let image = UIImage(data: imageData)
+                backImageView.image = image
+            }catch {}
+        }
+        imageLabel.text = model.shortTitle
+        
+        //扶持对象
+        if d.isOpen {
+            var text = ""
+            for applyTo in model.applyTo{
+                text += "扶持对象  \(applyTo.target!)\n\(applyTo.description!)\n"
+            }
+            titleLabel.text = text
+        }else{
+            titleLabel.text = "扶持对象  " + model.applyTo.first!.target + "  等\(model.applyTo.count)项"
+        }
     }
     
     private func config(){
         
         //添加按钮事件
         checkButton.addTarget(self, action: #selector(check(sender:)), for: .touchUpInside)
+        
+        //初始化设置
+        imageLabel.textColor = .white
+        titleLabel.font = .small
     }
     
     private func createContents(){
@@ -52,6 +77,6 @@ class SecondCell: UITableViewCell {
     }
     
     @objc private func check(sender: UIButton){
-        closure?(id)
+        closure?(index)
     }
 }
