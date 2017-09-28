@@ -15,12 +15,12 @@ class EditVC: UIViewController {
     @IBOutlet weak var optionLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var applyButton: UIButton!
-    
     @IBOutlet weak var tableView: UITableView!
     
     var isRootEdit = true
     var applyId = 0
-    var policyContents: String?
+
+    var detailPolicyModel: DetailPolicyModel?
     
     //MARK:- init-------------------------------------------------
     override func viewDidLoad() {
@@ -42,6 +42,10 @@ class EditVC: UIViewController {
         topView.layer.cornerRadius = .cornerRadius
         
         //请求
+        Handler.getUserApply{
+            resultCode, message, applyListModelList in
+            
+        }
     }
     
     private func config(){
@@ -58,8 +62,11 @@ class EditVC: UIViewController {
     }
     
     //MARK:- 查看政策
-    @IBAction func checkPolicy(_ sender: Any) {
-        
+    @IBAction func checkPolicy(_ sender: Any) {        
+        if let policyCheckVC = storyboard?.instantiateViewController(withIdentifier: "policycheck") as? PolicyCheckVC{
+            policyCheckVC.detailPolicyModel = detailPolicyModel
+            navigationController?.show(policyCheckVC, sender: nil)
+        }
     }
     
     //MARK:- 其他操作
@@ -67,6 +74,15 @@ class EditVC: UIViewController {
         let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "关闭", destructiveButtonTitle: "取消这个申请", otherButtonTitles: "登陆网页版")
         actionSheet.show(in: view)
         actionSheet.show(from: CGRect(x:0, y:12, width: 123, height: 323), in: view, animated: true)
+    }
+    
+    //MARK: 点击header回调
+    @objc fileprivate func clickHeader(tap: UITapGestureRecognizer){
+        guard let header = tap.view else{
+            return
+        }
+        
+        let tag = header.tag
     }
 }
 
@@ -78,7 +94,7 @@ extension EditVC: UIActionSheetDelegate{
             //取消这个申请
             Handler.CancelApply(withApplyId: applyId){
                 resultCode, message in
-                
+                self.navigationController?.popViewController(animated: true)
             }
         case 1:
             print("关闭")
@@ -101,12 +117,13 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return .labelHeight * 2 + 8 * 3
+        return .labelHeight * 2 + .edge8 * 3
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerFrame = CGRect(x: 0, y: 0, width: view_size.width, height: .labelHeight * 2 + 8 * 3)
         let header = UIView(frame: headerFrame)
+        header.tag - section
         
             let titleFrame = CGRect(x: .edge16, y: .edge8, width: headerFrame.width - .edge16 * 2, height: .labelHeight)
             let titleLabel = UILabel(frame: titleFrame)
@@ -119,6 +136,12 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
             subTitleLabel.text = "subTitle"
             subTitleLabel.font = .small
             header.addSubview(subTitleLabel)
+        
+        //添加点击事件
+        let tap = UITapGestureRecognizer(target: self, action: #selector(clickHeader(tap:)))
+        tap.numberOfTouchesRequired = 1
+        tap.numberOfTapsRequired = 1
+        header.addGestureRecognizer(tap)
         return header
     }
     

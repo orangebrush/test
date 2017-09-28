@@ -88,8 +88,14 @@ class PolicyVC: UIViewController {
     //MARK:- 申请或查看或继续编辑
     @IBAction func apply(_ sender: Any) {
         
-        let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit")
+        let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
+        editVC.detailPolicyModel = detailPolicyModel
         navigationController?.show(editVC, sender: nil)
+    }
+    
+    //MARK: 分享
+    @IBAction func share(_ sender: Any) {
+        
     }
 }
 

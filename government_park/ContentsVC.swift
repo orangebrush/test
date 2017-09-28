@@ -63,12 +63,13 @@ class ContentsVC: UIViewController {
             }
             
             DispatchQueue.main.async {
-                print("homepagePolicyModelList: \(homepagePolicyModelList)")
+                print("homepagePolicyModelList: \(String(describing: homepagePolicyModelList))")
                 
                 guard let list = homepagePolicyModelList else{
                     return
                 }
                 
+                self.homepagePolicyModelList.removeAll()
                 for model in list{
                     self.homepagePolicyModelList.append((false, model))
                 }

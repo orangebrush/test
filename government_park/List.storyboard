@@ -44,6 +44,9 @@
                                                         <constraint firstAttribute="width" secondItem="9eK-Y0-4Lv" secondAttribute="height" multiplier="1:1" id="hW6-xc-hnm"/>
                                                     </constraints>
                                                     <state key="normal" title="v"/>
+                                                    <connections>
+                                                        <action selector="clickPreparedMark:" destination="kGn-zT-EbH" eventType="touchUpInside" id="3HZ-OY-kVV"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3h5-ZW-4Gb">
                                                     <rect key="frame" x="46" y="8" width="321" height="20.5"/>

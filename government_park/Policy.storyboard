@@ -171,7 +171,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="Gni-WM-kj4">
-                        <barButtonItem key="rightBarButtonItem" title="分享" id="vi4-jD-KGA"/>
+                        <barButtonItem key="rightBarButtonItem" title="分享" id="vi4-jD-KGA">
+                            <connections>
+                                <action selector="share:" destination="gyb-aJ-4qo" id="dRv-ch-Fb5"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="applyButton" destination="Ngt-Pa-8VA" id="9av-aH-b6j"/>
