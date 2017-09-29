@@ -123,7 +123,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ai-aQ-Ilj" userLabel="bottomtabbar">
                                 <rect key="frame" x="0.0" y="667" width="375" height="49"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ngt-Pa-8VA">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ngt-Pa-8VA">
                                         <rect key="frame" x="317" y="0.0" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Ngt-Pa-8VA" secondAttribute="height" multiplier="1:1" id="IMq-ny-vjd"/>
@@ -134,7 +134,7 @@
                                             <action selector="apply:" destination="gyb-aJ-4qo" eventType="touchUpInside" id="qXu-zR-nJw"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bW-5u-x2F">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bW-5u-x2F">
                                         <rect key="frame" x="259" y="-1" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="3bW-5u-x2F" secondAttribute="height" multiplier="1:1" id="il6-e5-RYd"/>

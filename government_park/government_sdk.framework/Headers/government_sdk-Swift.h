@@ -186,6 +186,14 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 SWIFT_MODULE_NAMESPACE_PUSH("government_sdk")
 
+SWIFT_CLASS("_TtC14government_sdk18NewsEntryComponent")
+@interface NewsEntryComponent : NSObject
+/// 条目名称
+@property (nonatomic, copy) NSString * _Null_unspecified value SWIFT_DEPRECATED_OBJC("Swift property 'NewsEntryComponent.value' uses '@objc' inference deprecated in Swift 4; add '@objc' to provide an Objective-C entrypoint");
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 SWIFT_CLASS("_TtC14government_sdk9NewsModel")
 @interface NewsModel : NSObject
 @property (nonatomic, copy) NSString * _Nullable title SWIFT_DEPRECATED_OBJC("Swift property 'NewsModel.title' uses '@objc' inference deprecated in Swift 4; add '@objc' to provide an Objective-C entrypoint");
@@ -206,6 +214,20 @@ SWIFT_CLASS("_TtC14government_sdk13NewsPageModel")
 
 SWIFT_CLASS("_TtC14government_sdk14NewsPageParams")
 @interface NewsPageParams : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC14government_sdk6Option")
+@interface Option : NSObject
+/// 选项ID
+@property (nonatomic, copy) NSString * _Null_unspecified id SWIFT_DEPRECATED_OBJC("Swift property 'Option.id' uses '@objc' inference deprecated in Swift 4; add '@objc' to provide an Objective-C entrypoint");
+/// 选项标题
+@property (nonatomic, copy) NSString * _Null_unspecified title SWIFT_DEPRECATED_OBJC("Swift property 'Option.title' uses '@objc' inference deprecated in Swift 4; add '@objc' to provide an Objective-C entrypoint");
+/// 附加字段值?(申报金额:钱数 其他均为短文本)
+@property (nonatomic, copy) NSString * _Nullable extraValue SWIFT_DEPRECATED_OBJC("Swift property 'Option.extraValue' uses '@objc' inference deprecated in Swift 4; add '@objc' to provide an Objective-C entrypoint");
+/// 附加字段完成状态信息
+@property (nonatomic, copy) NSString * _Nullable hint SWIFT_DEPRECATED_OBJC("Swift property 'Option.hint' uses '@objc' inference deprecated in Swift 4; add '@objc' to provide an Objective-C entrypoint");
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 

@@ -18,9 +18,31 @@ class EditVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var isRootEdit = true
+    var policyId = 0
     var applyId = 0
 
-    var detailPolicyModel: DetailPolicyModel?
+    var detailPolicyModel: DetailPolicyModel?       //政策详情
+    
+    var applyInstance: ApplyInstance? {             //申请目录
+        didSet{
+            tableView.reloadData()
+        }
+    }
+    
+    //目录
+    var catalogsList: [ApplyCatalogs]?{
+        didSet{
+            tableView.reloadData()
+            catalogsList?.first?.components
+        }
+    }
+    
+    //组件or组
+    var modelList: [BaseExampleModel]?{
+        didSet{
+            
+        }
+    }
     
     //MARK:- init-------------------------------------------------
     override func viewDidLoad() {
@@ -41,11 +63,6 @@ class EditVC: UIViewController {
         
         topView.layer.cornerRadius = .cornerRadius
         
-        //请求
-        Handler.getUserApply{
-            resultCode, message, applyListModelList in
-            
-        }
     }
     
     private func config(){
@@ -76,7 +93,7 @@ class EditVC: UIViewController {
         actionSheet.show(from: CGRect(x:0, y:12, width: 123, height: 323), in: view, animated: true)
     }
     
-    //MARK: 点击header回调
+    //MARK: 点击header回调（用于展开与收起一级目录）
     @objc fileprivate func clickHeader(tap: UITapGestureRecognizer){
         guard let header = tap.view else{
             return
@@ -92,10 +109,14 @@ extension EditVC: UIActionSheetDelegate{
         switch buttonIndex {
         case 0:
             //取消这个申请
-            Handler.CancelApply(withApplyId: applyId){
+            guard let instance = applyInstance else {
+                return
+            }
+            Handler.cancelApply(withApplyId: instance.id){
                 resultCode, message in
                 self.navigationController?.popViewController(animated: true)
             }
+            
         case 1:
             print("关闭")
         case 2:
@@ -109,7 +130,7 @@ extension EditVC: UIActionSheetDelegate{
 //MARK:- tableview delegate
 extension EditVC: UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -117,14 +138,15 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return .labelHeight * 2 + .edge8 * 3
+        return isRootEdit ? .labelHeight * 2 + .edge8 * 3 : 1
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerFrame = CGRect(x: 0, y: 0, width: view_size.width, height: .labelHeight * 2 + 8 * 3)
         let header = UIView(frame: headerFrame)
-        header.tag - section
+        header.tag = section
         
+        if isRootEdit {
             let titleFrame = CGRect(x: .edge16, y: .edge8, width: headerFrame.width - .edge16 * 2, height: .labelHeight)
             let titleLabel = UILabel(frame: titleFrame)
             titleLabel.text = "title"
@@ -137,11 +159,12 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
             subTitleLabel.font = .small
             header.addSubview(subTitleLabel)
         
-        //添加点击事件
-        let tap = UITapGestureRecognizer(target: self, action: #selector(clickHeader(tap:)))
-        tap.numberOfTouchesRequired = 1
-        tap.numberOfTapsRequired = 1
-        header.addGestureRecognizer(tap)
+            //添加点击事件(在第一级页面有张开收起功能)
+            let tap = UITapGestureRecognizer(target: self, action: #selector(clickHeader(tap:)))
+            tap.numberOfTouchesRequired = 1
+            tap.numberOfTapsRequired = 1
+            header.addGestureRecognizer(tap)
+        }
         return header
     }
     

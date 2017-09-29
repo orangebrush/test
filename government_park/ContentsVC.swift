@@ -168,15 +168,15 @@ extension ContentsVC: UITableViewDelegate, UITableViewDataSource {
             cell = firstCell
         }else {                 //马上开始申报资金 cell
             id = "second"
-            
-            let secondCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! SecondCell
+
+            let secondCell = tableView.dequeueReusableCell(withIdentifier: id) as! SecondCell
             secondCell.index = row
             secondCell.data = homepagePolicyModelList[row]
             secondCell.closure = {
                 id in
-
+                
                 self.homepagePolicyModelList[id].isOpen = !(self.homepagePolicyModelList[id].isOpen)
-                tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                tableView.layoutIfNeeded()
             }
             cell = secondCell
         }

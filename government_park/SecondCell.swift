@@ -17,7 +17,12 @@ class SecondCell: UITableViewCell {
     @IBOutlet weak var checkButton: UIButton!
     
     var index: Int = 0
-    var data: (isOpen: Bool, model: HomepagePolicyModel)?
+    var data: (isOpen: Bool, model: HomepagePolicyModel)?{
+        didSet{
+            layoutIfNeeded()
+            
+        }
+    }
     
     var closure: ((Int)->())?
     
@@ -26,16 +31,17 @@ class SecondCell: UITableViewCell {
         
         config()
         createContents()
-    }
+    }        
     
-    override func draw(_ rect: CGRect) {
+    override func layoutIfNeeded() {
+        
         guard let d = data else{
             return
         }
         
         if d.isOpen {
             let oldButtonFrame = buttonView.frame
-            buttonView.frame.origin = CGPoint(x: oldButtonFrame.origin.x, y: rect.height - oldButtonFrame.height - .edge8)
+            buttonView.frame.origin = CGPoint(x: oldButtonFrame.origin.x, y: frame.height - oldButtonFrame.height - .edge8)
         }
         checkButton.isSelected = d.isOpen
         

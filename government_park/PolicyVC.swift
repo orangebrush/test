@@ -20,6 +20,7 @@ class PolicyVC: UIViewController {
         }
     }
     
+    //政策
     fileprivate var detailPolicyModel: DetailPolicyModel?{
         didSet{
             guard let model = detailPolicyModel else {
@@ -27,25 +28,43 @@ class PolicyVC: UIViewController {
             }            
             
             //是否可收藏
-            if let canBookmark = model.canBookmark{
-                collectionButton.setTitle(canBookmark ? "收藏" : "取消收藏", for: .normal)
-            }else{
-                collectionButton.isHidden = true
+            Handler.getIsCompanyBookmarkApply(withPolicyId: model.id){
+                resultCode, message, bookmarkPolicyVirginModel in
+                
+                guard resultCode == .success else{
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.collectionButton.isEnabled = true
+                    self.collectionButton.isHidden = false
+                    self.collectionButton.isSelected = bookmarkPolicyVirginModel != nil
+                }
             }
             
             tableView.reloadData()
         }
     }
     
-    //政策id
-    var id = 1
-    
-    //数据
-    private var data: Any?{
+    //申请
+    fileprivate var applyInstance: ApplyInstance?{
         didSet{
+            guard let instance = applyInstance else {
+                return
+            }
             
+            applyButton.isEnabled = true
+            
+            //判断是否已申请
+            applyButton.setTitle(instance.statusHint!, for: .normal)
         }
     }
+    
+    //政策id
+    var id = 0
+    
+    //申请id
+    var applyId = 0
+    
     
     //MARK:- init--------------------------------------------------
     override func viewDidLoad() {
@@ -56,6 +75,8 @@ class PolicyVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        collectionButton.isHidden = true
+        applyButton.setTitle("申请", for: .normal)
         
         //获取政策详情
         Handler.getDetailPolicy(withPolicyId: id){
@@ -68,6 +89,44 @@ class PolicyVC: UIViewController {
             DispatchQueue.main.async {
                 self.detailPolicyModel = detailPolicyModel
             }
+            
+            //获取申请
+            Handler.getUserApply{
+                resultCode, message, applyListModelList in
+                
+                guard resultCode == .success else{
+                    return
+                }
+                
+                guard let list = applyListModelList else{
+                    return
+                }
+                
+                //判断是否已编辑过申请
+                let resultList = list.filter({$0.policyId == self.applyId})
+                if resultList.isEmpty{
+                    //新建申请
+                    Handler.getApply(withPolicyId: self.id, self.getApplyInstance)
+                }else{
+                    //继续申请
+                    self.applyId = resultList[0].id
+                    Handler.getApply(withApplyId: self.applyId, self.getApplyInstance)
+                }
+            }
+        }
+    }
+    
+    //MARK:- 获取到申请目录后回调
+    private func getApplyInstance(resultCode: ResultCode, message: String, applyInstance: ApplyInstance?){
+        guard resultCode == .success else {
+            return
+        }
+        guard let instance = applyInstance else{
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.applyInstance = instance
         }
     }
     
@@ -90,6 +149,9 @@ class PolicyVC: UIViewController {
         
         let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
         editVC.detailPolicyModel = detailPolicyModel
+        editVC.policyId = id
+        editVC.applyId = applyId
+        editVC.catalogsList = applyInstance?.catalogs
         navigationController?.show(editVC, sender: nil)
     }
     
