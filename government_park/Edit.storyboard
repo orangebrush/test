@@ -116,6 +116,10 @@
                                                 <constraint firstAttribute="leadingMargin" secondItem="bxE-IR-ylg" secondAttribute="leading" id="lQP-ka-7W2"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="firstLabel" destination="bxE-IR-ylg" id="pOv-TF-jT2"/>
+                                            <outlet property="secondLabel" destination="1co-6l-gKX" id="duh-Kd-6cq"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="field1" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="field1" rowHeight="66" id="EXn-B6-R9r" customClass="Field1Cell" customModule="government_park" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="121.5" width="375" height="66"/>
@@ -331,7 +335,7 @@
                                                     <rect key="frame" x="16" y="37" width="351" height="30"/>
                                                     <state key="normal" title="Button"/>
                                                     <connections>
-                                                        <action selector="click:" destination="I47-hT-RsZ" eventType="touchUpInside" id="UUu-ko-JA7"/>
+                                                        <action selector="click:" destination="I47-hT-RsZ" eventType="touchUpInside" id="lPs-DM-o3U"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -344,6 +348,10 @@
                                                 <constraint firstItem="Gx6-Uj-15I" firstAttribute="leading" secondItem="3Sw-hX-eqZ" secondAttribute="leading" constant="16" id="gR1-IP-VAJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="firstButton" destination="Gx6-Uj-15I" id="j9e-t8-0I0"/>
+                                            <outlet property="firstLabel" destination="vHe-Cs-vRQ" id="WgA-Nc-CC1"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="group1" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="group1" rowHeight="113" id="suX-lc-zS5" customClass="Group1Cell" customModule="government_park" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="659.5" width="375" height="113"/>
@@ -362,14 +370,14 @@
                                                     <rect key="frame" x="16" y="37" width="351" height="30"/>
                                                     <state key="normal" title="Button0"/>
                                                     <connections>
-                                                        <action selector="click:" destination="suX-lc-zS5" eventType="touchUpInside" id="Vnf-Ew-CQx"/>
+                                                        <action selector="click:" destination="suX-lc-zS5" eventType="touchUpInside" id="OHQ-o4-fEi"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efg-jW-pfc">
                                                     <rect key="frame" x="16" y="74" width="351" height="30"/>
                                                     <state key="normal" title="Button1"/>
                                                     <connections>
-                                                        <action selector="click:" destination="suX-lc-zS5" eventType="touchUpInside" id="HxM-pI-Dej"/>
+                                                        <action selector="click:" destination="suX-lc-zS5" eventType="touchUpInside" id="wEn-4k-Rig"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -385,6 +393,11 @@
                                                 <constraint firstItem="zNG-OX-Qik" firstAttribute="top" secondItem="fa0-YB-6Ly" secondAttribute="bottom" constant="8" id="vEc-eq-BLm"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="firstButton" destination="zNG-OX-Qik" id="3rQ-UG-xLY"/>
+                                            <outlet property="firstLabel" destination="fa0-YB-6Ly" id="57Z-sI-TdB"/>
+                                            <outlet property="secondButton" destination="efg-jW-pfc" id="cuq-E6-sKV"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="group2" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="group2" rowHeight="104" id="FnI-Fw-E84" customClass="Group2Cell" customModule="government_park" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="772.5" width="375" height="104"/>
@@ -412,7 +425,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="add:" destination="FnI-Fw-E84" eventType="touchUpInside" id="aUT-LK-zll"/>
+                                                        <action selector="click:" destination="FnI-Fw-E84" eventType="touchUpInside" id="Nm1-v2-9zL"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -429,6 +442,11 @@
                                                 <constraint firstItem="an1-a2-oS0" firstAttribute="leading" secondItem="zGN-x8-8cE" secondAttribute="leadingMargin" constant="16" id="mJ5-ie-W0v"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="firstButton" destination="JfJ-e9-TQg" id="QBi-Ws-UuA"/>
+                                            <outlet property="firstLabel" destination="xVZ-EB-AtZ" id="Vqx-df-Hcm"/>
+                                            <outlet property="secondLabel" destination="an1-a2-oS0" id="PWW-Pa-sjR"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="group3" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="group3" rowHeight="162" id="sYG-Uy-YDj" customClass="Group3Cell" customModule="government_park" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="876.5" width="375" height="162"/>
@@ -471,6 +489,10 @@
                                                 <constraint firstAttribute="leadingMargin" secondItem="cao-55-G42" secondAttribute="leading" id="vAU-qT-DXg"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="firstLabel" destination="cao-55-G42" id="V9v-DZ-uq2"/>
+                                            <outlet property="secondLabel" destination="2Np-us-iL1" id="CoF-RE-Inw"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -517,7 +539,7 @@
                 <exit id="lwv-eo-fUh" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="rbl-6H-nOf">
                     <connections>
-                        <action selector="click:" destination="lwv-eo-fUh" id="NoO-us-pUW"/>
+                        <action selector="tap:" destination="lwv-eo-fUh" id="UML-jM-a2p"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

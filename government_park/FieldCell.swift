@@ -9,7 +9,10 @@
 import UIKit
 class FieldCell: UITableViewCell {
 
+    @IBOutlet weak var firstLabel: UILabel!
+    @IBOutlet weak var secondLabel: UILabel!
     
+    //MARK:- init
     override func didMoveToSuperview() {
         
         config()

@@ -47,7 +47,7 @@ class SecondCell: UITableViewCell {
         
         //更新内容
         let model = d.model
-        if let url = URL(string: model.smallPic){
+        if let url = URL(string: model.smallPic!){
             do{
                 let imageData = try Data(contentsOf: url)
                 let image = UIImage(data: imageData)

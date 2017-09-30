@@ -9,10 +9,4 @@
 import UIKit
 class Group0Cell: GroupCell {
     
-    var closure: (()->())?
-    
-    
-    @IBAction func click(_ sender: Any) {
-        closure?()
-    }
 }

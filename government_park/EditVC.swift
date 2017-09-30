@@ -23,12 +23,10 @@ class EditVC: UIViewController {
 
     var detailPolicyModel: DetailPolicyModel?       //政策详情
     
-    var applyInstance: ApplyInstance? {             //申请目录
-        didSet{
-            tableView.reloadData()
-        }
-    }
+    var applyInstance: ApplyInstance?               //申请目录内容
+    var contentsList: [BaseExampleModel]?           //组内容
     
+    /*
     //目录
     var catalogsList: [ApplyCatalogs]?{
         didSet{
@@ -43,6 +41,7 @@ class EditVC: UIViewController {
             
         }
     }
+    */
     
     //MARK:- init-------------------------------------------------
     override func viewDidLoad() {
@@ -63,6 +62,7 @@ class EditVC: UIViewController {
         
         topView.layer.cornerRadius = .cornerRadius
         
+        tableView.reloadData()
     }
     
     private func config(){
@@ -112,7 +112,7 @@ extension EditVC: UIActionSheetDelegate{
             guard let instance = applyInstance else {
                 return
             }
-            Handler.cancelApply(withApplyId: instance.id){
+            Handler.cancelApply(withApplyId: instance.id!){
                 resultCode, message in
                 self.navigationController?.popViewController(animated: true)
             }
@@ -130,11 +130,20 @@ extension EditVC: UIActionSheetDelegate{
 //MARK:- tableview delegate
 extension EditVC: UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        if isRootEdit{
+            return applyInstance?.catalogs!.count ?? 0
+        }
+        return contentsList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if isRootEdit{
+            let catalog = applyInstance?.catalogs?[section]
+            return catalog?.secondItems!.count ?? 0
+        }
+        
+        let baseGroup = contentsList?[section] as? BaseGroupModel
+        return baseGroup?.secondItems!.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -147,15 +156,18 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
         header.tag = section
         
         if isRootEdit {
+            let catalog = applyInstance?.catalogs?[section]
+            let title = catalog?.title
+            
             let titleFrame = CGRect(x: .edge16, y: .edge8, width: headerFrame.width - .edge16 * 2, height: .labelHeight)
             let titleLabel = UILabel(frame: titleFrame)
-            titleLabel.text = "title"
+            titleLabel.text = title
             titleLabel.font = .middle
             header.addSubview(titleLabel)
             
             let subTitleFrame = CGRect(x: .edge16, y: .edge8 * 2 + .labelHeight, width: headerFrame.width - .edge16, height: .labelHeight)
             let subTitleLabel = UILabel(frame: subTitleFrame)
-            subTitleLabel.text = "subTitle"
+            subTitleLabel.text = "---"
             subTitleLabel.font = .small
             header.addSubview(subTitleLabel)
         
@@ -177,21 +189,61 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
         let row = indexPath.row
         var cell: UITableViewCell
         
-        let type = 0
-        if type == 0{
-            let assemblyCell = tableView.dequeueReusableCell(withIdentifier: "field2") as! Field2Cell
-            cell = assemblyCell
+        //获取具体数据（组）（字段）
+        var base: BaseExampleModel
+        if isRootEdit{
+            base = (applyInstance?.catalogs?[section].secondItems?[row])!
+            let type = base.type
+            let groupType = GroupType(rawValue: type!)!
+            let groupModel = base as! BaseGroupModel
+            
+//            switch groupType{
+//            case .normal:
+                //创建group cell
+                let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType.identifier()) as! GroupCell
+                groupCell.firstLabel.text = groupModel.title
+                groupCell.secondLabel.text = groupModel.hint
+                groupCell.closure = {
+                    tag in
+                    let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main) as! EditVC
+                    groupEditor.isRootEdit = groupModel.isRoot!
+                    self.navigationController?.show(groupEditor, sender: nil)
+                }
+                cell = groupCell
+//            case .image:
+//                break
+//            default:
+//                break
+//            }
         }else{
-            let groupCell = tableView.dequeueReusableCell(withIdentifier: "group0") as! Group0Cell
-            groupCell.closure = {
-                _ in
+            base = (contentsList?[section])!
+            if base.isGroup!{
+                let type = base.type
+                let groupType = GroupType(rawValue: type!)!
+                let groupModel = base as! BaseGroupModel
                 
-                let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main) as! EditVC
-                groupEditor.isRootEdit = false
-                self.navigationController?.show(groupEditor, sender: nil)
-
+                //创建group cell
+                let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType.identifier()) as! GroupCell
+                groupCell.firstLabel.text = groupModel.title
+                groupCell.secondLabel.text = groupModel.hint
+                groupCell.closure = {
+                    tag in
+                    let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main) as! EditVC
+                    groupEditor.isRootEdit = groupModel.isRoot!
+                    self.navigationController?.show(groupEditor, sender: nil)
+                }
+                cell = groupCell
+            }else{
+                let type = base.type
+                let fieldType = FieldType(rawValue: type!)!
+                let fieldModel = base as! BaseFieldModel
+                
+                //创建 field cell
+                let assemblyCell = tableView.dequeueReusableCell(withIdentifier: fieldType.identifier()) as! FieldCell
+                assemblyCell.firstLabel.text = fieldModel.title
+                assemblyCell.secondLabel.text = fieldModel.hint
+                cell = assemblyCell
             }
-            cell = groupCell
         }
         return cell
     }

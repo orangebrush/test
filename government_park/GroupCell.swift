@@ -9,6 +9,14 @@
 import UIKit
 class GroupCell: UITableViewCell {
     
+    var closure: ((Int?)->())?
+    @IBOutlet weak var firstLabel: UILabel!
+    @IBOutlet weak var secondLabel: UILabel!
+    
+    @IBOutlet weak var firstButton: UIButton!
+    @IBOutlet weak var secondButton: UIButton!
+    
+    //MARK:- init---------------------------
     override func didMoveToSuperview() {
         
         config()
@@ -21,5 +29,15 @@ class GroupCell: UITableViewCell {
     
     private func createContents(){
         
+    }
+    
+    //MARK: 按钮点击
+    @IBAction func click(_ sender: UIButton) {
+        closure?(sender.tag)
+    }
+    
+    //MARK: view 点击 图片组
+    @IBAction func tap(_ sender: UITapGestureRecognizer) {
+        closure?(nil)
     }
 }

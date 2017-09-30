@@ -9,9 +9,4 @@
 import UIKit
 class Group1Cell: GroupCell {
     
-    var closure: ((Int)->())?
-    
-    @IBAction func click(_ sender: UIButton) {
-        closure?(sender.tag)
-    }
 }

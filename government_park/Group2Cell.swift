@@ -7,15 +7,6 @@
 //
 
 import UIKit
-class Group2Cell: GroupCell {
+class Group2Cell: GroupCell {    
     
-    var closure: ((Int)->())?
-    
-    @objc func click(sender: UIButton){
-        closure?(sender.tag)
-    }
-    
-    @IBAction func add(_ sender: Any) {
-        closure?(0)
-    }
 }

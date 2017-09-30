@@ -47,6 +47,7 @@ class ContentsVC: UIViewController {
             resultCode, message, newsPageModel in
             
             guard resultCode == .success else{
+                self.notif(withTitle: message, duration: 1, closure: nil)
                 return
             }
             
@@ -59,6 +60,7 @@ class ContentsVC: UIViewController {
             resultCode, message, homepagePolicyModelList in
             
             guard resultCode == .success else{
+                self.notif(withTitle: message, duration: 1, closure: nil)
                 return
             }
             
@@ -192,7 +194,7 @@ extension ContentsVC: UITableViewDelegate, UITableViewDataSource {
         }else {                 //马上开始申报资金 sel
             let model = homepagePolicyModelList[row].model
             let policyVC = UIStoryboard(name: "Policy", bundle: Bundle.main).instantiateViewController(withIdentifier: "policy") as! PolicyVC
-            policyVC.id = model.id
+            policyVC.id = model.id!
             policyVC.navigationItem.title = model.shortTitle
             navigationController?.show(policyVC, sender: nil)
         }

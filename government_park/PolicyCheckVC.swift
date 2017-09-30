@@ -122,7 +122,7 @@ extension PolicyCheckVC: UITableViewDelegate, UITableViewDataSource{
         case 2:     //正文内容
             let muteCell = tableView.dequeueReusableCell(withIdentifier: "mute") as! PolicyMuteLineCell
             if let document = detailPolicyModel?.document?[row]{
-                muteCell.titleLabel.text = document.title + document.contentType
+                muteCell.titleLabel.text = document.title! + document.contentType!
             }
             cell = muteCell
         default:

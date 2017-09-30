@@ -24,6 +24,48 @@ enum GroupType: Int{
     case time           //时间组
     case multi          //多条组
     case image          //图片组
+    
+    //获取组高度
+    func height() -> CGFloat{
+        switch self {
+        case .normal:
+            return .group0
+        case .time:
+            return .group1
+        case .multi:
+            return .group2
+        case .image:
+            return .group3
+        }
+    }
+    
+    //获取identify
+    func identifier() -> String{
+        switch self {
+        case .normal:
+            return "group0"
+        case .time:
+            return "group1"
+        case .multi:
+            return "group2"
+        case .image:
+            return "group3"
+        }
+    }
+    
+    //获取cell类
+    func cellClass() -> AnyClass{
+        switch self {
+        case .normal:
+            return Group0Cell.self
+        case .time:
+            return Group1Cell.self
+        case .multi:
+            return Group2Cell.self
+        default:
+            return Group3Cell.self 
+        }
+    }
 }
 
 //字段实例类型
@@ -35,6 +77,7 @@ enum FieldType: Int{
     case single         //单选
     case multi          //多选
     case linkage        //联动选择
+    case time           //时间
     //获取段高度
     func height() -> CGFloat{
         switch self {
@@ -50,8 +93,54 @@ enum FieldType: Int{
             return .field4
         case .multi:
             return .field6
+        case .time:
+            return .field7
         default:
             return .field5
+        }
+    }
+    
+    //获取identifier
+    func identifier() -> String{
+        switch self {
+        case .short:
+            return "field0"
+        case .long:
+            return "field1"
+        case .image:
+            return "field2"
+        case .enclosure:
+            return "field3"
+        case .single:
+            return "field4"
+        case .multi:
+            return "field6"
+        case .time:
+            return "field7"
+        default:
+            return "field5"
+        }
+    }
+    
+    //获取cell类
+    func cellClass() -> AnyClass{
+        switch self {
+        case .short:
+            return Field0Cell.self
+        case .long:
+            return Field1Cell.self
+        case .image:
+            return Field2Cell.self
+        case .enclosure:
+            return Field3Cell.self
+        case .single:
+            return Field4Cell.self
+        case .multi:
+            return Field6Cell.self
+        case .time:
+            return Field7Cell.self
+        default:
+            return Field5Cell.self
         }
     }
 }

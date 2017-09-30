@@ -6,11 +6,7 @@
 	<dict>
 		<key>Headers/government_sdk-Swift.h</key>
 		<data>
-		glhWahT7oZXRGBxeuQ/IH3QxZWU=
-		</data>
-		<key>Headers/government_sdk.h</key>
-		<data>
-		ZHbj2FGCJw1Dxyidpik2R9hK3mI=
+		2X1KbOR9u7+B8s/0/4yYP+Oa2EI=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -18,15 +14,15 @@
 		</data>
 		<key>Modules/government_sdk.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		46EWSEVXd5Uf74y1ySoI/TBw/98=
+		iE37qJ9hT4MyuqRCPr539RTXnxw=
 		</data>
 		<key>Modules/government_sdk.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		2EaO6qKuuIcwhAxF06rOpTsQwrY=
+		Q4NVKHy5LMY+/4Duh3nk2MjT5h0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		k6AsT5QNtZYio/lkP5551od4iSc=
+		t0e7ofVgIYwwiZ0r5AzuUt5ceCM=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -35,55 +31,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			glhWahT7oZXRGBxeuQ/IH3QxZWU=
+			2X1KbOR9u7+B8s/0/4yYP+Oa2EI=
 			</data>
 			<key>hash2</key>
 			<data>
-			JjNKV+0TXgXfveRedBdv5TeVRaC2YvCRyrqYPWHQWMI=
-			</data>
-		</dict>
-		<key>Headers/government_sdk.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ZHbj2FGCJw1Dxyidpik2R9hK3mI=
-			</data>
-			<key>hash2</key>
-			<data>
-			GY888KKk0hLVn0tXPlhRcRrQGu8L9UOgQOQeEw8U47o=
+			ZKCA0saMMatL0pkGzn0UXtlD9FQFIxlWW0GTE4ulPhM=
 			</data>
 		</dict>
 		<key>Modules/government_sdk.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			46EWSEVXd5Uf74y1ySoI/TBw/98=
+			iE37qJ9hT4MyuqRCPr539RTXnxw=
 			</data>
 			<key>hash2</key>
 			<data>
-			4vpWNZ7E/7fELSxcv5UsVH8DjF5uBBWKjp+w6S433dk=
+			Leex1hUMEJkmRrwPNL/XkJx5VTwkbF1dFMqxI+xXfkw=
 			</data>
 		</dict>
 		<key>Modules/government_sdk.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2EaO6qKuuIcwhAxF06rOpTsQwrY=
+			Q4NVKHy5LMY+/4Duh3nk2MjT5h0=
 			</data>
 			<key>hash2</key>
 			<data>
-			wPtpB3Ud9M3BwPpVZDfFMcJ0GHLWVF3dPgFe4QQ4ZyI=
+			5USlLeOyrk/OHM2mHxA1On4yGD8GWVosuECbeX2Cg4s=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			k6AsT5QNtZYio/lkP5551od4iSc=
+			t0e7ofVgIYwwiZ0r5AzuUt5ceCM=
 			</data>
 			<key>hash2</key>
 			<data>
-			BAWykhJQ7hsT4M9tCLkbaHSnQS0Zxn6xscvv2GDtmoo=
+			xgLKuAIPveTKakJ5oySRs95osB+sSVBXbI9wVAi8t1w=
 			</data>
 		</dict>
 	</dict>

@@ -103,4 +103,10 @@ extension UIViewController{
         
         checkNotifList()
     }
+    
+    //MARK:- 登录弹窗
+    func login(){
+        let loginVC = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateViewController(withIdentifier: "login") as! LoginVC
+        navigationController?.show(loginVC, sender: nil)
+    }
 }

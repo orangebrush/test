@@ -13,6 +13,8 @@
 		321115C51F792D41005EA426 /* 0fflineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321115C41F792D41005EA426 /* 0fflineVC.swift */; };
 		321115C71F792D7E005EA426 /* Status.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 321115C61F792D7D005EA426 /* Status.storyboard */; };
 		321115C91F7A28B0005EA426 /* AuditingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321115C81F7A28B0005EA426 /* AuditingVC.swift */; };
+		321DF9531F7F322600A23DAC /* Field7Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321DF9521F7F322600A23DAC /* Field7Cell.swift */; };
+		321DF95C1F7F3FEB00A23DAC /* Field7Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321DF95B1F7F3FEB00A23DAC /* Field7Editor.swift */; };
 		321FE4FD1F73C7C3002FA78B /* Field6EditorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321FE4FC1F73C7C3002FA78B /* Field6EditorCell.swift */; };
 		324A91A11F73DBFF00A1F721 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A01F73DBFF00A1F721 /* Timer.swift */; };
 		324A91A31F73DD4600A1F721 /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */; };
@@ -70,6 +72,10 @@
 		329D88531F6FA63800D304FF /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329D88521F6FA63800D304FF /* Image+Extension.swift */; };
 		329D88551F6FA75000D304FF /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329D88541F6FA75000D304FF /* Color+Extension.swift */; };
 		329D88571F6FA80F00D304FF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329D88561F6FA80F00D304FF /* Font+Extension.swift */; };
+		32BB6E561F7F790200FC47F2 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BB6E551F7F790200FC47F2 /* Login.storyboard */; };
+		32BB6E5F1F7F7EC100FC47F2 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB6E5E1F7F7EC100FC47F2 /* LoginVC.swift */; };
+		32BB6E611F7F972300FC47F2 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB6E601F7F972300FC47F2 /* RegisterVC.swift */; };
+		32BB6E631F7F9BB600FC47F2 /* FindPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB6E621F7F9BB600FC47F2 /* FindPasswordVC.swift */; };
 		32EE31E51F70FA8900939EE8 /* Policy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32EE31E41F70FA8900939EE8 /* Policy.storyboard */; };
 		32EE31E71F70FB5800939EE8 /* PolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EE31E61F70FB5800939EE8 /* PolicyVC.swift */; };
 		32EE31EB1F711CB300939EE8 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EE31EA1F711CB300939EE8 /* GroupCell.swift */; };
@@ -182,6 +188,8 @@
 		321115C41F792D41005EA426 /* 0fflineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 0fflineVC.swift; sourceTree = "<group>"; };
 		321115C61F792D7D005EA426 /* Status.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Status.storyboard; sourceTree = "<group>"; };
 		321115C81F7A28B0005EA426 /* AuditingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditingVC.swift; sourceTree = "<group>"; };
+		321DF9521F7F322600A23DAC /* Field7Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field7Cell.swift; sourceTree = "<group>"; };
+		321DF95B1F7F3FEB00A23DAC /* Field7Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field7Editor.swift; sourceTree = "<group>"; };
 		321FE4FC1F73C7C3002FA78B /* Field6EditorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field6EditorCell.swift; sourceTree = "<group>"; };
 		324A91A01F73DBFF00A1F721 /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -315,6 +323,10 @@
 		329D88521F6FA63800D304FF /* Image+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
 		329D88541F6FA75000D304FF /* Color+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		329D88561F6FA80F00D304FF /* Font+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
+		32BB6E551F7F790200FC47F2 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		32BB6E5E1F7F7EC100FC47F2 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		32BB6E601F7F972300FC47F2 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		32BB6E621F7F9BB600FC47F2 /* FindPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordVC.swift; sourceTree = "<group>"; };
 		32EE31E41F70FA8900939EE8 /* Policy.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Policy.storyboard; sourceTree = "<group>"; };
 		32EE31E61F70FB5800939EE8 /* PolicyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolicyVC.swift; sourceTree = "<group>"; };
 		32EE31EA1F711CB300939EE8 /* GroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
@@ -363,6 +375,10 @@
 		321114DB1F78ED40005EA426 /* 登陆注册、验证 */ = {
 			isa = PBXGroup;
 			children = (
+				32BB6E551F7F790200FC47F2 /* Login.storyboard */,
+				32BB6E5E1F7F7EC100FC47F2 /* LoginVC.swift */,
+				32BB6E601F7F972300FC47F2 /* RegisterVC.swift */,
+				32BB6E621F7F9BB600FC47F2 /* FindPasswordVC.swift */,
 			);
 			name = "登陆注册、验证";
 			sourceTree = "<group>";
@@ -559,6 +575,8 @@
 				32933A081F724A2F00D3D88B /* Field6Cell.swift */,
 				32933A161F726B4200D3D88B /* Field6Editor.swift */,
 				321FE4FC1F73C7C3002FA78B /* Field6EditorCell.swift */,
+				321DF9521F7F322600A23DAC /* Field7Cell.swift */,
+				321DF95B1F7F3FEB00A23DAC /* Field7Editor.swift */,
 			);
 			name = "字段实例（7）";
 			sourceTree = "<group>";
@@ -930,6 +948,7 @@
 				329D88141F6F6F7A00D304FF /* Assets.xcassets in Resources */,
 				329D880F1F6F6F7A00D304FF /* Root.storyboard in Resources */,
 				32EE31F21F7120CF00939EE8 /* Edit.storyboard in Resources */,
+				32BB6E561F7F790200FC47F2 /* Login.storyboard in Resources */,
 				3269DF3A1F7A825700C14FC3 /* List.storyboard in Resources */,
 				329339EB1F7241B700D3D88B /* Editor.storyboard in Resources */,
 				321115C71F792D7E005EA426 /* Status.storyboard in Resources */,
@@ -959,6 +978,7 @@
 			files = (
 				329D88441F6F7AFC00D304FF /* RootNC.swift in Sources */,
 				329D88551F6FA75000D304FF /* Color+Extension.swift in Sources */,
+				32BB6E5F1F7F7EC100FC47F2 /* LoginVC.swift in Sources */,
 				3269DF451F7B882600C14FC3 /* ListCell.swift in Sources */,
 				32933A131F726B1600D3D88B /* Field4Editor.swift in Sources */,
 				3269DF3E1F7A826D00C14FC3 /* ListVC.swift in Sources */,
@@ -969,6 +989,7 @@
 				329339F21F72435A00D3D88B /* FieldCell.swift in Sources */,
 				329339F91F72498800D3D88B /* Group1Cell.swift in Sources */,
 				324A91A31F73DD4600A1F721 /* ViewController+Extension.swift in Sources */,
+				321DF9531F7F322600A23DAC /* Field7Cell.swift in Sources */,
 				329D883C1F6F704200D304FF /* RootTBV.swift in Sources */,
 				329339F51F72476000D3D88B /* FieldVC.swift in Sources */,
 				329B127A1F6FB2040061C38E /* SecondCell.swift in Sources */,
@@ -996,12 +1017,15 @@
 				329D88511F6FA50900D304FF /* Navigation+Extension.swift in Sources */,
 				32EE31ED1F711CBF00939EE8 /* Field0Cell.swift in Sources */,
 				32933A111F726B0100D3D88B /* Field3Editor.swift in Sources */,
+				32BB6E631F7F9BB600FC47F2 /* FindPasswordVC.swift in Sources */,
 				32933A031F7249FC00D3D88B /* Field3Cell.swift in Sources */,
 				32933A091F724A2F00D3D88B /* Field6Cell.swift in Sources */,
+				321DF95C1F7F3FEB00A23DAC /* Field7Editor.swift in Sources */,
 				324A91A11F73DBFF00A1F721 /* Timer.swift in Sources */,
 				32933A151F726B2E00D3D88B /* Field5Editor.swift in Sources */,
 				329D884C1F6FA00E00D304FF /* MeVC.swift in Sources */,
 				329339A11F72076F00D3D88B /* PolicyCheckVC.swift in Sources */,
+				32BB6E611F7F972300FC47F2 /* RegisterVC.swift in Sources */,
 				32933A1B1F736C7B00D3D88B /* Group3CollectionCell.swift in Sources */,
 				32933A0F1F726AE700D3D88B /* Field2Editor.swift in Sources */,
 				32933A191F73657400D3D88B /* Group3Editor.swift in Sources */,

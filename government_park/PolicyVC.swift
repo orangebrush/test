@@ -28,13 +28,14 @@ class PolicyVC: UIViewController {
             }            
             
             //是否可收藏
-            Handler.getIsCompanyBookmarkApply(withPolicyId: model.id){
+            Handler.getIsCompanyBookmarkApply(withPolicyId: model.id!){
                 resultCode, message, bookmarkPolicyVirginModel in
                 
-                guard resultCode == .success else{
-                    return
-                }
                 DispatchQueue.main.async {
+                    guard resultCode == .success else{
+                        self.notif(withTitle: message, duration: 1, closure: nil)
+                        return
+                    }
                     self.collectionButton.isEnabled = true
                     self.collectionButton.isHidden = false
                     self.collectionButton.isSelected = bookmarkPolicyVirginModel != nil
@@ -78,15 +79,18 @@ class PolicyVC: UIViewController {
         collectionButton.isHidden = true
         applyButton.setTitle("申请", for: .normal)
         
+        navigationController?.isNavigationBarHidden = false
+        
         //获取政策详情
         Handler.getDetailPolicy(withPolicyId: id){
             resultCode, message, detailPolicyModel in
             
-            guard resultCode == .success else{
-                return
-            }
-            
             DispatchQueue.main.async {
+                guard resultCode == .success else{
+                    self.notif(withTitle: message, duration: 1, closure: nil)
+                    return
+                }
+                
                 self.detailPolicyModel = detailPolicyModel
             }
             
@@ -95,10 +99,13 @@ class PolicyVC: UIViewController {
                 resultCode, message, applyListModelList in
                 
                 guard resultCode == .success else{
+                    self.login()
                     return
                 }
                 
                 guard let list = applyListModelList else{
+                    //新建申请
+                    Handler.getApplyContents(withPolicyId: self.id, self.getApplyInstance)
                     return
                 }
                 
@@ -106,11 +113,11 @@ class PolicyVC: UIViewController {
                 let resultList = list.filter({$0.policyId == self.applyId})
                 if resultList.isEmpty{
                     //新建申请
-                    Handler.getApply(withPolicyId: self.id, self.getApplyInstance)
+                    Handler.getApplyContents(withPolicyId: self.id, self.getApplyInstance)
                 }else{
                     //继续申请
                     self.applyId = resultList[0].id
-                    Handler.getApply(withApplyId: self.applyId, self.getApplyInstance)
+                    Handler.getApplyContents(withApplyId: self.applyId, self.getApplyInstance)
                 }
             }
         }
@@ -118,14 +125,15 @@ class PolicyVC: UIViewController {
     
     //MARK:- 获取到申请目录后回调
     private func getApplyInstance(resultCode: ResultCode, message: String, applyInstance: ApplyInstance?){
-        guard resultCode == .success else {
-            return
-        }
-        guard let instance = applyInstance else{
-            return
-        }
-        
         DispatchQueue.main.async {
+            guard resultCode == .success else {
+                self.notif(withTitle: message, duration: 1, closure: nil)
+                return
+            }
+            guard let instance = applyInstance else{
+                return
+            }
+            
             self.applyInstance = instance
         }
     }
@@ -149,9 +157,11 @@ class PolicyVC: UIViewController {
         
         let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
         editVC.detailPolicyModel = detailPolicyModel
+        editVC.isRootEdit = true
         editVC.policyId = id
         editVC.applyId = applyId
-        editVC.catalogsList = applyInstance?.catalogs
+        editVC.applyInstance = applyInstance
+        //editVC.catalogsList = applyInstance?.catalogs
         navigationController?.show(editVC, sender: nil)
     }
     
@@ -270,7 +280,7 @@ extension PolicyVC: UITableViewDelegate, UITableViewDataSource{
         case 4:     //正文内容
             let muteCell = tableView.dequeueReusableCell(withIdentifier: "mute") as! PolicyMuteLineCell
             if let document = detailPolicyModel?.document?[row]{
-                muteCell.titleLabel.text = document.title + document.contentType
+                muteCell.titleLabel.text = document.title! + document.contentType!
             }
             cell = muteCell
         default:
