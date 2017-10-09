@@ -32,6 +32,9 @@ class FindPasswordVC: UIViewController {
     
     private func config(){
         
+        if let localAccount = userDefaults.string(forKey: "account"){
+            accountTextField.text = localAccount
+        }
     }
     
     private func createContents(){

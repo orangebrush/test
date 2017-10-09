@@ -81,6 +81,7 @@ class PolicyVC: UIViewController {
         
         navigationController?.isNavigationBarHidden = false
         
+        Handler.updateCookie()
         //获取政策详情
         Handler.getDetailPolicy(withPolicyId: id){
             resultCode, message, detailPolicyModel in
@@ -99,7 +100,9 @@ class PolicyVC: UIViewController {
                 resultCode, message, applyListModelList in
                 
                 guard resultCode == .success else{
-                    self.login()
+                    DispatchQueue.main.async {
+                        self.login()
+                    }
                     return
                 }
                 
@@ -279,8 +282,16 @@ extension PolicyVC: UITableViewDelegate, UITableViewDataSource{
             cell = muteCell
         case 4:     //正文内容
             let muteCell = tableView.dequeueReusableCell(withIdentifier: "mute") as! PolicyMuteLineCell
-            if let document = detailPolicyModel?.document?[row]{
-                muteCell.titleLabel.text = document.title! + document.contentType!
+            if let model = detailPolicyModel{
+                if row < model.document!.count {
+                    if let document = model.document?[row]{
+                        muteCell.titleLabel.text = document.title! + document.contentType!
+                    }
+                }else{
+                    if let prize = model.prizes?[row - model.document!.count]{
+                        muteCell.titleLabel.text = prize.title!
+                    }
+                }
             }
             cell = muteCell
         default:

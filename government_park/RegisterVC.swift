@@ -18,6 +18,7 @@ class RegisterVC: UIViewController {
     @IBOutlet weak var registerButton: UIButton!
     
     private var account: String?
+    private var legalAcctoun: String?
     private var verification: String?
     private var password: String?
     
@@ -69,10 +70,35 @@ class RegisterVC: UIViewController {
     //MARK: 获取验证码
     @IBAction func getVerification(_ sender: Any){
         
+        let accountTuple = isAccountLegal(withString: account)
+        
+        guard accountTuple.isLegal else {
+            legalAcctoun = nil
+            notif(withTitle: accountTuple.message, duration: 1, closure: nil)
+            return
+        }
+        
+        legalAcctoun = account
     }
     
     //MARK: 注册
     @IBAction func register(_ sender: Any){
         
+        let passwordTuple = isPasswordLegal(withString: password)
+        
+        guard passwordTuple.isLegal else {
+            notif(withTitle: passwordTuple.message, duration: 1, closure: nil)
+            return
+        }
+        
+        //判断是否修改过用户名
+        guard account == legalAcctoun else {
+            notif(withTitle: "需为新账号重新获取验证码", duration: 1, closure: nil)
+            return
+        }
+        
+        //存储账号密码
+        userDefaults.set(account, forKey: "account")
+        userDefaults.set(password, forKey: "password")
     }
 }

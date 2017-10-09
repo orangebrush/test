@@ -15,11 +15,8 @@ class LoginVC: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    private var password: String?
-    private var account: String?
-    
-    var accountMaxLength = 20
-    var passwordMaxLength = 20
+    private var account: String?{return accountTextField.text}
+    private var password: String?{return passwordTextField.text}
     
     
     //MARK:- init----------------------------------------
@@ -38,6 +35,14 @@ class LoginVC: UIViewController {
         
         topView.layer.cornerRadius = .cornerRadius
         loginButton.layer.cornerRadius = .cornerRadius
+        
+        if let localAccount = userDefaults.string(forKey: "account"){
+            accountTextField.text = localAccount
+        }
+        
+        if let localPassword = userDefaults.string(forKey: "password"){
+            passwordTextField.text = localPassword
+        }
     }
     
     private func createContents(){
@@ -51,16 +56,56 @@ class LoginVC: UIViewController {
     
     //MARK: 输入
     @IBAction func valueChanged(_ sender: UITextField){
-        if sender.tag == 0 {
-            account = sender.text
-        }else{
-            password = sender.text
-        }
+//        if sender.tag == 0 {
+//            account = sender.text
+//        }else{
+//            password = sender.text
+//        }
     }
     
     //MARK: 登录
     @IBAction func login(_ sender: Any){
         
+        let accountTuple = isAccountLegal(withString: account)
+        let passwordTuple = isPasswordLegal(withString: password)
+        
+        guard accountTuple.isLegal else {
+            notif(withTitle: accountTuple.message, duration: 1, closure: nil)
+            return
+        }
+        
+        guard passwordTuple.isLegal else {
+            notif(withTitle: passwordTuple.message, duration: 1, closure: nil)
+            return
+        }
+        
+        //存储账号密码
+        userDefaults.set(account, forKey: "account")
+        userDefaults.set(password, forKey: "password")
+        
+        Handler.userLogin(withLoginName: account!, withPassword: password!){
+            resultCode, message, userInforMationModel in
+            
+            Handler.saveCookie()
+            DispatchQueue.main.async {
+                guard resultCode == .success else {
+                    self.notif(withTitle: message, duration: 1, closure: nil)
+                    return
+                }
+                
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
+        let urlString = "https:test"
+        let url = URL(string: urlString)
+        let request = URLRequest(url: url!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
+        request.httpShouldHandleCookies = true
+        
+        let session = URLSession.shared
+        session.dataTask(with: request, completionHandler: { (data, response, error) in
+            
+        })
     }
     
     //MARK: 找回密码
@@ -145,7 +190,7 @@ extension LoginVC: UITextFieldDelegate{
         
         var maxLenght: Int
         if textField.tag == 0{
-            maxLenght = accountMaxLength
+            maxLenght = accountLength
         }else {
             maxLenght = passwordMaxLength
         }

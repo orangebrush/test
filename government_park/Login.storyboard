@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,7 +13,6 @@
         <!--Find PasswordVC-->
         <scene sceneID="ce6-Lu-TOi">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gb3-hC-xDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="QK4-CP-JOV" customClass="FindPasswordVC" customModule="government_park" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="a4M-3S-LV8"/>
@@ -111,13 +109,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qEG-fM-Lvl">
                                 <rect key="frame" x="16" y="216" width="343" height="75"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DuE-PJ-ALf">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新密码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DuE-PJ-ALf">
                                         <rect key="frame" x="8" y="8" width="327" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="密码" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mc6-pq-6OZ">
+                                    <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入密码" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mc6-pq-6OZ">
                                         <rect key="frame" x="8" y="37" width="327" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -181,6 +179,7 @@
                         <outlet property="verificationTextField" destination="c6q-T9-J4R" id="rmY-Lc-cIS"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gb3-hC-xDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1056.8" y="382.75862068965517"/>
         </scene>
@@ -252,7 +251,7 @@
                                         <rect key="frame" x="8" y="104" width="327" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                         <connections>
                                             <action selector="valueChanged:" destination="sit-qZ-Vif" eventType="valueChanged" id="E6P-Rw-mfV"/>
                                             <outlet property="delegate" destination="sit-qZ-Vif" id="VSi-f9-I6b"/>
@@ -307,9 +306,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="accountTextField" destination="mSw-S4-ts8" id="KJf-lR-Gpt"/>
+                        <outlet property="accountTextField" destination="ePZ-Yr-K82" id="b9U-v0-nBJ"/>
                         <outlet property="loginButton" destination="Kem-VB-d7P" id="yjw-zY-XR0"/>
-                        <outlet property="passwordTextField" destination="ePZ-Yr-K82" id="DLU-P8-DN3"/>
+                        <outlet property="passwordTextField" destination="mSw-S4-ts8" id="kTJ-rx-FsM"/>
                         <outlet property="topView" destination="FY8-fA-M05" id="nTw-g8-E8K"/>
                     </connections>
                 </viewController>
