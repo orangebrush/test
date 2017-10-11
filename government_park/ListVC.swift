@@ -75,6 +75,7 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource{
             headerView.addSubview(label)
         
         if tag == 1 {
+            
             let tap = UITapGestureRecognizer(target: self, action: #selector(click))
             tap.numberOfTapsRequired = 1
             tap.numberOfTouchesRequired = 1

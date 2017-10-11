@@ -14,11 +14,11 @@
 		</data>
 		<key>Modules/government_sdk.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		do6kkaI47+tUNXZRzYYkJTxpqR8=
+		uXORWdl8IMBQXER/+oi3YxZ0pdI=
 		</data>
 		<key>Modules/government_sdk.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		TTVW00tkVLI/s512rrUWziMhaRE=
+		ylzkG7c0QOq7hOhNfiGxCXek8GU=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -42,22 +42,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			do6kkaI47+tUNXZRzYYkJTxpqR8=
+			uXORWdl8IMBQXER/+oi3YxZ0pdI=
 			</data>
 			<key>hash2</key>
 			<data>
-			LXMkh0dwP2b0vCcGlHVriRMnrC7QPDTv7PkUPhEfRX0=
+			y8yZ0P1N7VQnRj7we364u9LDbAiUePIkEmlA/abkhI8=
 			</data>
 		</dict>
 		<key>Modules/government_sdk.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TTVW00tkVLI/s512rrUWziMhaRE=
+			ylzkG7c0QOq7hOhNfiGxCXek8GU=
 			</data>
 			<key>hash2</key>
 			<data>
-			BhHkNMjd7H9OL+LCKgwLwXSt4bp3BJlvgfm9Aq9XV3A=
+			3gvth5FpkvQwVx2g8L13v9tAcw0Zvd6EU6GOEHsOTdk=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

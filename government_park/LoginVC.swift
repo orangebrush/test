@@ -86,26 +86,33 @@ class LoginVC: UIViewController {
         Handler.userLogin(withLoginName: account!, withPassword: password!){
             resultCode, message, userInforMationModel in
             
-            Handler.saveCookie()
             DispatchQueue.main.async {
                 guard resultCode == .success else {
                     self.notif(withTitle: message, duration: 1, closure: nil)
                     return
                 }
                 
+                userDefaults.set(self.account!, forKey: "account")
+                userDefaults.set(self.password!, forKey: "password")
+                userDefaults.synchronize()
+                
                 self.navigationController?.popViewController(animated: true)
             }
         }
         
+        /*
         let urlString = "https:test"
         let url = URL(string: urlString)
-        let request = URLRequest(url: url!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
+        var request = URLRequest(url: url!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
         request.httpShouldHandleCookies = true
         
         let session = URLSession.shared
         session.dataTask(with: request, completionHandler: { (data, response, error) in
             
         })
+         */
+        
+        
     }
     
     //MARK: 找回密码

@@ -81,7 +81,6 @@ class PolicyVC: UIViewController {
         
         navigationController?.isNavigationBarHidden = false
         
-        Handler.updateCookie()
         //获取政策详情
         Handler.getDetailPolicy(withPolicyId: id){
             resultCode, message, detailPolicyModel in

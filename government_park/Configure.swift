@@ -166,6 +166,15 @@ enum ProgressType: Int {
 let accountLength = 11
 let passwordMaxLength = 20
 let passwordMinLength = 6
+
+//获取本地存储的账户与密码
+var localAccount: String? {
+    return userDefaults.string(forKey: "account")
+}
+var localPassword: String? {
+    return userDefaults.string(forKey: "password")
+}
+
 //MARK:- 正则表达式
 struct Regex {
     let regex: NSRegularExpression?
