@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import government_sdk
+import gov_sdk
 class PolicyVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -28,7 +28,8 @@ class PolicyVC: UIViewController {
             }            
             
             //是否可收藏
-            Handler.getIsCompanyBookmarkApply(withPolicyId: model.id!){
+            /*
+            Handler.getIsCompanyBookmarkApply(withPolicyId: model.id!, withLoginName: localAccount, withPassword: localPassword){
                 resultCode, message, bookmarkPolicyVirginModel in
                 
                 DispatchQueue.main.async {
@@ -41,6 +42,7 @@ class PolicyVC: UIViewController {
                     self.collectionButton.isSelected = bookmarkPolicyVirginModel != nil
                 }
             }
+             */
             
             tableView.reloadData()
         }
@@ -56,7 +58,13 @@ class PolicyVC: UIViewController {
             applyButton.isEnabled = true
             
             //判断是否已申请
-            applyButton.setTitle(instance.statusHint!, for: .normal)
+            if instance.finished == 100 {
+                applyButton.setTitle("继续编辑100%", for: .normal)
+            }else if instance.finished == 0{
+                applyButton.setTitle("申请", for: .normal)
+            }else{
+                applyButton.setTitle("继续编辑\(instance.finished!)%", for: .normal)
+            }
         }
     }
     
@@ -82,6 +90,7 @@ class PolicyVC: UIViewController {
         navigationController?.isNavigationBarHidden = false
         
         //获取政策详情
+        /*
         Handler.getDetailPolicy(withPolicyId: id){
             resultCode, message, detailPolicyModel in
             
@@ -95,9 +104,9 @@ class PolicyVC: UIViewController {
             }
             
             //获取申请
-            Handler.getUserApply{
+            Handler.getUserApply(withLoginName: localAccount, withPassword: localPassword){
                 resultCode, message, applyListModelList in
-                
+                print("applyList:", applyListModelList)
                 guard resultCode == .success else{
                     DispatchQueue.main.async {
                         self.login()
@@ -107,29 +116,30 @@ class PolicyVC: UIViewController {
                 
                 guard let list = applyListModelList else{
                     //新建申请
-                    Handler.getApplyContents(withPolicyId: self.id, self.getApplyInstance)
+                    Handler.getApplyContents(withPolicyId: self.id, withLoginName: localAccount, withPassword: localPassword, self.getApplyInstance(resultCode:message:applyInstance:))
                     return
                 }
                 
                 //判断是否已编辑过申请
-                let resultList = list.filter({$0.policyId == self.applyId})
+                let resultList = list.filter({$0.policyId == self.detailPolicyModel!.id!})
                 if resultList.isEmpty{
                     //新建申请
-                    Handler.getApplyContents(withPolicyId: self.id, self.getApplyInstance)
+                    Handler.getApplyContents(withPolicyId: self.id, withLoginName: localAccount, withPassword: localPassword, self.getApplyInstance(resultCode:message:applyInstance:))
                 }else{
                     //继续申请
                     self.applyId = resultList[0].id
-                    Handler.getApplyContents(withApplyId: self.applyId, self.getApplyInstance)
+                    Handler.getApplyContents(withApplyId: self.applyId, withLoginName: localAccount, withPassword: localPassword, self.getApplyInstance(resultCode:message:applyInstance:))
                 }
             }
         }
+         */
     }
     
     //MARK:- 获取到申请目录后回调
     private func getApplyInstance(resultCode: ResultCode, message: String, applyInstance: ApplyInstance?){
         DispatchQueue.main.async {
             guard resultCode == .success else {
-                self.notif(withTitle: message, duration: 1, closure: nil)
+                self.notif(withTitle: message, duration: 3, closure: nil)
                 return
             }
             guard let instance = applyInstance else{

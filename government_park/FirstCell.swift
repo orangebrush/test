@@ -7,15 +7,15 @@
 //
 
 import UIKit
-import government_sdk
+import gov_sdk
 class FirstCell: UITableViewCell {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
-    var closure: ((NewsModel)->())?
+    var closure: ((News)->())?
     
     //新闻数据
-    var data: NewsPageModel?{
+    var data: AllNewsData?{
         didSet{
             guard let d = data else {
                 return
@@ -26,16 +26,13 @@ class FirstCell: UITableViewCell {
                 subView.removeFromSuperview()
             }
             
-            guard let newsModelList = d.newsModelList else {
-                return
-            }
-            
-            let count = newsModelList.count
+            let newsList = d.newsList
+            let count = newsList.count
             
             scrollView.contentSize = CGSize(width: .edge8 + (new_size.width + .edge8) * CGFloat(count), height: new_size.height)
             
             //添加新闻
-            for (index, newsModel) in newsModelList.enumerated(){
+            for (index, news) in newsList.enumerated(){
 
                 //创建imageview
                 let imageFrame = CGRect(x: .edge8 + CGFloat(index) * (.edge8 + new_size.width), y: 0, width: new_size.width, height: new_size.width)
@@ -56,11 +53,11 @@ class FirstCell: UITableViewCell {
                 label.font = .tiny
                 label.numberOfLines = 2
                 label.textColor = .subWord
-                label.text = newsModel.title
+                label.text = news.title
                 scrollView.addSubview(label)
                 
                 //获取图片
-                if let imgUrl = newsModel.picUrl{
+                if let imgUrl = news.picUrl{
                     do{
                         let imgData = try Data(contentsOf: imgUrl)
                         let image = UIImage(data: imgData)
@@ -94,11 +91,11 @@ class FirstCell: UITableViewCell {
             return
         }
         
-        guard let newsModel = data?.newsModelList?[tag] else{
+        guard let news = data?.newsList[tag] else{
             return
         }
         
-        closure?(newsModel)
+        closure?(news)
     }
 }
 

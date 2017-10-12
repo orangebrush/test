@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "government_park/PolicyVC.swift"
-            timestampString = "529320229.404455"
+            timestampString = "529464009.514026"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "getApplyInstance(resultCode:message:applyInstance:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,23 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "government_park/PolicyVC.swift"
-            timestampString = "529320229.404992"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "government_park/PolicyVC.swift"
-            timestampString = "529320229.405372"
+            timestampString = "529464009.514491"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "33"
@@ -51,14 +35,14 @@
             landmarkType = "24">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (government_sdk.ResultCode, Swift.String, Swift.Optional&lt;government_sdk.BookmarkPolicyVirginModel&gt;) -&gt; () in government_park.PolicyVC.(detailPolicyModel in _50C7CF4AD8C3E2E6CAA26D201C982893).didset : Swift.Optional&lt;government_sdk.DetailPolicyModel&gt;"
                   moduleName = "government_park"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gan/Documents/git/government_park/government_park/PolicyVC.swift"
-                  timestampString = "529320229.43567"
+                  timestampString = "529405955.081015"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "34"
@@ -66,14 +50,14 @@
                   offsetFromSymbolStart = "41">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 () -&gt; () in closure #1 (government_sdk.ResultCode, Swift.String, Swift.Optional&lt;government_sdk.BookmarkPolicyVirginModel&gt;) -&gt; () in government_park.PolicyVC.(detailPolicyModel in _50C7CF4AD8C3E2E6CAA26D201C982893).didset : Swift.Optional&lt;government_sdk.DetailPolicyModel&gt;"
                   moduleName = "government_park"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gan/Documents/git/government_park/government_park/PolicyVC.swift"
-                  timestampString = "529320229.474734"
+                  timestampString = "529405955.083155"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "35"
@@ -86,11 +70,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "government_park/PolicyVC.swift"
-            timestampString = "529320229.405696"
+            timestampString = "529464009.514881"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "30"
@@ -99,7 +83,7 @@
             landmarkType = "24">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "government_park.PolicyVC.(detailPolicyModel in _50C7CF4AD8C3E2E6CAA26D201C982893).didset : Swift.Optional&lt;government_sdk.DetailPolicyModel&gt;"
@@ -114,7 +98,7 @@
                   offsetFromSymbolStart = "139">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (government_sdk.ResultCode, Swift.String, Swift.Optional&lt;government_sdk.BookmarkPolicyVirginModel&gt;) -&gt; () in government_park.PolicyVC.(detailPolicyModel in _50C7CF4AD8C3E2E6CAA26D201C982893).didset : Swift.Optional&lt;government_sdk.DetailPolicyModel&gt;"
@@ -129,6 +113,102 @@
                   offsetFromSymbolStart = "41">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "government_park/PolicyVC.swift"
+            timestampString = "529464009.515107"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "government_park/PolicyVC.swift"
+            timestampString = "529464009.515423"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "getApplyInstance(resultCode:message:applyInstance:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "government_park/PolicyVC.swift"
+            timestampString = "529464009.515516"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "government_park/PolicyVC.swift"
+            timestampString = "529464009.515615"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "government_park/PolicyVC.swift"
+            timestampString = "529464009.515737"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "government_park/PolicyVC.swift"
+            timestampString = "529464009.51581"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "applyInstance"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

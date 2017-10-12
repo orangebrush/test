@@ -7,25 +7,25 @@
 //
 
 import UIKit
-import government_sdk
+import gov_sdk
 class NewsVC: UIViewController {
     
     @IBOutlet weak var webView: UIWebView!
     
-    var newsModel: NewsModel?
+    var news: News?
     
     //MARK:- init------------------------------------------------
     override func viewWillAppear(_ animated: Bool) {
         
-        guard let model = newsModel else {
+        guard let n = news else {
             return
         }
         
         //更新标题
-        navigationItem.title = model.title
+        navigationItem.title = n.title
         
         //更新内容
-        if let url = model.contentUrl{
+        if let url = n.url{
             let urlRequest = URLRequest(url: url)
             webView.loadRequest(urlRequest)
         }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import government_sdk
+import gov_sdk
 class EditVC: UIViewController {
     
     @IBOutlet weak var topView: UIView!
@@ -112,7 +112,8 @@ extension EditVC: UIActionSheetDelegate{
             guard let instance = applyInstance else {
                 return
             }
-            Handler.cancelApply(withApplyId: instance.id!){
+            
+            Handler.cancelApply(withApplyId: instance.id!, withLoginName: localAccount, withPassword: localPassword){
                 resultCode, message in
                 self.navigationController?.popViewController(animated: true)
             }
@@ -131,19 +132,30 @@ extension EditVC: UIActionSheetDelegate{
 extension EditVC: UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         if isRootEdit{
-            return applyInstance?.catalogs!.count ?? 0
+            if let catalogs = applyInstance?.catalogs{
+                return catalogs.count
+            }
+            return 0
         }
         return contentsList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isRootEdit{
-            let catalog = applyInstance?.catalogs?[section]
-            return catalog?.secondItems!.count ?? 0
+            if let catalog = applyInstance?.catalogs?[section]{
+                if let secondItems = catalog.secondItems{
+                    return secondItems.count
+                }
+            }
+            return 0
         }
         
-        let baseGroup = contentsList?[section] as? BaseGroupModel
-        return baseGroup?.secondItems!.count ?? 0
+        if let baseGroup = contentsList?[section] as? BaseGroupModel{
+            if let secondItems = baseGroup.secondItems{
+                return secondItems.count
+            }
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

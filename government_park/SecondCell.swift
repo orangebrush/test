@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import government_sdk
+import gov_sdk
 class SecondCell: UITableViewCell {
     
     @IBOutlet weak var backImageView: UIImageView!
@@ -17,7 +17,7 @@ class SecondCell: UITableViewCell {
     @IBOutlet weak var checkButton: UIButton!
     
     var index: Int = 0
-    var data: (isOpen: Bool, model: HomepagePolicyModel)?{
+    var policyTuple: (isOpen: Bool, policy: Policy)?{
         didSet{
             layoutIfNeeded()
             
@@ -35,36 +35,36 @@ class SecondCell: UITableViewCell {
     
     override func layoutIfNeeded() {
         
-        guard let d = data else{
+        guard let tuple = policyTuple else{
             return
         }
         
-        if d.isOpen {
+        if tuple.isOpen {
             let oldButtonFrame = buttonView.frame
             buttonView.frame.origin = CGPoint(x: oldButtonFrame.origin.x, y: frame.height - oldButtonFrame.height - .edge8)
         }
-        checkButton.isSelected = d.isOpen
+        checkButton.isSelected = tuple.isOpen
         
         //更新内容
-        let model = d.model
-        if let url = URL(string: model.smallPic!){
+        let policy = tuple.policy
+        if let url = policy.smallPicUrl{
             do{
                 let imageData = try Data(contentsOf: url)
                 let image = UIImage(data: imageData)
                 backImageView.image = image
             }catch {}
         }
-        imageLabel.text = model.shortTitle
+        imageLabel.text = policy.shortTitle
         
         //扶持对象
-        if d.isOpen {
+        if tuple.isOpen {
             var text = ""
-            for applyTo in model.applyTo{
-                text += "扶持对象  \(applyTo.target!)\n\(applyTo.description!)\n"
+            for applicant in policy.applicantList{
+                text += "扶持对象  \(applicant.name!)\n\(applicant.detailText!)\n"
             }
             titleLabel.text = text
         }else{
-            titleLabel.text = "扶持对象  " + model.applyTo.first!.target + "  等\(model.applyTo.count)项"
+            titleLabel.text = "扶持对象  " + policy.applicantList.first!.name! + "  等\(policy.applicantList.count)项"
         }
     }
     

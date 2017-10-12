@@ -1,4 +1,0 @@
-framework module government_sdk {
-    header "government_sdk-Swift.h"
-    requires objc
-}

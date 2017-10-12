@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import government_sdk
+import gov_sdk
 class LoginVC: UIViewController {
     
     @IBOutlet weak var topView: UIView!
@@ -83,6 +83,7 @@ class LoginVC: UIViewController {
         userDefaults.set(account, forKey: "account")
         userDefaults.set(password, forKey: "password")
         
+        /*
         Handler.userLogin(withLoginName: account!, withPassword: password!){
             resultCode, message, userInforMationModel in
             
@@ -100,16 +101,6 @@ class LoginVC: UIViewController {
             }
         }
         
-        /*
-        let urlString = "https:test"
-        let url = URL(string: urlString)
-        var request = URLRequest(url: url!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
-        request.httpShouldHandleCookies = true
-        
-        let session = URLSession.shared
-        session.dataTask(with: request, completionHandler: { (data, response, error) in
-            
-        })
          */
         
         

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import government_sdk
+import gov_sdk
 class PolicyCheckVC: UIViewController {
     
     

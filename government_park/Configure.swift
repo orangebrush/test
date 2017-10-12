@@ -15,8 +15,6 @@ let new_size = CGSize(width: 100, height: 100 + 21 * 2 +  8)    //新闻大小
 //navigation高度
 var navigation_height: CGFloat?
 
-//userDefaults
-let userDefaults = UserDefaults.standard
 
 //组类型
 enum GroupType: Int{
@@ -166,14 +164,6 @@ enum ProgressType: Int {
 let accountLength = 11
 let passwordMaxLength = 20
 let passwordMinLength = 6
-
-//获取本地存储的账户与密码
-var localAccount: String? {
-    return userDefaults.string(forKey: "account")
-}
-var localPassword: String? {
-    return userDefaults.string(forKey: "password")
-}
 
 //MARK:- 正则表达式
 struct Regex {
