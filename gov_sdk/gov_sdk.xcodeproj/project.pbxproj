@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		326C7A2C1F90A5D400010B70 /* H+RootEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A2B1F90A5D400010B70 /* H+RootEditor.swift */; };
+		326C7A2E1F90AF5C00010B70 /* H+Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A2D1F90AF5C00010B70 /* H+Editor.swift */; };
 		32759F5A1F8F1281007ED97C /* gov_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32759F501F8F1281007ED97C /* gov_sdk.framework */; };
 		32759F5F1F8F1281007ED97C /* gov_sdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32759F5E1F8F1281007ED97C /* gov_sdkTests.swift */; };
 		32759F611F8F1281007ED97C /* gov_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 32759F531F8F1281007ED97C /* gov_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -21,6 +23,11 @@
 		32759F7A1F8F1706007ED97C /* Configure.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32759F6E1F8F12F6007ED97C /* Configure.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		32FB217F1F8F5379000D8B63 /* H+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FB217E1F8F5379000D8B63 /* H+Account.swift */; };
 		32FB21811F8F8D8C000D8B63 /* H+Me.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FB21801F8F8D8C000D8B63 /* H+Me.swift */; };
+		32FD94501F9052CB00DDC5A3 /* H+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD944F1F9052CB00DDC5A3 /* H+Status.swift */; };
+		32FD94531F9057C900DDC5A3 /* DataEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD94521F9057C900DDC5A3 /* DataEncode.swift */; };
+		32FD94551F905D7E00DDC5A3 /* H+Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD94541F905D7E00DDC5A3 /* H+Attachment.swift */; };
+		32FD94581F906F0E00DDC5A3 /* H+Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD94571F906F0E00DDC5A3 /* H+Base.swift */; };
+		32FD945A1F906F6100DDC5A3 /* Fload+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD94591F906F6100DDC5A3 /* Fload+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		326C7A2B1F90A5D400010B70 /* H+RootEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+RootEditor.swift"; sourceTree = "<group>"; };
+		326C7A2D1F90AF5C00010B70 /* H+Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Editor.swift"; sourceTree = "<group>"; };
 		32759F501F8F1281007ED97C /* gov_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gov_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32759F531F8F1281007ED97C /* gov_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gov_sdk.h; sourceTree = "<group>"; };
 		32759F541F8F1281007ED97C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +56,11 @@
 		32759F741F8F151A007ED97C /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		32FB217E1F8F5379000D8B63 /* H+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Account.swift"; sourceTree = "<group>"; };
 		32FB21801F8F8D8C000D8B63 /* H+Me.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Me.swift"; sourceTree = "<group>"; };
+		32FD944F1F9052CB00DDC5A3 /* H+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Status.swift"; sourceTree = "<group>"; };
+		32FD94521F9057C900DDC5A3 /* DataEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataEncode.swift; sourceTree = "<group>"; };
+		32FD94541F905D7E00DDC5A3 /* H+Attachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Attachment.swift"; sourceTree = "<group>"; };
+		32FD94571F906F0E00DDC5A3 /* H+Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Base.swift"; sourceTree = "<group>"; };
+		32FD94591F906F6100DDC5A3 /* Fload+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fload+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +106,14 @@
 				32759F6A1F8F1295007ED97C /* Handler.swift */,
 				32759F701F8F133B007ED97C /* H+Home.swift */,
 				32FB21801F8F8D8C000D8B63 /* H+Me.swift */,
+				32FD944F1F9052CB00DDC5A3 /* H+Status.swift */,
+				32FD94541F905D7E00DDC5A3 /* H+Attachment.swift */,
+				326C7A2B1F90A5D400010B70 /* H+RootEditor.swift */,
+				326C7A2D1F90AF5C00010B70 /* H+Editor.swift */,
 				32FB217E1F8F5379000D8B63 /* H+Account.swift */,
 				32759F6C1F8F12C0007ED97C /* Session.swift */,
+				32FD94561F906EDD00DDC5A3 /* 组与字段数据 */,
+				32FD94511F9057B500DDC5A3 /* encode */,
 				32759F731F8F1502007ED97C /* extension */,
 				32759F721F8F14EF007ED97C /* supportingFiles */,
 				32759F541F8F1281007ED97C /* Info.plist */,
@@ -123,8 +143,25 @@
 			isa = PBXGroup;
 			children = (
 				32759F741F8F151A007ED97C /* TimeInterval+Extension.swift */,
+				32FD94591F906F6100DDC5A3 /* Fload+Extension.swift */,
 			);
 			path = extension;
+			sourceTree = "<group>";
+		};
+		32FD94511F9057B500DDC5A3 /* encode */ = {
+			isa = PBXGroup;
+			children = (
+				32FD94521F9057C900DDC5A3 /* DataEncode.swift */,
+			);
+			path = encode;
+			sourceTree = "<group>";
+		};
+		32FD94561F906EDD00DDC5A3 /* 组与字段数据 */ = {
+			isa = PBXGroup;
+			children = (
+				32FD94571F906F0E00DDC5A3 /* H+Base.swift */,
+			);
+			path = "组与字段数据";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,9 +279,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32FD94501F9052CB00DDC5A3 /* H+Status.swift in Sources */,
+				32FD94581F906F0E00DDC5A3 /* H+Base.swift in Sources */,
+				32FD945A1F906F6100DDC5A3 /* Fload+Extension.swift in Sources */,
+				32FD94551F905D7E00DDC5A3 /* H+Attachment.swift in Sources */,
 				32FB217F1F8F5379000D8B63 /* H+Account.swift in Sources */,
 				32759F751F8F151A007ED97C /* TimeInterval+Extension.swift in Sources */,
 				32FB21811F8F8D8C000D8B63 /* H+Me.swift in Sources */,
+				326C7A2C1F90A5D400010B70 /* H+RootEditor.swift in Sources */,
+				32FD94531F9057C900DDC5A3 /* DataEncode.swift in Sources */,
+				326C7A2E1F90AF5C00010B70 /* H+Editor.swift in Sources */,
 				32759F6D1F8F12C0007ED97C /* Session.swift in Sources */,
 				32759F6B1F8F1295007ED97C /* Handler.swift in Sources */,
 				32759F6F1F8F12F6007ED97C /* Configure.swift in Sources */,

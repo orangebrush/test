@@ -19,7 +19,14 @@ public class NetworkHandler: NSObject {
     }()
     
     //我的
+    public lazy var me: NWHMe = {
+        return NWHMe.share()
+    }()
     
+    //申请状态
+    public lazy var status: NWHStatus = {
+        return NWHStatus.share()
+    }()
     
     //MARK:- init -----------------------------------------------------------------
     private static let __once = NetworkHandler()

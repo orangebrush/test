@@ -135,56 +135,27 @@ public class NWHHome: NSObject {
             "pageSize": params.pageSize
         ]
         Session.session(withAction: Actions.allPolicy , withMethod: Method.get, withParam: dict) { (resultCode, message, data) in
-            let policyData = AllPolicyData()
+            let allPolicyData = AllPolicyData()
             
             if let d = data as? [String: Any]{
                 if let totalCount = d["totalCount"] as? Int{
-                    policyData.totalCount = totalCount
+                    allPolicyData.totalCount = totalCount
                 }
                 if let page = d["page"] as? Int{
-                    policyData.page = page
+                    allPolicyData.page = page
                 }
                 if let totalPage = d["totalPage"] as? Int{
-                    policyData.totalPage = totalPage
+                    allPolicyData.totalPage = totalPage
                 }
                 if let results = d["results"] as? [[String: Any]]{
                     for result in results{
-                        let policy = Policy()
-                        if let id = result["id"] as? Int{
-                            policy.id = id
-                        }
-                        policy.shortTitle = result["shortTitle"] as? String
-                        policy.longTitle = result["longTitle"] as? String
-                        if let smallPicStr = result["smallPic"] as? String{
-                            policy.smallPicUrl = URL(string: smallPicStr)
-                        }
-                        if let bigPicStr = result["bigPic"] as? String{
-                            policy.bigPicUrl = URL(string: bigPicStr)
-                        }
-                        policy.summary = result["summary"] as? String
-                        if let pulishAt = result["pulishAt"] as? Int{
-                            policy.date = TimeInterval(pulishAt).date()
-                        }
-                        if let deadline = result["deadline"] as? Int{
-                            policy.endDate = TimeInterval(deadline).date()
-                        }
-                        if let applyTos = result["applyTo"] as? [[String: Any]]{
-                            let applicant = Applicant()
-                            for applyTo in applyTos{
-                                if let id = applyTo["id"] as? Int{
-                                    applicant.id = id
-                                }
-                                applicant.name = applyTo["target"] as? String
-                                applicant.detailText = applyTo["description"] as? String
-                            }
-                            policy.applicantList.append(applicant)
-                        }
-                        policyData.policyList.append(policy)
+                        let policy = DataEncode.policy(withPolicyData: result)
+                        allPolicyData.policyList.append(policy)
                     }
                 }
             }
             
-            closure(resultCode, message, policyData)
+            closure(resultCode, message, allPolicyData)
         }
     }
 }

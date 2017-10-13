@@ -10,11 +10,35 @@ import Foundation
 
 //actions
 struct Actions{
+    //首页
     static let allNews              = "/news"                   //获取新闻
     static let allPolicy            = "/policy"                 //获取所有政策
-    static let allApply             = "/apply"                  //获取申请列表
-    static let allBookmark          = "/policy/bookmark"        //获取所有收藏政策
+    
+    //我
+    static let allApply             = "/apply/list"             //获取申请列表
+    static let allBookmark          = "/policy/bookmark/list"   //获取所有收藏政策
     static let registerCompany      = "/company/register"       //注册企业
+    
+    //申请状态
+    static let getApply             = "/apply"                  //获取单个申请
+    static let recallApply          = "/apply/recall"           //撤回申请
+    static let removeApply          = "/apply/remove"           //移除申请
+    
+    //材料清单
+    static let allStuff             = "/apply/attachment/list"  //获取线下材料清单
+    static let markStuff            = "/apply/attachment"       //标记线下材料完成情况
+    
+    //root编辑器
+    static let submitApply          = "/apply/submit"           //提交申请
+    static let cancelApply          = "/apply/cancel"           //取消申请
+    
+    //编辑器
+    static let getComponent         = "/component"              //获取组件数据
+    static let getGroup             = "/component/group"        //获取组内数据
+    static let getInstance          = "/component/itemInstance" //获取条目内数据
+    static let addInstance          = "/component/itemInstance/add"     //新建条目
+    static let deleteInstance       = "/component/itemInstance/delete"  //删除条目
+    static let rollInstance         = "/component/itemInstance/roll"    //调整条目排序
 }
 
 //method

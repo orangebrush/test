@@ -51,21 +51,26 @@ public class Appointment: NSObject{ //预约线下办理时间
     public var appointDate: Date?
     public var governmentContact: GovernmentContact?
 }
-public class Apply: NSObject{    //所有申请
+
+public class Apply: NSObject{       //所有申请
     public var id = 0
     public var policyId = 0
     public var policyShortTitle: String?
-    public var applyStatus: ApplyStatus?
-    public var instanceStatus: InstanceStatus?
+    public var applyStatus: ApplyStatus?            //申请状态
+    
+    public var instanceStatus: InstanceStatus?      //操作状态
     public var lastUpdateDate: Date?        //最后更新时间
     public var dateHint: String?
-    public var statusHint: String?
+    public var statusHint: String?          //状态描述信息
     public var date: Date?                  //提交时间
     public var appointment: Appointment?    //预约线下办理信息
     public var reason: String?              //驳回／中断原因
     public var cancelDate: Date?            //取消时间
     public var finished: Int = 0            //材料完成度
     public var attachmentFinished: Int = 0  //线下材料完成度
+    
+    
+    public var catalogList = [Catalog]()    //申请表目录
 }
 
 //注册企业相关
@@ -74,6 +79,8 @@ public class RegisterCompanyParams: NSObject{
     public var orgCode: String?     //统一信用代码
     public var file: UIImage?       //营业执照照片
 }
+
+
 
 public class NWHMe: NSObject {
     
@@ -91,76 +98,23 @@ public class NWHMe: NSObject {
             return
         }
         let dic = [
-            "userID": account,
+            "userId": account,
             "password": password
         ]
         Session.session(withAction: Actions.allApply, withMethod: Method.get, withParam: dic) { (resultCode, message, data) in
             
-            var allApplyDataList = [Apply]()
+            var applyList = [Apply]()
             if let dList = data as? [[String: Any]]{
-                for d in dList{
-                    let allApplyData = Apply()
-                    if let id = d["id"] as? Int{
-                        allApplyData.id = id
-                    }
-                    if let policyId = d["policyId"] as? Int{
-                        allApplyData.policyId = policyId
-                    }
-                    allApplyData.policyShortTitle = d["policyShortTitle"] as? String
-                    if let applyStatusRawvalue = d["applyStatus"] as? Int{
-                        allApplyData.applyStatus = ApplyStatus(rawValue: applyStatusRawvalue)
-                    }
-                    if let instanceStatusRawvalue = d["instanceStatus"] as? String{
-                        allApplyData.instanceStatus = InstanceStatus(rawValue: instanceStatusRawvalue)
-                    }
-                    if let lastUpdateAt = d["lastUpdateAt"] as? Int{
-                        allApplyData.lastUpdateDate = TimeInterval(lastUpdateAt).date()
-                    }
-                    allApplyData.dateHint = d["dateHint"] as? String
-                    allApplyData.statusHint = d["statusHint"] as? String
-                    if let applyAt = d["applyAt"] as? Int{
-                        allApplyData.date = TimeInterval(applyAt).date()
-                    }
-                    if let appointmentData = d["appointment"] as? [String: Any]{
-                        let appointment = Appointment()
-                        if let applyId = appointmentData["applyId"] as? Int{
-                            appointment.applyId = applyId
-                        }
-                        appointment.address = appointmentData["address"] as? String
-                        if let locationStr = appointmentData["location"] as? String{
-                            let longtitud = NSString(string: locationStr).doubleValue
-                            let latitude = NSString(string: locationStr).doubleValue
-                            let coor = CLLocationCoordinate2D(latitude: latitude, longitude: longtitud)
-                            appointment.location = coor
-                        }
-                        if let appointDate = appointmentData["appointDate"] as? Int{
-                            appointment.appointDate = TimeInterval(appointDate).date()
-                        }
-                        if let governmentContactData = appointmentData["governmentContact"] as? [String: String]{
-                            let governmentContact = GovernmentContact()
-                            governmentContact.name = governmentContactData["name"]
-                            governmentContact.phone = governmentContactData["phone"]
-                            appointment.governmentContact = governmentContact
-                        }
-                        allApplyData.appointment = appointment
-                    }
-                    allApplyData.reason = d["reason"] as? String
-                    if let cancelDate = d["cancelDate"] as? Int{
-                        allApplyData.cancelDate = TimeInterval(cancelDate).date()
-                    }
-                    if let finished = d["finished"] as? Int{
-                        allApplyData.finished = finished
-                    }
-                    if let attachmentFinished = d["attachmentFinished"] as? Int{
-                        allApplyData.attachmentFinished = attachmentFinished
-                    }
-                    
-                    allApplyDataList.append(allApplyData)
+                for applyData in dList{                    
+                    let apply = DataEncode.apply(withApplyData: applyData)
+                    applyList.append(apply)
                 }
             }
-            closure(resultCode, message, allApplyDataList)
+            closure(resultCode, message, applyList)
         }
     }
+    
+    
     
     //MARK: 获取收藏政策
     public func getBookmarkPolicy(withPolicyId policyId: Int? = nil, closure: @escaping (_ resultCode: ResultCode, _ message: String, _ data: [Policy]?) -> ()){
@@ -169,7 +123,7 @@ public class NWHMe: NSObject {
             return
         }
         var dic: [String: Any] = [
-            "userID": account,
+            "userId": account,
             "password": password
         ]
         if let id = policyId{
@@ -178,38 +132,9 @@ public class NWHMe: NSObject {
         Session.session(withAction: Actions.allBookmark, withMethod: Method.get, withParam: dic) { (resultCode, message, data) in
             
             var policyList = [Policy]()
-            if let results = data as? [[String: Any]]{
-                for result in results{
-                    let policy = Policy()
-                    if let id = result["id"] as? Int{
-                        policy.id = id
-                    }
-                    policy.shortTitle = result["shortTitle"] as? String
-                    policy.longTitle = result["longTitle"] as? String
-                    if let smallPicStr = result["smallPic"] as? String{
-                        policy.smallPicUrl = URL(string: smallPicStr)
-                    }
-                    if let bigPicStr = result["bigPic"] as? String{
-                        policy.bigPicUrl = URL(string: bigPicStr)
-                    }
-                    policy.summary = result["summary"] as? String
-                    if let pulishAt = result["pulishAt"] as? Int{
-                        policy.date = TimeInterval(pulishAt).date()
-                    }
-                    if let deadline = result["deadline"] as? Int{
-                        policy.endDate = TimeInterval(deadline).date()
-                    }
-                    if let applyTos = result["applyTo"] as? [[String: Any]]{
-                        let applicant = Applicant()
-                        for applyTo in applyTos{
-                            if let id = applyTo["id"] as? Int{
-                                applicant.id = id
-                            }
-                            applicant.name = applyTo["target"] as? String
-                            applicant.detailText = applyTo["description"] as? String
-                        }
-                        policy.applicantList.append(applicant)
-                    }
+            if let policyListData = data as? [[String: Any]]{
+                for policyData in policyListData{
+                    let policy = DataEncode.policy(withPolicyData: policyData)
                     policyList.append(policy)
                 }
             }
@@ -225,7 +150,7 @@ public class NWHMe: NSObject {
             return
         }
         var dic: [String: Any] = [
-            "userID": account,
+            "userId": account,
             "password": password
         ]
         
