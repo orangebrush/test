@@ -84,8 +84,8 @@ public class NWHHome: NSObject {
     ///获取所有政策新闻
     public func getAllNews(withParams params: AllNewsParams = AllNewsParams(), closure: @escaping (_ resultCode: ResultCode, _ message: String, _ data: AllNewsData?) -> ()) {
         let dict = [
-            "page": params.page,
-            "pageSize": params.pageSize
+            "page": "\(params.page)",
+            "pageSize": "\(params.pageSize)"
         ]
         Session.session(withAction: Actions.allNews, withMethod: Method.get, withParam: dict, closure: {
             resultCode, message, data in
@@ -131,8 +131,8 @@ public class NWHHome: NSObject {
     //获取所有政策
     public func getAllPolicy(withParams params: AllPolicyParams = AllPolicyParams(), closure: @escaping (_ resultCode: ResultCode, _ message: String, _ data: AllPolicyData?) -> ()){
         let dict = [
-            "page": params.page,
-            "pageSize": params.pageSize
+            "page": "\(params.page)",
+            "pageSize": "\(params.pageSize)"
         ]
         Session.session(withAction: Actions.allPolicy , withMethod: Method.get, withParam: dict) { (resultCode, message, data) in
             let allPolicyData = AllPolicyData()

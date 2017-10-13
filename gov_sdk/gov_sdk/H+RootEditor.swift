@@ -22,7 +22,7 @@ public class NWHRootEditor: NSObject {
             return
         }
         let dic: [String: Any] = [
-            "applyId": applyId,
+            "applyId": "\(applyId)",
             "userId": account,
             "password": password
         ]
@@ -37,7 +37,7 @@ public class NWHRootEditor: NSObject {
             return
         }
         let dic: [String: Any] = [
-            "applyId": applyId,
+            "applyId": "\(applyId)",
             "userId": account,
             "password": password
         ]

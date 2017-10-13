@@ -22,7 +22,7 @@ public class NWHStatus: NSObject {
             return
         }
         let dic: [String: Any] = [
-            "applyId": applyId,
+            "applyId": "\(applyId)",
             "userId": account,
             "password": password
         ]
@@ -43,7 +43,7 @@ public class NWHStatus: NSObject {
             return
         }
         let dic: [String: Any] = [
-            "applyId": applyId,
+            "applyId": "\(applyId)",
             "userId": account,
             "password": password
         ]
@@ -58,7 +58,7 @@ public class NWHStatus: NSObject {
             return
         }
         let dic: [String: Any] = [
-            "applyId": applyId,
+            "applyId": "\(applyId)",
             "userId": account,
             "password": password
         ]

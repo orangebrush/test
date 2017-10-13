@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		326C7A2C1F90A5D400010B70 /* H+RootEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A2B1F90A5D400010B70 /* H+RootEditor.swift */; };
 		326C7A2E1F90AF5C00010B70 /* H+Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A2D1F90AF5C00010B70 /* H+Editor.swift */; };
+		326C7A301F90FE9D00010B70 /* H+Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A2F1F90FE9D00010B70 /* H+Field.swift */; };
+		326C7A321F9122EB00010B70 /* H+Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A311F9122EB00010B70 /* H+Policy.swift */; };
 		32759F5A1F8F1281007ED97C /* gov_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32759F501F8F1281007ED97C /* gov_sdk.framework */; };
 		32759F5F1F8F1281007ED97C /* gov_sdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32759F5E1F8F1281007ED97C /* gov_sdkTests.swift */; };
 		32759F611F8F1281007ED97C /* gov_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 32759F531F8F1281007ED97C /* gov_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,6 +45,8 @@
 /* Begin PBXFileReference section */
 		326C7A2B1F90A5D400010B70 /* H+RootEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+RootEditor.swift"; sourceTree = "<group>"; };
 		326C7A2D1F90AF5C00010B70 /* H+Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Editor.swift"; sourceTree = "<group>"; };
+		326C7A2F1F90FE9D00010B70 /* H+Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Field.swift"; sourceTree = "<group>"; };
+		326C7A311F9122EB00010B70 /* H+Policy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Policy.swift"; sourceTree = "<group>"; };
 		32759F501F8F1281007ED97C /* gov_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gov_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32759F531F8F1281007ED97C /* gov_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gov_sdk.h; sourceTree = "<group>"; };
 		32759F541F8F1281007ED97C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -110,6 +114,8 @@
 				32FD94541F905D7E00DDC5A3 /* H+Attachment.swift */,
 				326C7A2B1F90A5D400010B70 /* H+RootEditor.swift */,
 				326C7A2D1F90AF5C00010B70 /* H+Editor.swift */,
+				326C7A2F1F90FE9D00010B70 /* H+Field.swift */,
+				326C7A311F9122EB00010B70 /* H+Policy.swift */,
 				32FB217E1F8F5379000D8B63 /* H+Account.swift */,
 				32759F6C1F8F12C0007ED97C /* Session.swift */,
 				32FD94561F906EDD00DDC5A3 /* 组与字段数据 */,
@@ -286,10 +292,12 @@
 				32FB217F1F8F5379000D8B63 /* H+Account.swift in Sources */,
 				32759F751F8F151A007ED97C /* TimeInterval+Extension.swift in Sources */,
 				32FB21811F8F8D8C000D8B63 /* H+Me.swift in Sources */,
+				326C7A301F90FE9D00010B70 /* H+Field.swift in Sources */,
 				326C7A2C1F90A5D400010B70 /* H+RootEditor.swift in Sources */,
 				32FD94531F9057C900DDC5A3 /* DataEncode.swift in Sources */,
 				326C7A2E1F90AF5C00010B70 /* H+Editor.swift in Sources */,
 				32759F6D1F8F12C0007ED97C /* Session.swift in Sources */,
+				326C7A321F9122EB00010B70 /* H+Policy.swift in Sources */,
 				32759F6B1F8F1295007ED97C /* Handler.swift in Sources */,
 				32759F6F1F8F12F6007ED97C /* Configure.swift in Sources */,
 				32759F711F8F133B007ED97C /* H+Home.swift in Sources */,

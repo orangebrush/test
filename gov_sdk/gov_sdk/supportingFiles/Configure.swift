@@ -39,6 +39,17 @@ struct Actions{
     static let addInstance          = "/component/itemInstance/add"     //新建条目
     static let deleteInstance       = "/component/itemInstance/delete"  //删除条目
     static let rollInstance         = "/component/itemInstance/roll"    //调整条目排序
+    
+    //录入器
+    static let saveField            = "/component/update"               //更新组件数据（普通）
+    static let saveFile             = "/component/update/attachment"    //更新组件数据（图片）
+    
+    //政策详情
+    static let getPolicy            = "/policy"                 //获取政策
+    static let applyExisted         = "/policy/apply"           //判断是否存在申请实例
+    //static let applyBookmark        = "/policy/bookmark"        //判断企业是否收藏该政策
+    static let addApply             = "/apply/add"              //新建申请实例
+    static let bookmark             = "/policy/bookmark"        //收藏或取消收藏,判断
 }
 
 //method

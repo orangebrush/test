@@ -123,6 +123,9 @@ public class Value: NSObject{
     public var id = 0
     public var title: String?
     public var status: BaseItemStatus?
+    
+    public var extraValue = [Value]()
+    public var hint: String?
 }
 
 public enum InstanceUnit: String{
@@ -135,8 +138,9 @@ public enum InstanceUnit: String{
 //统一的组与字段实例(基础item)
 public class BaseItem: NSObject{
     //区分是否为组或字段实例
-    public var type: ItemType?
-    
+    public var isGroup = false
+    public var groupType: ItemType.GroupType?
+    public var fieldType: ItemType.FieldType?
     
     public var id = 0                              //组或字段实例id
     public var instanceId: Int?                    //条目id
@@ -164,7 +168,7 @@ public class Item: BaseItem{
     public var isRoot = false                       //判断是否为组件
     public var applyId = 0                          //申请id
     public var componentId: Int?                    //组件id(如果本身为组件，则等于id)
-    public var baseItemList = [BaseItem]()
+    public var baseItemList = [Item]()
 }
 
 

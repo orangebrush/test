@@ -46,7 +46,6 @@ class DataEncode {
         return policy
     }
     
-    
     //MARK: 解析apply
     class func apply(withApplyData applyData: [String: Any]) -> Apply{
         let apply = Apply()
@@ -135,41 +134,6 @@ class DataEncode {
         return apply
     }
 
-    /*
-    public class BaseItem: NSObject{
-        //区分是否为组或字段实例
-        public var type: ItemType?
-     
-     
-        public var id = 0                              //组或字段实例id
-        public var instanceId: Int?                    //条目id
-        public var title: String?                      //标题(路径)
-        public var isOptional = false                  //可选or必选
-        public var status: BaseItemStatus?             //完成状态
-        public var hint: String?                       //完成提示
-     
-        //多条组、多条图片组、。。。
-        public var valueList = [Value]()               //条目(多条组条目信息，字段内容信息)
-        public var maxValueCount = 0                   //最大条目数(多条组，多条图片组)
-     
-        //时间点组...
-        public var unit: InstanceUnit?                 //单位
-        public var number: Int = 0                     //值
-     
-        //字段
-        public var maxLength = 0                       //位数限制
-        public var prefix: String?
-        public var suffix: String?
-    }
-    
-    //组或组件或字段实例
-    public class Item: BaseItem{
-        public var isRoot = false                       //判断是否为组件
-        public var applyId = 0                          //申请id
-        public var componentId: Int?                    //组件id(如果本身为组件，则等于id)
-        public var baseItemList = [BaseItem]()
-    }
-     */
     //MARK: 解析item
     class func item(withItemData itemData: [String: Any]) -> Item{
         let item = Item()
@@ -188,8 +152,95 @@ class DataEncode {
         item.instanceId = itemData["instanceId"] as? Int
         item.title = itemData["title"] as? String
         if let type = itemData["itemType"] as? String{
-            
+            if type == "G"{         //组
+                item.isGroup = true
+                if let groupType = itemData["groupType"] as? String{
+                    item.groupType = ItemType.GroupType(rawValue: groupType)
+                }
+            }else if type == "F"{   //字段
+                item.isGroup = false
+                if let fieldType = itemData["fieldType"] as? Int{
+                    switch fieldType{
+                    case 1210, 1220, 1241, 1243, 1244, 1245, 1246, 1247:        //短文本
+                        item.fieldType = .short
+                    case 1110, 1120:                                            //长文本
+                        item.fieldType = .long
+                    case 2000:                                                  //图片
+                        item.fieldType = .image
+                    case 3100:                                                  //附件
+                        item.fieldType = .enclosure
+                    case 9110, 9120, 9130:                                      //单选
+                        item.fieldType = .single
+                    case 9310, 9320, 9330, 9340, 9350:                          //多选
+                        item.fieldType = .multi
+                    case 9210:                                                  //联动
+                        item.fieldType = .linkage
+                    default:                                                    //时间
+                        item.fieldType = .time
+                    }
+                }
+            }
+        }
+        item.instanceId = itemData["instanceId"] as? Int
+        if let isOptional = itemData["optional"] as? Bool{
+            item.isOptional = isOptional
+        }
+        if let statusRawvalue = itemData["status"] as? Int{
+            item.status = BaseItemStatus(rawValue: statusRawvalue)
+        }
+        item.hint = itemData["hint"] as? String
+        if let maxItem = itemData["maxItem"] as? Int{
+            item.maxValueCount = maxItem
+        }
+        if let unit = itemData["itemUnit"] as? String{
+            item.unit = InstanceUnit(rawValue: unit)
+        }
+        if let number = itemData["itemNumber"] as? Int{
+            item.number = number
+        }
+        if let maxLength = itemData["maxLength"] as? Int{
+            item.maxLength = maxLength
+        }
+        item.prefix = itemData["fieldPrefix"] as? String
+        item.suffix = itemData["fieldSuffix"] as? String
+        if let valuesData = itemData["value"] as? [[String: Any]]{
+            for valueData in valuesData{
+                let value = DataEncode.value(withValueData: valueData)
+                item.valueList.append(value)
+            }
+        }else if let valueData = itemData["value"] as? [String: Any]{
+            let value = DataEncode.value(withValueData: valueData)
+            item.valueList.append(value)
+        }
+        if let baseItemsData = itemData["items"] as? [[String: Any]]{
+            for baseItemData in baseItemsData{
+                let item = DataEncode.item(withItemData: baseItemData)
+                item.baseItemList.append(item)
+            }
         }
         return item
+    }
+    
+    //MARK: 解析value
+    class func value(withValueData valueData: [String: Any]) -> Value{
+        let value = Value()
+        if let id = valueData["id"] as? Int{
+            value.id = id
+        }
+        value.title = valueData["title"] as? String
+        if let statusRawvalue = valueData["status"] as? Int{
+            value.status = BaseItemStatus(rawValue: statusRawvalue)
+        }
+        if let extrasValue = valueData["extraValue"] as? [[String: Any]]{
+            for extraValue in extrasValue{
+                let value = DataEncode.value(withValueData: extraValue)
+                value.extraValue.append(value)
+            }
+        }else if let extraValue = valueData["extraValue"] as? [String: Any]{
+            let value = DataEncode.value(withValueData: extraValue)
+            value.extraValue.append(value)
+        }
+        value.hint = valueData["hint"] as? String
+        return value
     }
 }

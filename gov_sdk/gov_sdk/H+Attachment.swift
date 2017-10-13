@@ -45,7 +45,7 @@ public class NWHAttachment: NSObject {
             return
         }
         let dic: [String: Any] = [
-            "applyId": applyId,
+            "applyId": "\(applyId)",
             "type": didFinished ? "C" : "U",
             "userId": account,
             "password": password
@@ -106,8 +106,8 @@ public class NWHAttachment: NSObject {
             return
         }
         let dic: [String: Any] = [
-            "applyId": applyId,
-            "attachmentId": stuffId,
+            "applyId": "\(applyId)",
+            "attachmentId": "\(stuffId)",
             "checked": marked,
             "userId": account,
             "password": password
