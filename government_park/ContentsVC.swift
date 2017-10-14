@@ -96,7 +96,7 @@ extension ContentsVC: UITableViewDelegate, UITableViewDataSource {
             return 1
         }
         
-        return homepagePolicyModelList.count
+        return policyList.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

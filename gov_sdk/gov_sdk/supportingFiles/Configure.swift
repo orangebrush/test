@@ -47,9 +47,22 @@ struct Actions{
     //政策详情
     static let getPolicy            = "/policy"                 //获取政策
     static let applyExisted         = "/policy/apply"           //判断是否存在申请实例
-    //static let applyBookmark        = "/policy/bookmark"        //判断企业是否收藏该政策
     static let addApply             = "/apply/add"              //新建申请实例
     static let bookmark             = "/policy/bookmark"        //收藏或取消收藏,判断
+    
+    //用户
+    static let userinfo             = "/user"                       //获取用户信息（可作为登陆判定）
+    static let getVerifyCode        = "/user/register/verifyCode"   //获取验证码
+    static let checkVerifyCode      = "/user/register/checkCode"    //校验验证码
+    static let register             = "/user/register"              //注册
+    static let getResetVerifyCode   = "/user/reset/verifyCode"      //获取找回密码验证码
+    static let checkResetVerifyCode = "/user/reset/checkCode"       //校验找回密码验证码
+    static let reset                = "/user/reset"                 //找回密码
+    static let changePassword       = "/user/changePassword"        //修改密码
+    
+    //扫码
+    static let login                = "/qrcode/login"               //扫码登陆
+    static let download             = "/qrcode/download"            //扫码下载
 }
 
 //method
@@ -77,4 +90,72 @@ public var localAccount: String? {
 }
 public var localPassword: String? {
     return userDefaults.string(forKey: "password")
+}
+
+
+//账号密码验证
+public let accountLength        = 11
+public let passwordMaxLength    = 20
+public let passwordMinLength    = 6
+public let verifyCodeLength     = 4
+
+//MARK:- 正则表达式
+struct Regex {
+    let regex: NSRegularExpression?
+    
+    init(_ pattern: String) {
+        regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+    }
+    
+    func match(input: String) -> Bool {
+        if let matches = regex?.matches(in: input, options: [], range: NSMakeRange(0, (input as NSString).length)) {
+            return matches.count > 0
+        }
+        return false
+    }
+}
+
+//判断密码是否合法
+public func isPasswordLegal(withString string: String?) -> (isLegal: Bool, message: String) {
+    //判断密码是否为空
+    guard let password: String = string, !password.characters.isEmpty else{
+        return (false, "密码不能为空")
+    }
+    
+//    let count = password.characters.count
+//    guard  count >= passwordMinLength, count <= passwordMaxLength  else {
+//        return (false, "密码长度为\(passwordMinLength)~\(passwordMaxLength)之间")
+//    }
+    return (true, "")
+}
+
+//判断账号是否合法
+public func isAccountLegal(withString string: String?) -> (isLegal: Bool, message: String) {
+    //判断账号是否为空
+    guard let account: String = string, !account.characters.isEmpty else {
+        return (false, "账号不能为空")
+    }
+    
+    //判断账号是否合法
+    let mailPattern = "^1[0-9]{10}$"
+    let matcher = Regex(mailPattern)
+    guard matcher.match(input: account) else{
+        return (false, "账号需为合法的手机号")
+    }
+    
+    return (true, "")
+}
+
+//判断验证码是否合法
+public func isVerifyCodeLegal(withString string: String?) -> (isLegal: Bool, message: String) {
+    //判断验证码是否为空
+    guard let verifyCode: String = string, !verifyCode.characters.isEmpty else{
+        return (false, "验证码不能为空")
+    }
+    
+    let count = verifyCode.characters.count
+    guard  count == verifyCodeLength else {
+        return (false, "验证码长度为\(verifyCodeLength)")
+    }
+    return (true, "")
 }

@@ -11,6 +11,7 @@
 		326C7A2E1F90AF5C00010B70 /* H+Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A2D1F90AF5C00010B70 /* H+Editor.swift */; };
 		326C7A301F90FE9D00010B70 /* H+Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A2F1F90FE9D00010B70 /* H+Field.swift */; };
 		326C7A321F9122EB00010B70 /* H+Policy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A311F9122EB00010B70 /* H+Policy.swift */; };
+		326C7A341F91E1E700010B70 /* H+QR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326C7A331F91E1E700010B70 /* H+QR.swift */; };
 		32759F5A1F8F1281007ED97C /* gov_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32759F501F8F1281007ED97C /* gov_sdk.framework */; };
 		32759F5F1F8F1281007ED97C /* gov_sdkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32759F5E1F8F1281007ED97C /* gov_sdkTests.swift */; };
 		32759F611F8F1281007ED97C /* gov_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 32759F531F8F1281007ED97C /* gov_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,6 +24,18 @@
 		32759F781F8F1706007ED97C /* H+Home.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32759F701F8F133B007ED97C /* H+Home.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		32759F791F8F1706007ED97C /* TimeInterval+Extension.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32759F741F8F151A007ED97C /* TimeInterval+Extension.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		32759F7A1F8F1706007ED97C /* Configure.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32759F6E1F8F12F6007ED97C /* Configure.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A951F9271F40099481A /* H+Me.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32FB21801F8F8D8C000D8B63 /* H+Me.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A961F9271F40099481A /* H+Status.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32FD944F1F9052CB00DDC5A3 /* H+Status.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A971F9271F40099481A /* H+Attachment.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32FD94541F905D7E00DDC5A3 /* H+Attachment.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A981F9271F40099481A /* H+RootEditor.swift in Headers */ = {isa = PBXBuildFile; fileRef = 326C7A2B1F90A5D400010B70 /* H+RootEditor.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A991F9271F40099481A /* H+Editor.swift in Headers */ = {isa = PBXBuildFile; fileRef = 326C7A2D1F90AF5C00010B70 /* H+Editor.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A9A1F9271F40099481A /* H+Field.swift in Headers */ = {isa = PBXBuildFile; fileRef = 326C7A2F1F90FE9D00010B70 /* H+Field.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A9B1F9271F40099481A /* H+Policy.swift in Headers */ = {isa = PBXBuildFile; fileRef = 326C7A311F9122EB00010B70 /* H+Policy.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A9C1F9271F40099481A /* H+Account.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32FB217E1F8F5379000D8B63 /* H+Account.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A9D1F9271F40099481A /* H+QR.swift in Headers */ = {isa = PBXBuildFile; fileRef = 326C7A331F91E1E700010B70 /* H+QR.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A9E1F9272130099481A /* H+Base.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32FD94571F906F0E00DDC5A3 /* H+Base.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0A9F1F9272130099481A /* DataEncode.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32FD94521F9057C900DDC5A3 /* DataEncode.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		32DB0AA01F9272130099481A /* Fload+Extension.swift in Headers */ = {isa = PBXBuildFile; fileRef = 32FD94591F906F6100DDC5A3 /* Fload+Extension.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		32FB217F1F8F5379000D8B63 /* H+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FB217E1F8F5379000D8B63 /* H+Account.swift */; };
 		32FB21811F8F8D8C000D8B63 /* H+Me.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FB21801F8F8D8C000D8B63 /* H+Me.swift */; };
 		32FD94501F9052CB00DDC5A3 /* H+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD944F1F9052CB00DDC5A3 /* H+Status.swift */; };
@@ -47,6 +60,7 @@
 		326C7A2D1F90AF5C00010B70 /* H+Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Editor.swift"; sourceTree = "<group>"; };
 		326C7A2F1F90FE9D00010B70 /* H+Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Field.swift"; sourceTree = "<group>"; };
 		326C7A311F9122EB00010B70 /* H+Policy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Policy.swift"; sourceTree = "<group>"; };
+		326C7A331F91E1E700010B70 /* H+QR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+QR.swift"; sourceTree = "<group>"; };
 		32759F501F8F1281007ED97C /* gov_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gov_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32759F531F8F1281007ED97C /* gov_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gov_sdk.h; sourceTree = "<group>"; };
 		32759F541F8F1281007ED97C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,6 +72,7 @@
 		32759F6E1F8F12F6007ED97C /* Configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configure.swift; sourceTree = "<group>"; };
 		32759F701F8F133B007ED97C /* H+Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Home.swift"; sourceTree = "<group>"; };
 		32759F741F8F151A007ED97C /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
+		32DB0A8D1F926E380099481A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		32FB217E1F8F5379000D8B63 /* H+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Account.swift"; sourceTree = "<group>"; };
 		32FB21801F8F8D8C000D8B63 /* H+Me.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Me.swift"; sourceTree = "<group>"; };
 		32FD944F1F9052CB00DDC5A3 /* H+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "H+Status.swift"; sourceTree = "<group>"; };
@@ -117,6 +132,7 @@
 				326C7A2F1F90FE9D00010B70 /* H+Field.swift */,
 				326C7A311F9122EB00010B70 /* H+Policy.swift */,
 				32FB217E1F8F5379000D8B63 /* H+Account.swift */,
+				326C7A331F91E1E700010B70 /* H+QR.swift */,
 				32759F6C1F8F12C0007ED97C /* Session.swift */,
 				32FD94561F906EDD00DDC5A3 /* 组与字段数据 */,
 				32FD94511F9057B500DDC5A3 /* encode */,
@@ -150,6 +166,7 @@
 			children = (
 				32759F741F8F151A007ED97C /* TimeInterval+Extension.swift */,
 				32FD94591F906F6100DDC5A3 /* Fload+Extension.swift */,
+				32DB0A8D1F926E380099481A /* String+Extension.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -177,6 +194,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32DB0A9E1F9272130099481A /* H+Base.swift in Headers */,
+				32DB0A9F1F9272130099481A /* DataEncode.swift in Headers */,
+				32DB0AA01F9272130099481A /* Fload+Extension.swift in Headers */,
+				32DB0A951F9271F40099481A /* H+Me.swift in Headers */,
+				32DB0A961F9271F40099481A /* H+Status.swift in Headers */,
+				32DB0A971F9271F40099481A /* H+Attachment.swift in Headers */,
+				32DB0A981F9271F40099481A /* H+RootEditor.swift in Headers */,
+				32DB0A991F9271F40099481A /* H+Editor.swift in Headers */,
+				32DB0A9A1F9271F40099481A /* H+Field.swift in Headers */,
+				32DB0A9B1F9271F40099481A /* H+Policy.swift in Headers */,
+				32DB0A9C1F9271F40099481A /* H+Account.swift in Headers */,
+				32DB0A9D1F9271F40099481A /* H+QR.swift in Headers */,
 				32759F771F8F1706007ED97C /* Handler.swift in Headers */,
 				32759F781F8F1706007ED97C /* H+Home.swift in Headers */,
 				32759F791F8F1706007ED97C /* TimeInterval+Extension.swift in Headers */,
@@ -291,6 +320,7 @@
 				32FD94551F905D7E00DDC5A3 /* H+Attachment.swift in Sources */,
 				32FB217F1F8F5379000D8B63 /* H+Account.swift in Sources */,
 				32759F751F8F151A007ED97C /* TimeInterval+Extension.swift in Sources */,
+				326C7A341F91E1E700010B70 /* H+QR.swift in Sources */,
 				32FB21811F8F8D8C000D8B63 /* H+Me.swift in Sources */,
 				326C7A301F90FE9D00010B70 /* H+Field.swift in Sources */,
 				326C7A2C1F90A5D400010B70 /* H+RootEditor.swift in Sources */,
@@ -454,6 +484,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.orangebrush.gov-sdk";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -478,6 +509,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.orangebrush.gov-sdk";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

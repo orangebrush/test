@@ -15,7 +15,7 @@ class PolicyCheckVC: UIViewController {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    var detailPolicyModel: DetailPolicyModel?
+    var policy: Policy?
     
     //MARK:- init-------------------------------------
     override func viewDidLoad() {
@@ -54,7 +54,7 @@ extension PolicyCheckVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let model = detailPolicyModel else {
+        guard let pol = policy else {
             return 0
         }
         
@@ -62,12 +62,9 @@ extension PolicyCheckVC: UITableViewDelegate, UITableViewDataSource{
         case 0:         //短标题
             return 1
         case 1:         //扶持对象
-            return model.applyTo?.count ?? 0
+            return pol.applicantList.count
         case 2:         //1正文内容
-            if model.document == nil || model.prizes == nil{
-                return 0
-            }
-            return (model.document?.count ?? 0) + (model.prizes?.count ?? 0)
+            return pol.documentList.count + pol.prizeList.count
         default:
             return 0
         }
@@ -85,9 +82,9 @@ extension PolicyCheckVC: UITableViewDelegate, UITableViewDataSource{
         case 0:         //标题
             return 44 * 2
         case 1:         //扶持对象
-            let applyto = detailPolicyModel?.applyTo?[row]
+            let applicant = (policy?.applicantList)?[row]
             
-            let text = applyto?.description ?? ""
+            let text = applicant?.detailText ?? ""
             let size = CGSize(width: view_size.width, height: view_size.width)
             let rect = NSString(string: text).boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont(name: UIFont.mainName, size: .labelHeight)!], context: nil)
             
@@ -110,19 +107,19 @@ extension PolicyCheckVC: UITableViewDelegate, UITableViewDataSource{
         case 0:     //标题
             identifier = "single"
             let singleCell = tableView.dequeueReusableCell(withIdentifier: "single") as! PolicySingleLineCell
-            singleCell.label.text = detailPolicyModel?.longTitle
+            singleCell.label.text = policy?.longTitle
             cell = singleCell
         case 1:     //扶持对象
             let muteCell = tableView.dequeueReusableCell(withIdentifier: "mute") as! PolicyMuteLineCell
-            if let applyto = detailPolicyModel?.applyTo?[row]{
-                muteCell.titleLabel.text = "扶持对象  " + applyto.target
-                muteCell.detailLabel.text = applyto.description
+            if let applicant = (policy?.applicantList)?[row]{
+                muteCell.titleLabel.text = "扶持对象  " + applicant.name!
+                muteCell.detailLabel.text = applicant.detailText
             }
             cell = muteCell
         case 2:     //正文内容
             let muteCell = tableView.dequeueReusableCell(withIdentifier: "mute") as! PolicyMuteLineCell
-            if let document = detailPolicyModel?.document?[row]{
-                muteCell.titleLabel.text = document.title! + document.contentType!
+            if let document = (policy?.documentList)?[row]{
+                muteCell.titleLabel.text = document.title
             }
             cell = muteCell
         default:

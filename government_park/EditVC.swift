@@ -21,27 +21,10 @@ class EditVC: UIViewController {
     var policyId = 0
     var applyId = 0
 
-    var detailPolicyModel: DetailPolicyModel?       //政策详情
+    var policy: Policy?       //政策详情
     
-    var applyInstance: ApplyInstance?               //申请目录内容
-    var contentsList: [BaseExampleModel]?           //组内容
-    
-    /*
-    //目录
-    var catalogsList: [ApplyCatalogs]?{
-        didSet{
-            tableView.reloadData()
-            catalogsList?.first?.components
-        }
-    }
-    
-    //组件or组
-    var modelList: [BaseExampleModel]?{
-        didSet{
-            
-        }
-    }
-    */
+    var apply: Apply?                           //申请目录内容
+    var item: Item?                                 //组或组件内容
     
     //MARK:- init-------------------------------------------------
     override func viewDidLoad() {
@@ -81,7 +64,7 @@ class EditVC: UIViewController {
     //MARK:- 查看政策
     @IBAction func checkPolicy(_ sender: Any) {        
         if let policyCheckVC = storyboard?.instantiateViewController(withIdentifier: "policycheck") as? PolicyCheckVC{
-            policyCheckVC.detailPolicyModel = detailPolicyModel
+            policyCheckVC.policy = policy
             navigationController?.show(policyCheckVC, sender: nil)
         }
     }
@@ -109,14 +92,17 @@ extension EditVC: UIActionSheetDelegate{
         switch buttonIndex {
         case 0:
             //取消这个申请
-            guard let instance = applyInstance else {
+            guard let apl = apply else {
                 return
             }
             
-            Handler.cancelApply(withApplyId: instance.id!, withLoginName: localAccount, withPassword: localPassword){
-                resultCode, message in
+            NetworkHandler.share().rootEditor.cancelApply(withApplyId: apl.id, closure: { (resultCode, message, data) in
+                guard resultCode == .success else{
+                    self.notif(withTitle: message, duration: 2, closure: nil)
+                    return
+                }
                 self.navigationController?.popViewController(animated: true)
-            }
+            })
             
         case 1:
             print("关闭")
@@ -132,28 +118,26 @@ extension EditVC: UIActionSheetDelegate{
 extension EditVC: UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         if isRootEdit{
-            if let catalogs = applyInstance?.catalogs{
-                return catalogs.count
+            if let catalogList = apply?.catalogList{
+                return catalogList.count
             }
             return 0
         }
-        return contentsList?.count ?? 0
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isRootEdit{
-            if let catalog = applyInstance?.catalogs?[section]{
-                if let secondItems = catalog.secondItems{
-                    return secondItems.count
-                }
+            if let catalogList = apply?.catalogList{
+                let catalog = catalogList[section]
+                let itemList = catalog.baseItemList
+                return itemList.count
             }
             return 0
         }
         
-        if let baseGroup = contentsList?[section] as? BaseGroupModel{
-            if let secondItems = baseGroup.secondItems{
-                return secondItems.count
-            }
+        if let baseItemList = item?.baseItemList{
+            return baseItemList.count
         }
         return 0
     }
@@ -168,7 +152,9 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
         header.tag = section
         
         if isRootEdit {
-            let catalog = applyInstance?.catalogs?[section]
+            let catalogList = apply?.catalogList
+            let catalog = catalogList?[section]
+
             let title = catalog?.title
             
             let titleFrame = CGRect(x: .edge16, y: .edge8, width: headerFrame.width - .edge16 * 2, height: .labelHeight)
@@ -193,7 +179,18 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return FieldType.image.height()
+        if isRootEdit{
+            return ItemType.GroupType.normal.height()
+        }
+        
+        if let baseItemList = item?.baseItemList{
+            let baseItem = baseItemList[indexPath.row]
+            if baseItem.isGroup{
+                return baseItem.groupType?.height() ?? .cellHeight
+            }
+            return baseItem.fieldType?.height() ?? .cellHeight
+        }
+        return .cellHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -202,23 +199,27 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
         var cell: UITableViewCell
         
         //获取具体数据（组）（字段）
-        var base: BaseExampleModel
+        var base: BaseItem
         if isRootEdit{
-            base = (applyInstance?.catalogs?[section].secondItems?[row])!
-            let type = base.type
-            let groupType = GroupType(rawValue: type!)!
-            let groupModel = base as! BaseGroupModel
+            let catalog = (apply?.catalogList)?[section]
+            let ase = (catalog?.baseItemList)?[row]
+            base = ase!
+
+            //如果为rootItem则必然为group
+            let type = base.groupType!
             
-//            switch groupType{
+            //let groupModel = base as! BaseGroupModel
+            
+//            switch type!{
 //            case .normal:
-                //创建group cell
-                let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType.identifier()) as! GroupCell
-                groupCell.firstLabel.text = groupModel.title
-                groupCell.secondLabel.text = groupModel.hint
+                //创建group cell (组件为普通组，无需判断)
+                let groupCell = tableView.dequeueReusableCell(withIdentifier: type.identifier()) as! Group0Cell
+                groupCell.firstLabel.text = base.title
+                groupCell.secondLabel.text = base.hint
                 groupCell.closure = {
                     tag in
                     let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main) as! EditVC
-                    groupEditor.isRootEdit = groupModel.isRoot!
+                    groupEditor.isRootEdit = false
                     self.navigationController?.show(groupEditor, sender: nil)
                 }
                 cell = groupCell
@@ -228,32 +229,55 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
 //                break
 //            }
         }else{
-            base = (contentsList?[section])!
-            if base.isGroup!{
-                let type = base.type
-                let groupType = GroupType(rawValue: type!)!
-                let groupModel = base as! BaseGroupModel
+            let baseItem = (item?.baseItemList)?[row]
+            base = baseItem as! BaseItem
+            
+            if base.isGroup{
+                let groupType = base.groupType
                 
                 //创建group cell
-                let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType.identifier()) as! GroupCell
-                groupCell.firstLabel.text = groupModel.title
-                groupCell.secondLabel.text = groupModel.hint
-                groupCell.closure = {
-                    tag in
-                    let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main) as! EditVC
-                    groupEditor.isRootEdit = groupModel.isRoot!
-                    self.navigationController?.show(groupEditor, sender: nil)
+                switch groupType!{
+                case .normal:
+                    let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
+                    groupCell.firstLabel.text = base.title
+                    groupCell.secondLabel.text = base.hint
+                    groupCell.closure = {
+                        tag in
+                        let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main) as! EditVC
+                        groupEditor.isRootEdit = false
+                        self.navigationController?.show(groupEditor, sender: nil)
+                    }
+                    cell = groupCell
+                case .multi:
+                    let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
+                    groupCell.firstLabel.text = base.title
+                    groupCell.secondLabel.text = base.hint
+                    groupCell.closure = {
+                        tag in
+                        let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main) as! EditVC
+                        groupEditor.isRootEdit = false
+                        self.navigationController?.show(groupEditor, sender: nil)
+                    }
+                    cell = groupCell
+                default:
+                    let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
+                    groupCell.firstLabel.text = base.title
+                    groupCell.secondLabel.text = base.hint
+                    groupCell.closure = {
+                        tag in
+                        let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main) as! EditVC
+                        groupEditor.isRootEdit = false
+                        self.navigationController?.show(groupEditor, sender: nil)
+                    }
+                    cell = groupCell
                 }
-                cell = groupCell
             }else{
-                let type = base.type
-                let fieldType = FieldType(rawValue: type!)!
-                let fieldModel = base as! BaseFieldModel
+                let fieldType = base.fieldType
                 
                 //创建 field cell
-                let assemblyCell = tableView.dequeueReusableCell(withIdentifier: fieldType.identifier()) as! FieldCell
-                assemblyCell.firstLabel.text = fieldModel.title
-                assemblyCell.secondLabel.text = fieldModel.hint
+                let assemblyCell = tableView.dequeueReusableCell(withIdentifier: fieldType!.identifier()) as! FieldCell
+                assemblyCell.firstLabel.text = base.title
+                assemblyCell.secondLabel.text = base.hint
                 cell = assemblyCell
             }
         }
@@ -262,10 +286,20 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
     
     //MARK: 点击选择，仅判断字段实例
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let section = indexPath.section
         let row = indexPath.row
         
-        let field2Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: "field2") as! Field2Editor
-        navigationController?.show(field2Editor, sender: nil)
+        let baseItem = (item?.baseItemList)?[row]
+        let base = baseItem as! BaseItem
+        
+        let fieldType = base.fieldType
+        
+        switch fieldType! {
+        case .short:
+            let field0Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field0Editor
+            navigationController?.show(field0Editor, sender: nil)
+        default:
+            let field1Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field1Editor
+            navigationController?.show(field1Editor, sender: nil)
+        }
     }
 }

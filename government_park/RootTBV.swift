@@ -34,14 +34,11 @@ class RootTBV: UITabBarController {
     
     private func config(){
 
-        let params = NewsPageParams()
-        params.page = 1
-        params.pageSize = 8
-        Handler.getPageNews(withParam: params){
-            resultCode, message, newspageModel in
-            print("resultCode:\(resultCode)\n")
-            print("message:\(message)\n")
-            print("newsPageMode: \(String(describing: newspageModel))\n")
+        NetworkHandler.share().home.getAllNews { (resultCode, message, allNewsData) in
+            guard resultCode == .success else{
+                self.notif(withTitle: message, duration: 3, closure: nil)
+                return
+            }
         }
         //修改返回按钮颜色
         UINavigationBar.appearance().tintColor = .subWord

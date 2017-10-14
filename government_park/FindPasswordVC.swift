@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import gov_sdk
 class FindPasswordVC: UIViewController {
     
     @IBOutlet weak var topView: UIView!

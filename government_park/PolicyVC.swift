@@ -21,9 +21,9 @@ class PolicyVC: UIViewController {
     }
     
     //政策
-    fileprivate var detailPolicyModel: DetailPolicyModel?{
+    fileprivate var policy: Policy?{
         didSet{
-            guard let model = detailPolicyModel else {
+            guard let pol = policy else {
                 return
             }            
             
@@ -49,9 +49,9 @@ class PolicyVC: UIViewController {
     }
     
     //申请
-    fileprivate var applyInstance: ApplyInstance?{
+    fileprivate var apply: Apply?{
         didSet{
-            guard let instance = applyInstance else {
+            guard let instance = apply else {
                 return
             }
             
@@ -63,7 +63,7 @@ class PolicyVC: UIViewController {
             }else if instance.finished == 0{
                 applyButton.setTitle("申请", for: .normal)
             }else{
-                applyButton.setTitle("继续编辑\(instance.finished!)%", for: .normal)
+                applyButton.setTitle("继续编辑\(instance.finished)%", for: .normal)
             }
         }
     }
@@ -136,17 +136,17 @@ class PolicyVC: UIViewController {
     }
     
     //MARK:- 获取到申请目录后回调
-    private func getApplyInstance(resultCode: ResultCode, message: String, applyInstance: ApplyInstance?){
+    private func getApplyClosure(resultCode: ResultCode, message: String, apply: Apply?){
         DispatchQueue.main.async {
             guard resultCode == .success else {
                 self.notif(withTitle: message, duration: 3, closure: nil)
                 return
             }
-            guard let instance = applyInstance else{
+            guard let apl = apply else{
                 return
             }
             
-            self.applyInstance = instance
+            self.apply = apl
         }
     }
     
@@ -168,12 +168,10 @@ class PolicyVC: UIViewController {
     @IBAction func apply(_ sender: Any) {
         
         let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
-        editVC.detailPolicyModel = detailPolicyModel
+        editVC.policy = policy
         editVC.isRootEdit = true
         editVC.policyId = id
-        editVC.applyId = applyId
-        editVC.applyInstance = applyInstance
-        //editVC.catalogsList = applyInstance?.catalogs
+        editVC.apply = apply
         navigationController?.show(editVC, sender: nil)
     }
     
@@ -191,7 +189,7 @@ extension PolicyVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let model = detailPolicyModel else {
+        guard let pol = policy else {
             return 0
         }
         
@@ -203,12 +201,9 @@ extension PolicyVC: UITableViewDelegate, UITableViewDataSource{
         case 2:         //短标题
             return 1
         case 3:         //扶持对象
-            return model.applyTo?.count ?? 0
+            return pol.applicantList.count
         case 4:         //1正文内容
-            if model.document == nil || model.prizes == nil{
-                return 0
-            }
-            return (model.document?.count ?? 0) + (model.prizes?.count ?? 0)
+            return pol.documentList.count + pol.prizeList.count
         default:
             return 0
         }
@@ -226,7 +221,7 @@ extension PolicyVC: UITableViewDelegate, UITableViewDataSource{
         case 0:
             return view_size.width * 9 / 16
         case 1:         //引言
-            let text = detailPolicyModel?.summary ?? ""
+            let text = policy?.summary ?? ""
             let size = CGSize(width: view_size.width, height: view_size.width)
             let rect = NSString(string: text).boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont(name: UIFont.mainName, size: .labelHeight)!], context: nil)
             
@@ -234,9 +229,9 @@ extension PolicyVC: UITableViewDelegate, UITableViewDataSource{
         case 2:         //标题
             return 44 * 2
         case 3:         //扶持对象
-            let applyto = detailPolicyModel?.applyTo?[row]
+            let applicant = policy?.applicantList[row]
             
-            let text = applyto?.description ?? ""
+            let text = applicant?.detailText ?? ""
             let size = CGSize(width: view_size.width, height: view_size.width)
             let rect = NSString(string: text).boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont(name: UIFont.mainName, size: .labelHeight)!], context: nil)
             
@@ -261,45 +256,42 @@ extension PolicyVC: UITableViewDelegate, UITableViewDataSource{
             let imageCell = tableView.dequeueReusableCell(withIdentifier: identifier) as! PolicyImageCell
 
             //图片
-            if let picString = detailPolicyModel?.bigPic {
-                if let url = URL(string: picString){
+            if let picUrl = policy?.bigPicUrl {
                     do{
-                        let imageData = try Data(contentsOf: url)
+                        let imageData = try Data(contentsOf: picUrl)
                         let image = UIImage(data: imageData)
                         imageCell.headImageView.image = image
                     }catch{}
-                }
             }
             cell = imageCell
         case 1:     //引言
             identifier = "single"
             let singleCell = tableView.dequeueReusableCell(withIdentifier: "single") as! PolicySingleLineCell
-            singleCell.label.text = detailPolicyModel?.summary
+            singleCell.label.text = policy?.summary
             singleCell.label.font = .middle
             cell = singleCell
         case 2:     //标题
             identifier = "single"
             let singleCell = tableView.dequeueReusableCell(withIdentifier: "single") as! PolicySingleLineCell
-            singleCell.label.text = detailPolicyModel?.longTitle
+            singleCell.label.text = policy?.longTitle
             cell = singleCell
         case 3:     //扶持对象
             let muteCell = tableView.dequeueReusableCell(withIdentifier: "mute") as! PolicyMuteLineCell
-            if let applyto = detailPolicyModel?.applyTo?[row]{
-                muteCell.titleLabel.text = "扶持对象  " + applyto.target
-                muteCell.detailLabel.text = applyto.description
+            if let applicantList = policy?.applicantList{
+                let applicant = applicantList[row]
+                muteCell.titleLabel.text = "扶持对象  " + (applicant.name ?? "")
+                muteCell.detailLabel.text = applicant.detailText
             }
             cell = muteCell
         case 4:     //正文内容
             let muteCell = tableView.dequeueReusableCell(withIdentifier: "mute") as! PolicyMuteLineCell
-            if let model = detailPolicyModel{
-                if row < model.document!.count {
-                    if let document = model.document?[row]{
-                        muteCell.titleLabel.text = document.title! + document.contentType!
-                    }
+            if let pol = policy{
+                if row < pol.documentList.count {
+                    let document = pol.documentList[row]
+                    muteCell.titleLabel.text = document.title
                 }else{
-                    if let prize = model.prizes?[row - model.document!.count]{
-                        muteCell.titleLabel.text = prize.title!
-                    }
+                    let prize = pol.prizeList[row - pol.documentList.count]
+                    muteCell.titleLabel.text = prize.title
                 }
             }
             cell = muteCell

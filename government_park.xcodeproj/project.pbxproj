@@ -72,6 +72,8 @@
 		32BB6E5F1F7F7EC100FC47F2 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB6E5E1F7F7EC100FC47F2 /* LoginVC.swift */; };
 		32BB6E611F7F972300FC47F2 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB6E601F7F972300FC47F2 /* RegisterVC.swift */; };
 		32BB6E631F7F9BB600FC47F2 /* FindPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB6E621F7F9BB600FC47F2 /* FindPasswordVC.swift */; };
+		32DB0A911F92702A0099481A /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DB0A901F92702A0099481A /* String+Extension.swift */; };
+		32DB0A941F9271120099481A /* Header.h in Sources */ = {isa = PBXBuildFile; fileRef = 32DB0A931F9270F30099481A /* Header.h */; };
 		32EE31E51F70FA8900939EE8 /* Policy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32EE31E41F70FA8900939EE8 /* Policy.storyboard */; };
 		32EE31E71F70FB5800939EE8 /* PolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EE31E61F70FB5800939EE8 /* PolicyVC.swift */; };
 		32EE31EB1F711CB300939EE8 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EE31EA1F711CB300939EE8 /* GroupCell.swift */; };
@@ -187,6 +189,8 @@
 		32BB6E5E1F7F7EC100FC47F2 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		32BB6E601F7F972300FC47F2 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		32BB6E621F7F9BB600FC47F2 /* FindPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordVC.swift; sourceTree = "<group>"; };
+		32DB0A901F92702A0099481A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		32DB0A931F9270F30099481A /* Header.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = Header.h; sourceTree = "<group>"; };
 		32EE31E41F70FA8900939EE8 /* Policy.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Policy.storyboard; sourceTree = "<group>"; };
 		32EE31E61F70FB5800939EE8 /* PolicyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolicyVC.swift; sourceTree = "<group>"; };
 		32EE31EA1F711CB300939EE8 /* GroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
@@ -399,6 +403,7 @@
 				329D88101F6F6F7A00D304FF /* government_park.xcdatamodeld */,
 				329D884D1F6FA42800D304FF /* Configure.swift */,
 				324A91A01F73DBFF00A1F721 /* Timer.swift */,
+				32DB0A931F9270F30099481A /* Header.h */,
 			);
 			name = supportingFiles;
 			sourceTree = "<group>";
@@ -460,6 +465,7 @@
 				329B127D1F70BAA10061C38E /* Float+Extension.swift */,
 				324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */,
 				32F6137B1F753FC700F72FB7 /* Tabbar+Extension.swift */,
+				32DB0A901F92702A0099481A /* String+Extension.swift */,
 			);
 			name = "扩展";
 			sourceTree = "<group>";
@@ -663,6 +669,7 @@
 				321115C21F7928CF005EA426 /* FinishedVC.swift in Sources */,
 				3269DF411F7B3FD200C14FC3 /* PolicyCells.swift in Sources */,
 				321FE4FD1F73C7C3002FA78B /* Field6EditorCell.swift in Sources */,
+				32DB0A911F92702A0099481A /* String+Extension.swift in Sources */,
 				32EE31E71F70FB5800939EE8 /* PolicyVC.swift in Sources */,
 				321115C51F792D41005EA426 /* 0fflineVC.swift in Sources */,
 				321115C91F7A28B0005EA426 /* AuditingVC.swift in Sources */,
@@ -680,6 +687,7 @@
 				329D884A1F6F7BF800D304FF /* ContentsVC.swift in Sources */,
 				329339F71F7248D600D3D88B /* Group0Cell.swift in Sources */,
 				329339FB1F7249A400D3D88B /* Group2Cell.swift in Sources */,
+				32DB0A941F9271120099481A /* Header.h in Sources */,
 				329D88511F6FA50900D304FF /* Navigation+Extension.swift in Sources */,
 				32EE31ED1F711CBF00939EE8 /* Field0Cell.swift in Sources */,
 				32933A111F726B0100D3D88B /* Field3Editor.swift in Sources */,
@@ -875,6 +883,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.governmentpark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = government_park/Header.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -893,6 +902,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.governmentpark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = government_park/Header.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
