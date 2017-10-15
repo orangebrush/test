@@ -115,6 +115,8 @@ class DataEncode {
                 if let componentsData = catalogData["components"] as? [[String: Any]]{
                     for componentData in componentsData{
                         let baseItem = BaseItem()
+                        baseItem.isGroup = true         //组件默认为组
+                        baseItem.groupType = .normal    //组件类型默认为普通类型
                         if let id = componentData["id"] as? Int{
                             baseItem.id = id
                         }

@@ -40,8 +40,8 @@ class LoginVC: UIViewController {
             accountTextField.text = localAccount
         }
         
-        if let localPassword = userDefaults.string(forKey: "password"){
-            passwordTextField.text = localPassword
+        if let originPassword = userDefaults.string(forKey: "originalPassword"){
+            passwordTextField.text = originPassword
         }
     }
     
@@ -80,30 +80,21 @@ class LoginVC: UIViewController {
         }
         
         //存储账号密码
-        userDefaults.set(account, forKey: "account")
-        userDefaults.set(password, forKey: "password")
+        userDefaults.set(account!, forKey: "account")
+        userDefaults.set(password!.sha1(), forKey: "password")
+        userDefaults.set(password!, forKey: "originalPassword")
+        userDefaults.synchronize()
         
-        /*
-        Handler.userLogin(withLoginName: account!, withPassword: password!){
-            resultCode, message, userInforMationModel in
-            
+        NetworkHandler.share().account.getUserinfo { (resultCode, message, user) in
             DispatchQueue.main.async {
                 guard resultCode == .success else {
                     self.notif(withTitle: message, duration: 1, closure: nil)
                     return
                 }
                 
-                userDefaults.set(self.account!, forKey: "account")
-                userDefaults.set(self.password!, forKey: "password")
-                userDefaults.synchronize()
-                
                 self.navigationController?.popViewController(animated: true)
             }
         }
-        
-         */
-        
-        
     }
     
     //MARK: 找回密码

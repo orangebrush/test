@@ -11,8 +11,8 @@ import Foundation
 //actions
 struct Actions{
     //首页
-    static let allNews              = "/news"                   //获取新闻
-    static let allPolicy            = "/policy"                 //获取所有政策
+    static let allNews              = "/news/page"              //获取新闻
+    static let allPolicy            = "/policy/page"            //获取所有政策
     
     //我
     static let allApply             = "/apply/list"             //获取申请列表
@@ -90,6 +90,9 @@ public var localAccount: String? {
 }
 public var localPassword: String? {
     return userDefaults.string(forKey: "password")
+}
+public var originPassword: String? {
+    return userDefaults.string(forKey: "originalPassword")
 }
 
 

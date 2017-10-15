@@ -28,21 +28,18 @@ class PolicyVC: UIViewController {
             }            
             
             //是否可收藏
-            /*
-            Handler.getIsCompanyBookmarkApply(withPolicyId: model.id!, withLoginName: localAccount, withPassword: localPassword){
-                resultCode, message, bookmarkPolicyVirginModel in
+            NetworkHandler.share().policy.isPolicyBookmarked(withPolicyId: pol.id) { (resultCode, message, isBookmarked) in
                 
                 DispatchQueue.main.async {
                     guard resultCode == .success else{
-                        self.notif(withTitle: message, duration: 1, closure: nil)
+                        self.notif(withTitle: message, duration: 3, closure: nil)
                         return
                     }
                     self.collectionButton.isEnabled = true
                     self.collectionButton.isHidden = false
-                    self.collectionButton.isSelected = bookmarkPolicyVirginModel != nil
+                    self.collectionButton.isSelected = isBookmarked
                 }
             }
-             */
             
             tableView.reloadData()
         }
@@ -51,19 +48,46 @@ class PolicyVC: UIViewController {
     //申请
     fileprivate var apply: Apply?{
         didSet{
-            guard let instance = apply else {
+            guard let apl = apply else {
                 return
             }
             
             applyButton.isEnabled = true
             
             //判断是否已申请
-            if instance.finished == 100 {
-                applyButton.setTitle("继续编辑100%", for: .normal)
-            }else if instance.finished == 0{
-                applyButton.setTitle("申请", for: .normal)
-            }else{
-                applyButton.setTitle("继续编辑\(instance.finished)%", for: .normal)
+            /*
+             case initial = 10           //新建
+             case editing = 11           //填写中
+             case waiting = 18           //待提交
+             //}
+             //public enum Committed: Int{             //已提交
+             case unread = 20            //未阅读
+             case untreated = 21         //未处理
+             case interested = 22        //感兴趣
+             case notConsider = 23       //不考虑
+             case reject = 29            //驳回
+             //}
+             //public enum BelowLine: Int{             //已进入线下环节
+             case undetermined = 30      //尚未确定办理时间
+             case reservation = 31       //已预约办理
+             case approval = 38          //批准拨款
+             case refuse = 39            //拒绝拨款
+             //}
+             //public enum Interrupt: Int{             //中断
+             case overdue = 40           //政策自动过期
+             case underCarriage = 41     //政策强行下架
+             case black = 42             //企业被拉黑
+             case interrupt = 49         //强行中断
+             */
+            switch apl.applyStatus! {
+            case .initial, .editing, .waiting :
+                applyButton.setTitle("继续编辑\(apl.finished)%", for: .normal)
+            case .unread, .untreated, .interested, .notConsider, .reject:
+                applyButton.setTitle("查看申请", for: .normal)  //提交线下申请材料（完成度）
+            case .undetermined, .reservation, .approval, .refuse:
+                applyButton.setTitle("申请已拒绝", for: .normal)
+            default:
+                applyButton.setTitle("申请已中断", for: .normal)
             }
         }
     }
@@ -90,49 +114,38 @@ class PolicyVC: UIViewController {
         navigationController?.isNavigationBarHidden = false
         
         //获取政策详情
-        /*
-        Handler.getDetailPolicy(withPolicyId: id){
-            resultCode, message, detailPolicyModel in
-            
+        NetworkHandler.share().policy.getPolicy(withPolicyId: id) { (resultCode, message, policy) in
+
             DispatchQueue.main.async {
                 guard resultCode == .success else{
                     self.notif(withTitle: message, duration: 1, closure: nil)
                     return
                 }
                 
-                self.detailPolicyModel = detailPolicyModel
+                self.policy = policy
             }
             
             //获取申请
-            Handler.getUserApply(withLoginName: localAccount, withPassword: localPassword){
-                resultCode, message, applyListModelList in
-                print("applyList:", applyListModelList)
-                guard resultCode == .success else{
+            NetworkHandler.share().policy.existedApply(withPolicyId: self.id, closure: { (resultCode, message, apply) in
+                guard resultCode == .success else{  //登陆判断
                     DispatchQueue.main.async {
                         self.login()
                     }
                     return
                 }
                 
-                guard let list = applyListModelList else{
+                guard let apl = apply else{
                     //新建申请
-                    Handler.getApplyContents(withPolicyId: self.id, withLoginName: localAccount, withPassword: localPassword, self.getApplyInstance(resultCode:message:applyInstance:))
+                    NetworkHandler.share().policy.addApply(withPolicyId: self.id, closure: self.getApplyClosure(resultCode:message:apply:))
                     return
                 }
                 
-                //判断是否已编辑过申请
-                let resultList = list.filter({$0.policyId == self.detailPolicyModel!.id!})
-                if resultList.isEmpty{
-                    //新建申请
-                    Handler.getApplyContents(withPolicyId: self.id, withLoginName: localAccount, withPassword: localPassword, self.getApplyInstance(resultCode:message:applyInstance:))
-                }else{
-                    //继续申请
-                    self.applyId = resultList[0].id
-                    Handler.getApplyContents(withApplyId: self.applyId, withLoginName: localAccount, withPassword: localPassword, self.getApplyInstance(resultCode:message:applyInstance:))
-                }
-            }
+                //获取已有申请
+                NetworkHandler.share().status.getApply(withApplyId: apl.id, closure: self.getApplyClosure(resultCode:message:apply:))
+                
+            })
+
         }
-         */
     }
     
     //MARK:- 获取到申请目录后回调

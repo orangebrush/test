@@ -529,8 +529,8 @@
                     <connections>
                         <outlet property="applyButton" destination="5I4-LQ-k7a" id="BFi-i4-Wdw"/>
                         <outlet property="infoLabel" destination="Ez9-yC-Lef" id="8qO-6T-jP3"/>
-                        <outlet property="optionLabel" destination="Vf8-je-Zmg" id="Lfz-eq-ekx"/>
-                        <outlet property="requireLabel" destination="V8E-2y-cWe" id="Cn0-RV-SNT"/>
+                        <outlet property="optionLabel" destination="Vf8-je-Zmg" id="LjV-ai-m1z"/>
+                        <outlet property="requireLabel" destination="V8E-2y-cWe" id="fkl-SZ-P6k"/>
                         <outlet property="tableView" destination="Cgq-Ms-Xbh" id="fpJ-YZ-BxE"/>
                         <outlet property="topView" destination="bYs-ln-WkW" id="ksq-Bo-OqC"/>
                     </connections>

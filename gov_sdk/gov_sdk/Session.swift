@@ -28,7 +28,8 @@ class Session {
                     return
                 }
                 
-                debugPrint("<Session> result: \(result)")
+                debugPrint("<Session> result:")
+                print(result)
                 
                 guard let code = result["code"] as? Int, let message = result["message"] as? String else {
                     closure(.failure, "解析数据错误", nil)
@@ -59,6 +60,8 @@ class Session {
                     let v = value as! String
                     urlStr.append(key + "=" + v)
                 }
+                
+                print("<Session> \(action)- url: \(urlStr)")
             }
             
             //生成url
@@ -85,6 +88,7 @@ class Session {
                 }
                 request.httpBody = form.data(using: .utf8)
                 
+                print("<Session> \(action)- url: \(url)")
                 /*
                  let body = try JSONSerialization.data(withJSONObject: param, options: JSONSerialization.WritingOptions.prettyPrinted)
                  request.setValue("application/json", forHTTPHeaderField: "Content-Type")

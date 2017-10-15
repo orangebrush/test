@@ -19,7 +19,12 @@ class FindPasswordVC: UIViewController {
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var resetButtonConstraint: NSLayoutConstraint!
     
-    private var isLagel = false
+    private var isLagel = false{
+        didSet{
+            resetButtonConstraint.constant = isLagel ? .edge8 : -75
+            newView.isHidden = !isLagel
+        }
+    }
     private var account: String?
     private var verification: String?
     private var newPassword: String?
@@ -29,6 +34,10 @@ class FindPasswordVC: UIViewController {
         
         config()
         createContents()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        isLagel = false
     }
     
     private func config(){
@@ -72,14 +81,70 @@ class FindPasswordVC: UIViewController {
     //MARK: 获取验证码
     @IBAction func getVerification(_ sender: Any){
         
+        account = accountTextField.text
+        
+        let accountTuple = isAccountLegal(withString: account)
+        
+        guard accountTuple.isLegal else {
+            notif(withTitle: accountTuple.message, duration: 1, closure: nil)
+            return
+        }
+        
+        //存储账号
+        userDefaults.set(account!, forKey: "account")
+        
+        NetworkHandler.share().account.getResetVerifyCode(withAccount: account!) { (resultCode, message, data) in
+            DispatchQueue.main.async {
+                
+                self.notif(withTitle: message, duration: 3, closure: nil)
+            }
+        }
     }
     
     //MARK: 校验验证码or修改密码
     @IBAction func setPassword(_ sender: Any){
         if isLagel {
             //修改密码
+            newPassword = passwordTextField.text
+            
+            let accountTuple = isAccountLegal(withString: account)
+            let newPasswordTuple = isPasswordLegal(withString: newPassword)
+            
+            guard accountTuple.isLegal else {
+                notif(withTitle: accountTuple.message, duration: 1, closure: nil)
+                return
+            }
+            
+            guard newPasswordTuple.isLegal else {
+                notif(withTitle: newPasswordTuple.message, duration: 3, closure: nil)
+                return
+            }
+            
+            //存储账号密码
+            userDefaults.set(account!, forKey: "account")
+            userDefaults.set(newPassword!.sha1(), forKey: "password")
+            userDefaults.set(newPassword!, forKey: "originalPassword")
+            NetworkHandler.share().account.reset(withPassword: newPassword!, closure: { (resultCode, message, data) in
+                DispatchQueue.main.async {
+                    self.isLagel = false        //重置验证码为未验证
+                    self.navigationController?.popViewController(animated: true)
+                }
+            })
         }else{
             //校验验证码
+            verification = verificationTextField.text
+            let verificationTuple = isVerifyCodeLegal(withString: verification)
+            guard verificationTuple.isLegal else{
+                notif(withTitle: verificationTuple.message, duration: 3, closure: nil)
+                return
+            }
+            
+            NetworkHandler.share().account.checkResetVerifyCode(withVerfiyCode: verification!, closure: { (resultCode, message, data) in
+                DispatchQueue.main.async {
+                    self.isLagel = true     //设置验证码通过
+                }
+            })
         }
+        
     }
 }

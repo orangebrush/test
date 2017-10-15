@@ -32,8 +32,15 @@ class EditVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         if isRootEdit{
             topView.isHidden = false
+            //设置topView字段
+            if let apl = apply{
+                requireLabel.text = apl.policyShortTitle
+                optionLabel.text = apl.dateHint
+                infoLabel.text = apl.statusHint
+            }
             tableView.frame = CGRect(x: 0, y: 144, width: view_size.width, height: view_size.height - 116)
         }else{
             topView.isHidden = true
@@ -208,26 +215,20 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
             //如果为rootItem则必然为group
             let type = base.groupType!
             
-            //let groupModel = base as! BaseGroupModel
-            
-//            switch type!{
-//            case .normal:
-                //创建group cell (组件为普通组，无需判断)
-                let groupCell = tableView.dequeueReusableCell(withIdentifier: type.identifier()) as! Group0Cell
-                groupCell.firstLabel.text = base.title
+            //创建group cell (组件为普通组，无需判断)
+            let groupCell = tableView.dequeueReusableCell(withIdentifier: type.identifier()) as! Group0Cell
+            groupCell.firstLabel.text = base.title
+            if groupCell.secondLabel != nil{
                 groupCell.secondLabel.text = base.hint
-                groupCell.closure = {
-                    tag in
-                    let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main) as! EditVC
-                    groupEditor.isRootEdit = false
-                    self.navigationController?.show(groupEditor, sender: nil)
-                }
-                cell = groupCell
-//            case .image:
-//                break
-//            default:
-//                break
-//            }
+            }
+            groupCell.closure = {
+                tag in
+                let groupEditor = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
+                groupEditor.isRootEdit = false
+                self.navigationController?.show(groupEditor, sender: nil)
+            }
+            cell = groupCell
+
         }else{
             let baseItem = (item?.baseItemList)?[row]
             base = baseItem as! BaseItem

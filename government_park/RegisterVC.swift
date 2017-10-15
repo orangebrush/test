@@ -70,6 +70,8 @@ class RegisterVC: UIViewController {
     //MARK: 获取验证码
     @IBAction func getVerification(_ sender: Any){
         
+        account = accountTextField.text
+        
         let accountTuple = isAccountLegal(withString: account)
         
         guard accountTuple.isLegal else {
@@ -98,7 +100,8 @@ class RegisterVC: UIViewController {
         }
         
         //存储账号密码
-        userDefaults.set(account, forKey: "account")
-        userDefaults.set(password, forKey: "password")
+        userDefaults.set(account!, forKey: "account")
+        userDefaults.set(password!.sha1(), forKey: "password")
+        userDefaults.set(password!, forKey: "originalPassword")
     }
 }
