@@ -52,8 +52,6 @@ class PolicyVC: UIViewController {
                 return
             }
             
-            applyButton.isEnabled = true
-            
             //判断是否已申请
             /*
              case initial = 10           //新建
@@ -96,7 +94,7 @@ class PolicyVC: UIViewController {
     var id = 0
     
     //申请id
-    var applyId = 0
+    var applyId: Int?
     
     
     //MARK:- init--------------------------------------------------
@@ -107,9 +105,6 @@ class PolicyVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        collectionButton.isHidden = true
-        applyButton.setTitle("申请", for: .normal)
         
         navigationController?.isNavigationBarHidden = false
         
@@ -123,28 +118,27 @@ class PolicyVC: UIViewController {
                 }
                 
                 self.policy = policy
-            }
-            
-            //获取申请
-            NetworkHandler.share().policy.existedApply(withPolicyId: self.id, closure: { (resultCode, message, apply) in
-                guard resultCode == .success else{  //登陆判断
+                //判断是否有该申请 then 获取申请
+                NetworkHandler.share().policy.existedApply(withPolicyId: self.id, closure: { (resultCode, message, apply) in
                     DispatchQueue.main.async {
-                        self.login()
+                        guard resultCode == .success else{  //登陆判断
+                            self.login()
+                            return
+                        }
+                        
+                        self.applyButton.isEnabled = true
+                        
+                        guard let apl = apply else{
+                            //新建申请
+                            //NetworkHandler.share().policy.addApply(withPolicyId: self.id, closure: self.getApplyClosure(resultCode:message:apply:))
+                            return
+                        }
+                        
+                        //获取已有申请
+                        NetworkHandler.share().status.getApply(withApplyId: apl.id, closure: self.getApplyClosure(resultCode:message:apply:))
                     }
-                    return
-                }
-                
-                guard let apl = apply else{
-                    //新建申请
-                    NetworkHandler.share().policy.addApply(withPolicyId: self.id, closure: self.getApplyClosure(resultCode:message:apply:))
-                    return
-                }
-                
-                //获取已有申请
-                NetworkHandler.share().status.getApply(withApplyId: apl.id, closure: self.getApplyClosure(resultCode:message:apply:))
-                
-            })
-
+                })
+            }
         }
     }
     
@@ -152,13 +146,14 @@ class PolicyVC: UIViewController {
     private func getApplyClosure(resultCode: ResultCode, message: String, apply: Apply?){
         DispatchQueue.main.async {
             guard resultCode == .success else {
-                self.notif(withTitle: message, duration: 3, closure: nil)
+                //self.notif(withTitle: message, duration: 3, closure: nil)
                 return
             }
             guard let apl = apply else{
                 return
             }
             
+            self.applyId = apl.id
             self.apply = apl
         }
     }
@@ -166,6 +161,10 @@ class PolicyVC: UIViewController {
     private func config(){
         
         automaticallyAdjustsScrollViewInsets = false
+        
+        collectionButton.isHidden = true
+        applyButton.isEnabled = false
+        applyButton.setTitle("申请", for: .normal)
     }
     
     private func createContents(){
@@ -180,12 +179,37 @@ class PolicyVC: UIViewController {
     //MARK:- 申请或查看或继续编辑
     @IBAction func apply(_ sender: Any) {
         
-        let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
-        editVC.policy = policy
-        editVC.isRootEdit = true
-        editVC.policyId = id
-        editVC.apply = apply
-        navigationController?.show(editVC, sender: nil)
+        if let apl = apply {
+            let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
+            editVC.policyId = id
+            editVC.policy = policy
+            editVC.applyId = apl.id
+            //editVC.apply = apl(进入后重新获取)
+            editVC.isRootEdit = true
+            editVC.navigationItem.title = policy?.shortTitle
+            navigationController?.show(editVC, sender: nil)
+        }else{
+            NetworkHandler.share().policy.addApply(withPolicyId: self.id){ (resultCode, message, apply) in
+                DispatchQueue.main.async {
+                    guard resultCode == .success else{
+                        self.notif(withTitle: message, duration: 3, closure: nil)
+                        return
+                    }
+                    
+                    if let apl = apply{
+                        
+                        let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
+                        editVC.policyId = self.id
+                        editVC.policy = self.policy
+                        editVC.applyId = apl.id
+                        //editVC.apply = apl(进入后重新获取)
+                        editVC.isRootEdit = true
+                        editVC.navigationItem.title = self.policy?.shortTitle
+                        self.navigationController?.show(editVC, sender: nil)
+                    }
+                }
+            }
+        }
     }
     
     //MARK: 分享

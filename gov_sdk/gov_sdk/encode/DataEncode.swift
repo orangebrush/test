@@ -149,6 +149,7 @@ class DataEncode {
             item.componentId = componentId
             item.isRoot = false
         }else{
+            item.componentId = item.id
             item.isRoot = true
         }
         item.instanceId = itemData["instanceId"] as? Int
@@ -216,8 +217,8 @@ class DataEncode {
         }
         if let baseItemsData = itemData["items"] as? [[String: Any]]{
             for baseItemData in baseItemsData{
-                let item = DataEncode.item(withItemData: baseItemData)
-                item.baseItemList.append(item)
+                let baseItem = DataEncode.item(withItemData: baseItemData)
+                item.baseItemList.append(baseItem)
             }
         }
         return item

@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import gov_sdk
 class ScanVC: UIViewController {
     
     //MARK:- 扫描初始--------------------------------------------------------------------------------
@@ -85,8 +86,20 @@ extension ScanVC: AVCaptureMetadataOutputObjectsDelegate{
             return
         }
         
-        let value = metadataObject.stringValue
-        print("string value: \(value)")
-        navigationController?.popViewController(animated: true)
+        if let uuid = metadataObject.stringValue{
+            //登陆
+            NetworkHandler.share().QR.login(withUUID: uuid) { (resultCode, message, data) in
+                DispatchQueue.main.async {
+                    guard resultCode == .success else{
+                        self.notif(withTitle: message, duration: 3, closure: nil)
+                        self.login()
+                        return
+                    }
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }else{
+            notif(withTitle: "无法识别", duration: 3, closure: nil)
+        }
     }
 }

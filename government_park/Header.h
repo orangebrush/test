@@ -9,6 +9,12 @@
 #ifndef Header_h
 #define Header_h
 
+@import UIKit;
+
 #import <CommonCrypto/CommonDigest.h>
+
+#import "WechatAuthSDK.h"
+#import "WXApiObject.h"
+#import "WXApi.h"
 
 #endif /* Header_h */

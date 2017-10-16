@@ -7,7 +7,7 @@
 //附件编辑器
 
 import UIKit
-class Field3Editor: UIViewController {
+class Field3Editor: FieldEditor {
     
     @IBOutlet weak var webView: UIWebView!
     

@@ -187,7 +187,7 @@
             </objects>
             <point key="canvasLocation" x="-455.19999999999999" y="-34.632683658170919"/>
         </scene>
-        <!--NewsVC-->
+        <!--Title-->
         <scene sceneID="CNC-CH-fie">
             <objects>
                 <viewController storyboardIdentifier="news" id="qIJ-Dr-xWP" customClass="NewsVC" customModule="government_park" customModuleProvider="target" sceneMemberID="viewController">
@@ -212,6 +212,13 @@
                             <constraint firstItem="DLA-Se-C23" firstAttribute="top" secondItem="d8c-Ad-aar" secondAttribute="bottom" id="xHH-aP-agG"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="Rfr-oC-F1d">
+                        <barButtonItem key="rightBarButtonItem" title="分享" id="owW-mA-uUc">
+                            <connections>
+                                <action selector="share:" destination="qIJ-Dr-xWP" id="Yav-Rz-2ks"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="webView" destination="DLA-Se-C23" id="3UX-0Z-4Ot"/>
                     </connections>

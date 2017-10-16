@@ -7,6 +7,7 @@
 //审核中 等待
 
 import UIKit
+import gov_sdk
 class AuditingVC: UIViewController {
     
     @IBOutlet weak var label0: UILabel!
@@ -16,6 +17,9 @@ class AuditingVC: UIViewController {
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label1HeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var button1: UIButton!
+    
+    var apply: Apply?
+    
     
     //MARK:- init-----------------------------------------------------
     override func viewDidLoad() {

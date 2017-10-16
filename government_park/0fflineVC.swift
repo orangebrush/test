@@ -7,12 +7,12 @@
 //已进入线下办理
 
 import UIKit
+import gov_sdk
 class OfflineVC: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
-    var text: String?
-    
+    var apply: Apply?
     
     //MARK:- init-----------------------------------------------------
     override func viewDidLoad() {
@@ -41,7 +41,7 @@ class OfflineVC: UIViewController {
         //动态标签
         let label1Frame = CGRect(x: .edge8, y: label0Frame.origin.y + label0Frame.height + .edge8, width: width, height: .labelHeight * 5)
         let label1 = UILabel(frame: label1Frame)
-        label1.text = text
+        label1.text = apply?.statusHint
         scrollView.addSubview(label1)
         label1.sizeToFit()
         

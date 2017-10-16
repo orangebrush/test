@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class Field7Editor: UIViewController {
+class Field7Editor: FieldEditor {
     
     override func viewDidLoad() {
         

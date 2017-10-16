@@ -16,6 +16,17 @@
 		321DF9531F7F322600A23DAC /* Field7Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321DF9521F7F322600A23DAC /* Field7Cell.swift */; };
 		321DF95C1F7F3FEB00A23DAC /* Field7Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321DF95B1F7F3FEB00A23DAC /* Field7Editor.swift */; };
 		321FE4FD1F73C7C3002FA78B /* Field6EditorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321FE4FC1F73C7C3002FA78B /* Field6EditorCell.swift */; };
+		322BD2EB1F94B7C6003C650E /* ScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322BD2EA1F94B713003C650E /* ScanVC.swift */; };
+		322BD2F61F94C021003C650E /* GANAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322BD2ED1F94BF08003C650E /* GANAlertAction.swift */; };
+		322BD2F71F94C027003C650E /* s_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 322BD2EF1F94BF4B003C650E /* s_1.png */; };
+		322BD2F81F94C02A003C650E /* s_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 322BD2EE1F94BF4B003C650E /* s_2.png */; };
+		322BD3071F94C37A003C650E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322BD3061F94C37A003C650E /* SystemConfiguration.framework */; };
+		322BD3091F94C389003C650E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 322BD3081F94C389003C650E /* libsqlite3.0.tbd */; };
+		322BD30B1F94C394003C650E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 322BD30A1F94C394003C650E /* libz.tbd */; };
+		322BD30D1F94C3A4003C650E /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 322BD30C1F94C3A4003C650E /* libc++.tbd */; };
+		322BD30F1F94C3B2003C650E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322BD30E1F94C3B2003C650E /* CoreTelephony.framework */; };
+		322F48631F946511006C724B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322F48621F946511006C724B /* Date+Extension.swift */; };
+		322F48651F94B016006C724B /* FieldEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322F48641F94B016006C724B /* FieldEditor.swift */; };
 		324A91A11F73DBFF00A1F721 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A01F73DBFF00A1F721 /* Timer.swift */; };
 		324A91A31F73DD4600A1F721 /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */; };
 		324A91A51F73E9A700A1F721 /* Field5SubEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A41F73E9A700A1F721 /* Field5SubEditor.swift */; };
@@ -127,6 +138,21 @@
 		321DF9521F7F322600A23DAC /* Field7Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field7Cell.swift; sourceTree = "<group>"; };
 		321DF95B1F7F3FEB00A23DAC /* Field7Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field7Editor.swift; sourceTree = "<group>"; };
 		321FE4FC1F73C7C3002FA78B /* Field6EditorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field6EditorCell.swift; sourceTree = "<group>"; };
+		322BD2EA1F94B713003C650E /* ScanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanVC.swift; sourceTree = "<group>"; };
+		322BD2ED1F94BF08003C650E /* GANAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GANAlertAction.swift; sourceTree = "<group>"; };
+		322BD2EE1F94BF4B003C650E /* s_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_2.png; sourceTree = "<group>"; };
+		322BD2EF1F94BF4B003C650E /* s_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_1.png; sourceTree = "<group>"; };
+		322BD3021F94C2B1003C650E /* WechatAuthSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		322BD3031F94C2B1003C650E /* WXApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		322BD3041F94C2B2003C650E /* WXApiObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		322BD3051F94C357003C650E /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		322BD3061F94C37A003C650E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		322BD3081F94C389003C650E /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		322BD30A1F94C394003C650E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		322BD30C1F94C3A4003C650E /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		322BD30E1F94C3B2003C650E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		322F48621F946511006C724B /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		322F48641F94B016006C724B /* FieldEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldEditor.swift; sourceTree = "<group>"; };
 		324A91A01F73DBFF00A1F721 /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
 		324A91A41F73E9A700A1F721 /* Field5SubEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field5SubEditor.swift; sourceTree = "<group>"; };
@@ -207,6 +233,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				322BD30F1F94C3B2003C650E /* CoreTelephony.framework in Frameworks */,
+				322BD30D1F94C3A4003C650E /* libc++.tbd in Frameworks */,
+				322BD30B1F94C394003C650E /* libz.tbd in Frameworks */,
+				322BD3091F94C389003C650E /* libsqlite3.0.tbd in Frameworks */,
+				322BD3071F94C37A003C650E /* SystemConfiguration.framework in Frameworks */,
 				32FB21791F8F18DF000D8B63 /* gov_sdk.framework in Frameworks */,
 				329D883F1F6F707E00D304FF /* UIKit.framework in Frameworks */,
 			);
@@ -232,6 +263,7 @@
 		321114D61F78B2A7005EA426 /* 二维码扫描 */ = {
 			isa = PBXGroup;
 			children = (
+				322BD2EA1F94B713003C650E /* ScanVC.swift */,
 			);
 			name = "二维码扫描";
 			sourceTree = "<group>";
@@ -274,6 +306,20 @@
 			name = "线下、申请状态页";
 			sourceTree = "<group>";
 		};
+		322BD2EC1F94BEF2003C650E /* 分享 */ = {
+			isa = PBXGroup;
+			children = (
+				322BD3051F94C357003C650E /* libWeChatSDK.a */,
+				322BD3021F94C2B1003C650E /* WechatAuthSDK.h */,
+				322BD3031F94C2B1003C650E /* WXApi.h */,
+				322BD3041F94C2B2003C650E /* WXApiObject.h */,
+				322BD2ED1F94BF08003C650E /* GANAlertAction.swift */,
+				322BD2EF1F94BF4B003C650E /* s_1.png */,
+				322BD2EE1F94BF4B003C650E /* s_2.png */,
+			);
+			name = "分享";
+			sourceTree = "<group>";
+		};
 		3269DF381F7A823F00C14FC3 /* 材料清单 */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +342,7 @@
 			isa = PBXGroup;
 			children = (
 				329339F11F72435A00D3D88B /* FieldCell.swift */,
+				322F48641F94B016006C724B /* FieldEditor.swift */,
 				32EE31EC1F711CBF00939EE8 /* Field0Cell.swift */,
 				32933A0A1F726A0600D3D88B /* Field0Editor.swift */,
 				329339FE1F7249D600D3D88B /* Field1Cell.swift */,
@@ -411,6 +458,11 @@
 		329D883D1F6F707E00D304FF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				322BD30E1F94C3B2003C650E /* CoreTelephony.framework */,
+				322BD30C1F94C3A4003C650E /* libc++.tbd */,
+				322BD30A1F94C394003C650E /* libz.tbd */,
+				322BD3081F94C389003C650E /* libsqlite3.0.tbd */,
+				322BD3061F94C37A003C650E /* SystemConfiguration.framework */,
 				329D883E1F6F707E00D304FF /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -434,6 +486,7 @@
 				329D88451F6F7BE200D304FF /* Contents.storyboard */,
 				329D88491F6F7BF800D304FF /* ContentsVC.swift */,
 				321114D61F78B2A7005EA426 /* 二维码扫描 */,
+				322BD2EC1F94BEF2003C650E /* 分享 */,
 				329B12761F6FADED0061C38E /* cells */,
 				32EE31E31F70FA0400939EE8 /* 政策详情 */,
 				32EE31EE1F7120A600939EE8 /* 编辑页 */,
@@ -466,6 +519,7 @@
 				324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */,
 				32F6137B1F753FC700F72FB7 /* Tabbar+Extension.swift */,
 				32DB0A901F92702A0099481A /* String+Extension.swift */,
+				322F48621F946511006C724B /* Date+Extension.swift */,
 			);
 			name = "扩展";
 			sourceTree = "<group>";
@@ -622,7 +676,9 @@
 				32EE31F21F7120CF00939EE8 /* Edit.storyboard in Resources */,
 				32BB6E561F7F790200FC47F2 /* Login.storyboard in Resources */,
 				3269DF3A1F7A825700C14FC3 /* List.storyboard in Resources */,
+				322BD2F81F94C02A003C650E /* s_2.png in Resources */,
 				329339EB1F7241B700D3D88B /* Editor.storyboard in Resources */,
+				322BD2F71F94C027003C650E /* s_1.png in Resources */,
 				321115C71F792D7E005EA426 /* Status.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,7 +713,9 @@
 				329B12781F6FB0CF0061C38E /* FirstCell.swift in Sources */,
 				329D88571F6FA80F00D304FF /* Font+Extension.swift in Sources */,
 				32F6137C1F753FC700F72FB7 /* Tabbar+Extension.swift in Sources */,
+				322F48651F94B016006C724B /* FieldEditor.swift in Sources */,
 				32933A071F724A1D00D3D88B /* Field5Cell.swift in Sources */,
+				322BD2EB1F94B7C6003C650E /* ScanVC.swift in Sources */,
 				329339F21F72435A00D3D88B /* FieldCell.swift in Sources */,
 				329339F91F72498800D3D88B /* Group1Cell.swift in Sources */,
 				324A91A31F73DD4600A1F721 /* ViewController+Extension.swift in Sources */,
@@ -673,6 +731,7 @@
 				32EE31E71F70FB5800939EE8 /* PolicyVC.swift in Sources */,
 				321115C51F792D41005EA426 /* 0fflineVC.swift in Sources */,
 				321115C91F7A28B0005EA426 /* AuditingVC.swift in Sources */,
+				322BD2F61F94C021003C650E /* GANAlertAction.swift in Sources */,
 				32933A171F726B4200D3D88B /* Field6Editor.swift in Sources */,
 				32933A051F724A0C00D3D88B /* Field4Cell.swift in Sources */,
 				32EE31EB1F711CB300939EE8 /* GroupCell.swift in Sources */,
@@ -685,6 +744,7 @@
 				329339FF1F7249D600D3D88B /* Field1Cell.swift in Sources */,
 				32933A0D1F726ACB00D3D88B /* Field1Editor.swift in Sources */,
 				329D884A1F6F7BF800D304FF /* ContentsVC.swift in Sources */,
+				322F48631F946511006C724B /* Date+Extension.swift in Sources */,
 				329339F71F7248D600D3D88B /* Group0Cell.swift in Sources */,
 				329339FB1F7249A400D3D88B /* Group2Cell.swift in Sources */,
 				32DB0A941F9271120099481A /* Header.h in Sources */,
@@ -881,6 +941,14 @@
 				INFOPLIST_FILE = government_park/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/government_park/SDK1.6.2",
+				);
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.governmentpark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = government_park/Header.h;
@@ -900,6 +968,14 @@
 				INFOPLIST_FILE = government_park/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/government_park/SDK1.6.2",
+				);
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.orangebrush.governmentpark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = government_park/Header.h;

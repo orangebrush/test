@@ -7,7 +7,7 @@
 //多选编辑器
 
 import UIKit
-class Field6Editor: UIViewController {
+class Field6Editor: FieldEditor {
     
     @IBOutlet weak var tableView: UITableView!
     

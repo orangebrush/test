@@ -117,18 +117,16 @@ public class NWHMe: NSObject {
     
     
     //MARK: 获取收藏政策
-    public func getBookmarkPolicy(withPolicyId policyId: Int? = nil, closure: @escaping (_ resultCode: ResultCode, _ message: String, _ data: [Policy]?) -> ()){
+    public func getBookmarkPolicy(closure: @escaping (_ resultCode: ResultCode, _ message: String, _ data: [Policy]?) -> ()){
         guard let account = localAccount, let password = localPassword else {
             closure(.failure, "未登录", nil)
             return
         }
-        var dic: [String: Any] = [
+        let dic: [String: Any] = [
             "userId": account,
             "password": password
         ]
-        if let id = policyId{
-            dic["policyId"] = id
-        }
+  
         Session.session(withAction: Actions.allBookmark, withMethod: Method.get, withParam: dic) { (resultCode, message, data) in
             
             var policyList = [Policy]()

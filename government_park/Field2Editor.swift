@@ -7,7 +7,7 @@
 //图片编辑器
 
 import UIKit
-class Field2Editor: UIViewController {
+class Field2Editor: FieldEditor {
     
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!

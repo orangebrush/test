@@ -7,7 +7,8 @@
 //短文本编辑器
 
 import UIKit
-class Field0Editor: UIViewController {
+import gov_sdk
+class Field0Editor: FieldEditor {
     
     @IBOutlet weak var textField: UITextField!
     
@@ -36,6 +37,22 @@ class Field0Editor: UIViewController {
     
     //MARK: 保存
     @IBAction func save(_ sender: Any) {
+        let saveFieldParams = SaveFieldParams()
+        saveFieldParams.applyId = applyId
+        saveFieldParams.componentId = componentId
+        saveFieldParams.fieldId = fieldId
+        saveFieldParams.instanceId = instanceId
+        saveFieldParams.value = textField.text
+        NetworkHandler.share().field.saveField(withSaveFieldParams: saveFieldParams) { (resultCode, message, data) in
+            DispatchQueue.main.async {
+                guard resultCode == .success else{
+                    self.notif(withTitle: message, duration: 3, closure: nil)
+                    return
+                }
+                
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     //MARK:- 复制判断

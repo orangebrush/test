@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import gov_sdk
 class FinishedVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var data = ["1", "2", "3"]
+    var applyList = [Apply]()
     
     //MARK:- init----------------------------------------------------
     override func viewDidLoad() {
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
 }
 
@@ -27,15 +32,19 @@ extension FinishedVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return applyList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         let identifier = "cell0"
         
+        let apply = applyList[row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! MeCell0
-        cell.titleLabel.text = data[row]
+        cell.titleLabel.text = apply.policyShortTitle
+        cell.subTitleLabel.text = apply.dateHint
+        cell.detailLabel.text = apply.statusHint
         return cell
     }
     

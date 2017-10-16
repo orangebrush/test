@@ -7,7 +7,7 @@
 //联动编辑器
 
 import UIKit
-class Field5Editor: UIViewController {
+class Field5Editor: FieldEditor {
     
     fileprivate var selectedData: String?
     

@@ -65,7 +65,7 @@ public class NWHEditor: NSObject {
                 dic["groupId"] = "\(groupId)"
                 dic["instanceId"] = "\(instanceId)"
                 
-                Session.session(withAction: Actions.getInstance, withMethod: Method.post, withParam: dic, closure: { (resultCode, message, data) in
+                Session.session(withAction: Actions.getInstance, withMethod: Method.get, withParam: dic, closure: { (resultCode, message, data) in
                     var item: Item?
                     if let itemData = data as? [String: Any]{
                         item = DataEncode.item(withItemData: itemData)
@@ -75,9 +75,9 @@ public class NWHEditor: NSObject {
             }
         }else{
             if let groupId = params.groupId{        //获取普通组下内容
-                dic["groupId"] = groupId
+                dic["groupId"] = "\(groupId)"
                 
-                Session.session(withAction: Actions.getGroup, withMethod: Method.post, withParam: dic, closure: { (resultCode, message, data) in
+                Session.session(withAction: Actions.getGroup, withMethod: Method.get, withParam: dic, closure: { (resultCode, message, data) in
                     var item: Item?
                     if let itemData = data as? [String: Any]{
                         item = DataEncode.item(withItemData: itemData)
@@ -85,7 +85,7 @@ public class NWHEditor: NSObject {
                     closure(resultCode, message, item)
                 })
             }else{                                  //获取组件下内容
-                Session.session(withAction: Actions.getComponent, withMethod: Method.post, withParam: dic, closure: { (resultCode, message, data) in
+                Session.session(withAction: Actions.getComponent, withMethod: Method.get, withParam: dic, closure: { (resultCode, message, data) in
                     var item: Item?
                     if let itemData = data as? [String: Any]{
                         item = DataEncode.item(withItemData: itemData)

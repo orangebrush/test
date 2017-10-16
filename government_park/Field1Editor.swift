@@ -7,10 +7,11 @@
 //长文本编辑器
 
 import UIKit
-class Field1Editor: UIViewController {
+class Field1Editor: FieldEditor {
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var charactersLabel: UILabel!
+    
     
     var maxLength = 500
     var minLength = 1

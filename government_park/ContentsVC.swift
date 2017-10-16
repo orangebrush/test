@@ -184,6 +184,8 @@ extension ContentsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = indexPath.section
         let row = indexPath.row
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.setSelected(false, animated: true)
         
         if section == 0 {       //政策解读 sel
             

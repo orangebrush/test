@@ -31,7 +31,7 @@ class GroupCell: UITableViewCell {
         
     }
     
-    //MARK: 按钮点击
+    //MARK: 按钮点击  tap=条目id  (tag = 0 普通组)
     @IBAction func click(_ sender: UIButton) {
         closure?(sender.tag)
     }
