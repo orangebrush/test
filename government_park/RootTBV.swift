@@ -36,7 +36,7 @@ class RootTBV: UITabBarController {
 
         NetworkHandler.share().home.getAllNews { (resultCode, message, allNewsData) in
             guard resultCode == .success else{
-                self.notif(withTitle: message, duration: 3, closure: nil)
+                self.notif(withTitle: message, closure: nil)
                 return
             }
         }

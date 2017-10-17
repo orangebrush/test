@@ -32,7 +32,7 @@ class PolicyVC: UIViewController {
                 
                 DispatchQueue.main.async {
                     guard resultCode == .success else{
-                        self.notif(withTitle: message, duration: 3, closure: nil)
+                        self.notif(withTitle: message, closure: nil)
                         return
                     }
                     self.collectionButton.isEnabled = true
@@ -127,6 +127,7 @@ class PolicyVC: UIViewController {
                         }
                         
                         self.applyButton.isEnabled = true
+                        self.tableView.isHidden = false
                         
                         guard let apl = apply else{
                             //新建申请
@@ -146,7 +147,7 @@ class PolicyVC: UIViewController {
     private func getApplyClosure(resultCode: ResultCode, message: String, apply: Apply?){
         DispatchQueue.main.async {
             guard resultCode == .success else {
-                //self.notif(withTitle: message, duration: 3, closure: nil)
+                //self.notif(withTitle: message, closure: nil)
                 return
             }
             guard let apl = apply else{
@@ -165,6 +166,8 @@ class PolicyVC: UIViewController {
         collectionButton.isHidden = true
         applyButton.isEnabled = false
         applyButton.setTitle("申请", for: .normal)
+        
+        tableView.isHidden = true
     }
     
     private func createContents(){
@@ -179,6 +182,8 @@ class PolicyVC: UIViewController {
     //MARK:- 申请或查看或继续编辑
     @IBAction func apply(_ sender: Any) {
         
+        applyButton.isEnabled = false
+        
         if let apl = apply {
             let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
             editVC.policyId = id
@@ -192,7 +197,7 @@ class PolicyVC: UIViewController {
             NetworkHandler.share().policy.addApply(withPolicyId: self.id){ (resultCode, message, apply) in
                 DispatchQueue.main.async {
                     guard resultCode == .success else{
-                        self.notif(withTitle: message, duration: 3, closure: nil)
+                        self.notif(withTitle: message, closure: nil)
                         return
                     }
                     

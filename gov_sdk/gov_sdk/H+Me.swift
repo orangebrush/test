@@ -41,6 +41,7 @@ public enum InstanceStatus: String{
     case cancel = "C"
 }
 public class GovernmentContact: NSObject{
+    public var id: Int = 0
     public var name: String?
     public var phone: String?
 }
@@ -106,8 +107,9 @@ public class NWHMe: NSObject {
             var applyList = [Apply]()
             if let dList = data as? [[String: Any]]{
                 for applyData in dList{                    
-                    let apply = DataEncode.apply(withApplyData: applyData)
-                    applyList.append(apply)
+                    if let apply = DataEncode.apply(withApplyData: applyData){
+                        applyList.append(apply)
+                    }
                 }
             }
             closure(resultCode, message, applyList)

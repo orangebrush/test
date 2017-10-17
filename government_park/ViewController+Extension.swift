@@ -12,7 +12,7 @@ var notifList = [(title: String, duration: TimeInterval, closure: Closure?)]()
 var notifView: UIView?
 extension UIViewController{
     //MARK:- 顶部提示
-    func notif(withTitle title: String, duration: TimeInterval, closure: Closure?){
+    func notif(withTitle title: String, duration: TimeInterval = 3, closure: Closure?){
         if notifView != nil{
             notifList.append((title: title, duration: duration, closure: closure))
         }else{

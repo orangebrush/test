@@ -91,7 +91,7 @@ extension ScanVC: AVCaptureMetadataOutputObjectsDelegate{
             NetworkHandler.share().QR.login(withUUID: uuid) { (resultCode, message, data) in
                 DispatchQueue.main.async {
                     guard resultCode == .success else{
-                        self.notif(withTitle: message, duration: 3, closure: nil)
+                        self.notif(withTitle: message, closure: nil)
                         self.login()
                         return
                     }
@@ -99,7 +99,7 @@ extension ScanVC: AVCaptureMetadataOutputObjectsDelegate{
                 }
             }
         }else{
-            notif(withTitle: "无法识别", duration: 3, closure: nil)
+            notif(withTitle: "无法识别", closure: nil)
         }
     }
 }

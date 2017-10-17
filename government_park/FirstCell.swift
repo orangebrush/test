@@ -57,13 +57,17 @@ class FirstCell: UITableViewCell {
                 scrollView.addSubview(label)
                 
                 //获取图片
-                if let imgUrl = news.picUrl{
-                    do{
-                        let imgData = try Data(contentsOf: imgUrl)
-                        let image = UIImage(data: imgData)
-                        imageView.image = image
-                    }catch let error{
-                        print("loading image error: \(error)")
+                DispatchQueue.global().async {
+                    if let imgUrl = news.picUrl{
+                        do{
+                            let imgData = try Data(contentsOf: imgUrl)
+                            let image = UIImage(data: imgData)
+                            DispatchQueue.main.async {
+                                imageView.image = image                                
+                            }
+                        }catch let error{
+                            print("loading image error: \(error)")
+                        }
                     }
                 }
             }

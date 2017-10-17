@@ -22,6 +22,7 @@ class MeVC: UIViewController {
     
     //所有申请map
     fileprivate var applyListMap = [ApplyStatus: [Apply]]()
+    fileprivate var cancelList = [Apply]()
     //所有申请list
     fileprivate var applyListList = Array(repeating: [Apply](), count: 4)
     
@@ -43,41 +44,49 @@ class MeVC: UIViewController {
         NetworkHandler.share().me.getAllApply { (resultCode, message, applyList) in
             DispatchQueue.main.async {
                 guard resultCode == .success else{
-                    self.notif(withTitle: message, duration: 3, closure: nil)
+                    self.notif(withTitle: message, closure: nil)
                     self.login()
                     return
                 }
                 
                 guard let aplList = applyList else{
-                    self.notif(withTitle: message, duration: 3, closure: nil)
+                    self.notif(withTitle: message, closure: nil)
                     return
                 }
                 
                 self.applyListMap.removeAll()
+                self.applyListList = Array(repeating: [Apply](), count: 4)
+                self.cancelList.removeAll()
                 
                 //存储申请列表
                 for apply in aplList{
-                    if let status = apply.applyStatus{
-                        if self.applyListMap[status] == nil{
-                            self.applyListMap[status] = [Apply]()
-                            //index += 1
+                    if let instanceStatus = apply.instanceStatus{
+                        if instanceStatus == InstanceStatus.normal{
+                            if let status = apply.applyStatus{
+                                if self.applyListMap[status] == nil{
+                                    self.applyListMap[status] = [Apply]()
+                                    //index += 1
+                                }
+                                
+                                self.applyListMap[status]?.append(apply)
+                                
+                                let index: Int
+                                switch status{
+                                case let sta where self.applyStatusListList[0].contains(sta):
+                                    index = 0
+                                case let sta where self.applyStatusListList[1].contains(sta):
+                                    index = 1
+                                case let sta where self.applyStatusListList[2].contains(sta):
+                                    index = 2
+                                default:
+                                    index = 3
+                                }
+                                self.applyListList[index].append(apply)
+                                self.tableView.reloadData()
+                            }
+                        }else{
+                            self.cancelList.append(apply)
                         }
-                        
-                        self.applyListMap[status]?.append(apply)
-
-                        let index: Int
-                        switch status{
-                        case let sta where self.applyStatusListList[0].contains(sta):
-                            index = 0
-                        case let sta where self.applyStatusListList[1].contains(sta):
-                            index = 1
-                        case let sta where self.applyStatusListList[2].contains(sta):
-                            index = 2
-                        default:
-                            index = 3
-                        }
-                        self.applyListList[index].append(apply)
-                        self.tableView.reloadData()
                     }
                 }
                 
@@ -85,7 +94,7 @@ class MeVC: UIViewController {
                 NetworkHandler.share().me.getBookmarkPolicy { (resultCode, message, policyList) in
                     DispatchQueue.main.async {
                         guard let list = policyList else{
-                            self.notif(withTitle: message, duration: 3, closure: nil)
+                            self.notif(withTitle: message, closure: nil)
                             return
                         }
                         
@@ -172,7 +181,7 @@ extension MeVC: UITableViewDelegate, UITableViewDataSource{
             cell1.closure = {
                 //点击查看已完结回调
                 let finishedVC = UIStoryboard(name: "Finished", bundle: Bundle.main).instantiateViewController(withIdentifier: "finished") as! FinishedVC
-                finishedVC.applyList = self.applyListList[3]
+                finishedVC.applyList = self.applyListList[3] + self.cancelList
                 self.navigationController?.show(finishedVC, sender: nil)
             }
             cell = cell1
@@ -211,12 +220,14 @@ extension MeVC: UITableViewDelegate, UITableViewDataSource{
             let apply = applyListList[section][row]
             let offlineVC = UIStoryboard(name: "Status", bundle: Bundle.main).instantiateViewController(withIdentifier: "offline") as! OfflineVC
             offlineVC.apply = apply
+            offlineVC.navigationItem.title = apply.policyShortTitle
             navigationController?.show(offlineVC, sender: nil)
         case .auditing:             //审核中
             //跳转到申请状态页(auditing)
             let apply = applyListList[section][row]
             let auditingVC = UIStoryboard(name: "Status", bundle: Bundle.main).instantiateViewController(withIdentifier: "auditing") as! AuditingVC
-            auditingVC.apply = apply
+            auditingVC.applyId = apply.id
+            auditingVC.navigationItem.title = apply.policyShortTitle
             navigationController?.show(auditingVC, sender: nil)
         case .editing:              //编辑资料
             //跳转到申请编辑器(editing)
@@ -224,9 +235,11 @@ extension MeVC: UITableViewDelegate, UITableViewDataSource{
             let editVC = UIStoryboard(name: "Edit", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit") as! EditVC
             editVC.isRootEdit = true
             editVC.apply = apply
+            editVC.applyId = apply.id
             editVC.navigationItem.title = apply.policyShortTitle
             editVC.policyId = apply.policyId
             
+            editVC.navigationItem.title = apply.policyShortTitle
             navigationController?.show(editVC, sender: nil)
         case .collected:            //收藏
             //跳转到政策详情页(collected)

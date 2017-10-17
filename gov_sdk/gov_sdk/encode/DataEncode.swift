@@ -47,7 +47,10 @@ class DataEncode {
     }
     
     //MARK: 解析apply
-    class func apply(withApplyData applyData: [String: Any]) -> Apply{
+    class func apply(withApplyData applyData: [String: Any]) -> Apply?{
+        if applyData.isEmpty{
+            return nil
+        }
         let apply = Apply()
         if let id = applyData["id"] as? Int{
             apply.id = id
@@ -85,10 +88,13 @@ class DataEncode {
             if let appointDate = appointmentData["appointDate"] as? Int{
                 appointment.appointDate = TimeInterval(appointDate).date()
             }
-            if let governmentContactData = appointmentData["governmentContact"] as? [String: String]{
+            if let governmentContactData = appointmentData["governmentContact"] as? [String: Any]{
                 let governmentContact = GovernmentContact()
-                governmentContact.name = governmentContactData["name"]
-                governmentContact.phone = governmentContactData["phone"]
+                if let id = governmentContactData["id"] as? Int{
+                    governmentContact.id = id
+                }
+                governmentContact.name = governmentContactData["name"] as? String
+                governmentContact.phone = governmentContactData["phone"] as? String
                 appointment.governmentContact = governmentContact
             }
             apply.appointment = appointment
@@ -174,7 +180,7 @@ class DataEncode {
                         item.fieldType = .enclosure
                     case 9110, 9120, 9130:                                      //单选
                         item.fieldType = .single
-                    case 9310, 9320, 9330, 9340, 9350:                          //多选
+                    case 9310, 9320, 9330, 9340, 9350, 9390:                    //多选
                         item.fieldType = .multi
                     case 9210:                                                  //联动
                         item.fieldType = .linkage

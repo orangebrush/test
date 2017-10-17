@@ -7,19 +7,23 @@
 //多选编辑器
 
 import UIKit
+import gov_sdk
 class Field6Editor: FieldEditor {
     
     @IBOutlet weak var tableView: UITableView!
     
     fileprivate var textfieldMap = [Int: UITextField]()
     
-    var dataList = [String]()
+    var valueList = [Value]()
     var maxLength = 20
     
     //MARK:- init-----------------------------------------
     override func viewDidLoad() {
-        
         config()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
         createContents()
     }
     
@@ -28,7 +32,7 @@ class Field6Editor: FieldEditor {
     }
     
     private func createContents(){
-        
+        tableView.reloadData()
     }
     
     //MARK: 保存选择
@@ -39,8 +43,46 @@ class Field6Editor: FieldEditor {
             return
         }
         
-        let rowList = indexPathList.map{$0.row}
+        let saveFieldParams = SaveFieldParams()
+        saveFieldParams.applyId = applyId
+        saveFieldParams.componentId = componentId
+        saveFieldParams.fieldId = fieldId
+        saveFieldParams.instanceId = instanceId
+        /*
+         简单字段：
+         value = '1234';
+         单选字段 / 联动单选字段：
+         value = '{"id": 1234, "title": "XXXX"}';
+         多选字段：
+         value = '[{"id": 1234, "title": "XXXX", "extraValue": "2345"}, {"id": 5678, "title": "XXXX", "extraValue": "6789"}]';
+         多选字段示例二（可能没有extraValue的情况）：
+         value = '[{"id": 1234, "title": "XXXX", "extraValue": "2345"}, {"id": 5678, "title": "XXXX"}]';
+         */
+        var dataDicList = [[String: Any]]()
+        for indexPath in indexPathList{
+            var dataDic = [String: Any]()
+            let value = valueList[indexPath.row]
+            dataDic["id"] = value.id
+            dataDic["title"] = value.title ?? ""
+            if !value.extraValue.isEmpty{
+                let cell1 = tableView.cellForRow(at: indexPath) as! Field6EditorCell1
+                dataDic["extraValue"] = cell1.textField.text ?? ""
+            }
+            dataDicList.append(dataDic)
+        }
+        let data = try! JSONSerialization.data(withJSONObject: dataDicList, options: .prettyPrinted)
+        let valueJson = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
         
+        saveFieldParams.value = valueJson
+        NetworkHandler.share().field.saveField(withSaveFieldParams: saveFieldParams) { (resultCode, message, data) in
+            DispatchQueue.main.async {
+                self.notif(withTitle: message, closure: nil)
+                guard resultCode == .success else{
+                    return
+                }
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
 }
 
@@ -51,24 +93,31 @@ extension Field6Editor: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataList.count
+        return valueList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
+        let value = valueList[row]
         var cell: UITableViewCell
-        cell = tableView.dequeueReusableCell(withIdentifier: "cell!")!
-        
-        let cell1 = cell as! Field6EditorCell1
-        cell1.rowIndex = row
-        return cell1
+        if value.extraValue.isEmpty{
+            cell = tableView.dequeueReusableCell(withIdentifier: "cell0")!
+            let cell0 = cell as! Field6EditorCell0
+            cell0.value = value
+            return cell0
+        }else{
+            cell = tableView.dequeueReusableCell(withIdentifier: "cell1")!
+            let cell1 = cell as! Field6EditorCell1
+            cell1.value = value
+            return cell1
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         
         let cell = tableView.cellForRow(at: indexPath)
-        if cell?.accessoryType == .none {
+        if cell?.accessoryType != .checkmark {
             cell?.accessoryType = .checkmark
         }else{
             cell?.accessoryType = .none

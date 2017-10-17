@@ -96,7 +96,7 @@ class FindPasswordVC: UIViewController {
         NetworkHandler.share().account.getResetVerifyCode(withAccount: account!) { (resultCode, message, data) in
             DispatchQueue.main.async {
                 
-                self.notif(withTitle: message, duration: 3, closure: nil)
+                self.notif(withTitle: message, closure: nil)
             }
         }
     }
@@ -116,7 +116,7 @@ class FindPasswordVC: UIViewController {
             }
             
             guard newPasswordTuple.isLegal else {
-                notif(withTitle: newPasswordTuple.message, duration: 3, closure: nil)
+                notif(withTitle: newPasswordTuple.message, closure: nil)
                 return
             }
             
@@ -135,7 +135,7 @@ class FindPasswordVC: UIViewController {
             verification = verificationTextField.text
             let verificationTuple = isVerifyCodeLegal(withString: verification)
             guard verificationTuple.isLegal else{
-                notif(withTitle: verificationTuple.message, duration: 3, closure: nil)
+                notif(withTitle: verificationTuple.message, closure: nil)
                 return
             }
             

@@ -7,6 +7,7 @@
 //长文本编辑器
 
 import UIKit
+import gov_sdk
 class Field1Editor: FieldEditor {
     
     @IBOutlet weak var textView: UITextView!
@@ -34,6 +35,22 @@ class Field1Editor: FieldEditor {
     
     //MARK: 保存
     @IBAction func save(_ sender: Any) {
+        let saveFieldParams = SaveFieldParams()
+        saveFieldParams.applyId = applyId
+        saveFieldParams.componentId = componentId
+        saveFieldParams.fieldId = fieldId
+        saveFieldParams.instanceId = instanceId
+        saveFieldParams.value = textView.text
+        NetworkHandler.share().field.saveField(withSaveFieldParams: saveFieldParams) { (resultCode, message, data) in
+            DispatchQueue.main.async {
+                guard resultCode == .success else{
+                    self.notif(withTitle: message, closure: nil)
+                    return
+                }
+                
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
 }
 

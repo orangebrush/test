@@ -20,6 +20,7 @@ public class SaveFileParams: NSObject{
     public var componentId = 0
     public var applyId = 0
     public var instanceId: Int?
+    ///组或字段id
     public var fromItemId = 0       //组或字段实例id
     public var image: UIImage?
 }

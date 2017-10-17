@@ -108,7 +108,7 @@ public class NWHAttachment: NSObject {
         let dic: [String: Any] = [
             "applyId": "\(applyId)",
             "attachmentId": "\(stuffId)",
-            "checked": marked,
+            "checked": marked ? "1" : "0",
             "userId": account,
             "password": password
         ]

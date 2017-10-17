@@ -7,6 +7,7 @@
 //图片编辑器
 
 import UIKit
+import gov_sdk
 class Field2Editor: FieldEditor {
     
     @IBOutlet weak var addButton: UIButton!
@@ -56,6 +57,7 @@ class Field2Editor: FieldEditor {
     //MARK: 删除图片
     @IBAction func deleteImage(_ sender: Any) {
         image = nil
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -117,6 +119,21 @@ extension Field2Editor: UIActionSheetDelegate{
 extension Field2Editor: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         self.image = image
+        let saveFileParams = SaveFileParams()
+        saveFileParams.applyId = applyId
+        saveFileParams.componentId = componentId
+        saveFileParams.image = image
+        saveFileParams.instanceId = instanceId
+        saveFileParams.fromItemId = fieldId
+        NetworkHandler.share().field.saveFile(withSaveFileParams: saveFileParams) { (resultCode, message, tuple) in
+            DispatchQueue.main.async {
+                guard resultCode == .success else{
+                    self.notif(withTitle: message, closure: nil)
+                    return
+                }
+                self.notif(withTitle: message, closure: nil)
+            }
+        }
         picker.dismiss(animated: true){}
     }
     

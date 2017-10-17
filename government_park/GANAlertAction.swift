@@ -12,6 +12,8 @@ let kNotifShared = "sharenotif"
 class GANAlertAction: UIView {
     
     var height:CGFloat = 0
+    
+    private var isShow = false
     init(){
         height = view_size.height * 0.3
         super.init(frame: CGRect(origin: CGPoint(x: 0, y: view_size.height), size: CGSize(width: view_size.width, height: height)))
@@ -20,29 +22,31 @@ class GANAlertAction: UIView {
     }
     
     fileprivate func config(){
-        swipIn()
+        swipOut()
     }
     
     fileprivate func createContents(){
-        for index in 0..<6{
+        for index in 0..<2{
             let singleWechat = UIButton(type: UIButtonType.custom)
-            singleWechat.setImage(UIImage(named: "s_\(index + 1)"), for: UIControlState())
+            singleWechat.setImage(UIImage(named: "resource/share/s_\(index + 1)"), for: UIControlState())
             singleWechat.tag = index + 1
-            singleWechat.frame = CGRect(x: view_size.width / 6 * CGFloat(index + 1) - 25, y: frame.size.height * 0.3, width: 50, height: 50)
+            singleWechat.frame = CGRect(x: view_size.width / 2 + CGFloat(index) * 80 - 40 - 25, y: frame.size.height * 0.2, width: 50, height: 50)
             singleWechat.addTarget(self, action: #selector(GANAlertAction.pressBtn(_:)), for: .touchUpInside)
             addSubview(singleWechat)
         }
-        
-//        let cancelButton = UIButton(type: UIButtonType.Custom)
-//        cancelButton.setTitle("Cancel", forState: UIControlState.Normal)
-//        cancelButton.setTitleColor(UIColor(red: 0.7, green: 0.9, blue: 0.9, alpha: 1), forState: .Normal)
-//        cancelButton.frame = CGRect(x: 0, y: frame.size.height * 0.7, width: frame.size.width, height: frame.size.height * 0.3)
-//        cancelButton.addTarget(self, action: "swipOut", forControlEvents: .TouchUpInside)
-//        addSubview(cancelButton)
     }
     
-    func swipIn(){
+    func swip(){
+        if isShow {
+            swipOut()
+        }else{
+            swipIn()
+        }
+    }
+    
+    private func swipIn(){
         UIView.animate(withDuration: 1, animations: {
+            self.isShow = true
             self.frame = CGRect(origin: CGPoint(x: 0, y: view_size.height - self.height), size: CGSize(width: view_size.width, height: self.height))
             }, completion: {
                 finished in
@@ -50,8 +54,9 @@ class GANAlertAction: UIView {
         })
     }
     
-    func swipOut(){
+    private func swipOut(){
         UIView.animate(withDuration: 1, animations: {
+            self.isShow = false
             self.frame = CGRect(origin: CGPoint(x: 0, y: view_size.height), size: CGSize(width: view_size.width, height: self.height))
             }, completion: {
                 finished in

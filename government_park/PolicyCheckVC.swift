@@ -35,7 +35,7 @@ class PolicyCheckVC: UIViewController {
     }
     
     private func config(){
-        
+        closeButton.layer.cornerRadius = .cornerRadius
     }
     
     private func createContents(){

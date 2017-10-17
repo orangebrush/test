@@ -46,7 +46,7 @@ class Field0Editor: FieldEditor {
         NetworkHandler.share().field.saveField(withSaveFieldParams: saveFieldParams) { (resultCode, message, data) in
             DispatchQueue.main.async {
                 guard resultCode == .success else{
-                    self.notif(withTitle: message, duration: 3, closure: nil)
+                    self.notif(withTitle: message, closure: nil)
                     return
                 }
                 

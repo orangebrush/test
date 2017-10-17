@@ -7,9 +7,19 @@
 //
 
 import UIKit
+import gov_sdk
 class Field6EditorCell0: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
+    
+    var value: Value?{
+        didSet{
+            guard let val = value else {
+                return
+            }
+            label.text = val.title
+        }
+    }
 }
 
 class Field6EditorCell1: UITableViewCell {
@@ -17,9 +27,15 @@ class Field6EditorCell1: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textField: UITextField!
     
-    var rowIndex: Int = 0{
+    var value: Value?{
         didSet{
-            textField.tag = tag
+            guard let val = value else {
+                return
+            }
+            if val.extraValue.isEmpty{
+                textField.isHidden = true
+            }
+            label.text = val.title
         }
     }
 }

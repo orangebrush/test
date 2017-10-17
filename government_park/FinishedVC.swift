@@ -49,12 +49,12 @@ extension FinishedVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let section = indexPath.section
         let row = indexPath.row
         
         //判断状态，选择跳转
         
         let auditingVC = UIStoryboard(name: "Status", bundle: Bundle.main).instantiateViewController(withIdentifier: "auditing") as! AuditingVC
+        auditingVC.applyId = applyList[row].id
         navigationController?.show(auditingVC, sender: nil)
     }
 }

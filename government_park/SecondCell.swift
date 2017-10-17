@@ -33,12 +33,14 @@ class SecondCell: UITableViewCell {
         createContents()
     }        
     
+    static var i = 0
     override func layoutIfNeeded() {
         
         guard let tuple = policyTuple else{
             return
         }
-        
+        SecondCell.i += 1
+        print("----\(SecondCell.i)")
         if tuple.isOpen {
             let oldButtonFrame = buttonView.frame
             buttonView.frame.origin = CGPoint(x: oldButtonFrame.origin.x, y: frame.height - oldButtonFrame.height - .edge8)
@@ -47,12 +49,16 @@ class SecondCell: UITableViewCell {
         
         //更新内容
         let policy = tuple.policy
-        if let url = policy.smallPicUrl{
-            do{
-                let imageData = try Data(contentsOf: url)
-                let image = UIImage(data: imageData)
-                backImageView.image = image
-            }catch {}
+        DispatchQueue.global().async {
+            if let url = policy.smallPicUrl{
+                do{
+                    let imageData = try Data(contentsOf: url)
+                    let image = UIImage(data: imageData)
+                    DispatchQueue.main.async {
+                        self.backImageView.image = image
+                    }
+                }catch {}
+            }
         }
         imageLabel.text = policy.shortTitle
         

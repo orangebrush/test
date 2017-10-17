@@ -32,7 +32,7 @@
         <!--ScanVC-->
         <scene sceneID="EGU-Rb-7dk">
             <objects>
-                <viewController id="QnY-lt-sjN" customClass="ScanVC" customModule="government_park" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="scan" id="QnY-lt-sjN" customClass="ScanVC" customModule="government_park" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cjD-0D-uLd"/>
                         <viewControllerLayoutGuide type="bottom" id="kKK-hF-Eq8"/>

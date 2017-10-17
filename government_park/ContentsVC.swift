@@ -39,6 +39,10 @@ class ContentsVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+    }
+    
+    private func config() {
+        
         //更新数据
         let homeHandler = NetworkHandler.share().home
         homeHandler.getAllNews{
@@ -58,12 +62,12 @@ class ContentsVC: UIViewController {
             
             DispatchQueue.main.async {
                 guard resultCode == .success else{
-                    self.notif(withTitle: message, duration: 3, closure: nil)
+                    self.notif(withTitle: message, closure: nil)
                     return
                 }
                 
                 guard let policyList = allPolicyData?.policyList else{
-                    self.notif(withTitle: "policy list is empty", duration: 3, closure: nil)
+                    self.notif(withTitle: "policy list is empty", closure: nil)
                     return
                 }
                 
@@ -73,10 +77,6 @@ class ContentsVC: UIViewController {
                 }
             }
         }
-    }
-    
-    private func config() {
-        
     }
     
     private func createContents() {

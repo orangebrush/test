@@ -16,6 +16,7 @@ class EditVC: UIViewController {
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var applyButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     
     var isRootEdit = true
     
@@ -42,21 +43,32 @@ class EditVC: UIViewController {
         
         if isRootEdit{
             topView.isHidden = false
-            tableView.frame = CGRect(x: 0, y: 144, width: view_size.width, height: view_size.height - 116)
+            
+            //tableView.frame = CGRect(x: 0, y: 144, width: view_size.width, height: view_size.height - 116)
+            tableViewTopConstraint.constant = .edge8
             
             //如果apply的编辑数据为空则通过applyId重新拉取
             NetworkHandler.share().status.getApply(withApplyId: applyId, closure: { (resultCode, message, apply) in
                 DispatchQueue.main.async {
                     guard resultCode == .success else{
-                        self.notif(withTitle: message, duration: 3, closure: nil)
+                        self.notif(withTitle: message, closure: nil)
                         return
                     }
                     self.apply = apply
                     
                     //设置topView字段
-                    self.requireLabel.text = apply?.policyShortTitle
+                    self.requireLabel.text = apply?.statusHint
                     self.optionLabel.text = apply?.dateHint
-                    self.infoLabel.text = apply?.statusHint
+                    if let apl = apply{
+                        if apl.finished == 100{
+                            self.applyButton.layer.cornerRadius = .cornerRadius
+                            self.applyButton.isHidden = false
+                            self.infoLabel.text = "必填项目已完成，请在核实资料无误、全面后，正式将申请提交给政府。"
+                        }else{
+                            self.applyButton.isHidden = true
+                            self.infoLabel.text = ""
+                        }
+                    }
                     
                     //刷新
                     self.tableView.reloadData()
@@ -68,7 +80,7 @@ class EditVC: UIViewController {
                 NetworkHandler.share().policy.getPolicy(withPolicyId: policyId, closure: { (resultCode, message, policy) in
                     DispatchQueue.main.async {
                         guard resultCode == .success else{
-                            self.notif(withTitle: message, duration: 3, closure: nil)
+                            self.notif(withTitle: message, closure: nil)
                             return
                         }
                         self.policy = policy
@@ -77,7 +89,8 @@ class EditVC: UIViewController {
             }
         }else{
             topView.isHidden = true
-            tableView.frame = CGRect(x: 0, y: 0, width: view_size.width, height: view_size.height)
+            //tableView.frame = CGRect(x: 0, y: 0, width: view_size.width, height: view_size.height)
+            tableViewTopConstraint.constant = -116 - .edge8
             
             //清空右侧按钮
             navigationItem.rightBarButtonItems = []
@@ -93,7 +106,7 @@ class EditVC: UIViewController {
             NetworkHandler.share().editor.getItems(withParams: itemsParams, closure: { (resultCode, message, item) in
                 DispatchQueue.main.async {
                     guard resultCode == .success else{
-                        self.notif(withTitle: message, duration: 3, closure: nil)
+                        self.notif(withTitle: message, closure: nil)
                         return
                     }
                     if let itm = item{
@@ -114,6 +127,10 @@ class EditVC: UIViewController {
     
     private func config(){
         
+        infoLabel.font = .small
+        infoLabel.textColor = .gray
+        applyButton.isHidden = true
+        
         topView.layer.cornerRadius = .cornerRadius
     }
     
@@ -123,7 +140,16 @@ class EditVC: UIViewController {
     
     //MARK:- 提交申请
     @IBAction func apply(_ sender: Any) {
-        
+
+        NetworkHandler.share().rootEditor.submitApply(withApplyId: applyId) { (resultCode, message, data) in
+            DispatchQueue.main.async {
+                self.notif(withTitle: message, closure: nil)
+                guard resultCode == .success else{
+                    return
+                }
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     //MARK:- 查看政策
@@ -175,6 +201,8 @@ extension EditVC: UIActionSheetDelegate{
             print("关闭")
         case 2:
             print("登陆网页版")
+            let scanVC = UIStoryboard(name: "Contents", bundle: Bundle.main).instantiateViewController(withIdentifier: "scan") as! ScanVC
+            navigationController?.show(scanVC, sender: nil)
         default:
             print("other")
         }
@@ -232,7 +260,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
             
             let subTitleFrame = CGRect(x: .edge16, y: .edge8 * 2 + .labelHeight, width: headerFrame.width - .edge16, height: .labelHeight)
             let subTitleLabel = UILabel(frame: subTitleFrame)
-            subTitleLabel.text = "---"
+            subTitleLabel.text = catalog?.detailTitle //"---"
             subTitleLabel.font = .small
             header.addSubview(subTitleLabel)
         
@@ -275,7 +303,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
         NetworkHandler.share().editor.getItems(withParams: itemsParams, closure: { (resultCode, message, item) in
             DispatchQueue.main.async {
                 guard resultCode == .success else{
-                    self.notif(withTitle: message, duration: 3, closure: nil)
+                    self.notif(withTitle: message, closure: nil)
                     return
                 }
                 if let itm = item{
@@ -287,6 +315,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                     if itm.isGroup{
                         groupEditor.groupId = itm.id
                     }
+                    groupEditor.navigationItem.title = itm.title
                     self.navigationController?.show(groupEditor, sender: nil)
                 }
             }
@@ -361,7 +390,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 case .time:
                     let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
                     groupCell.firstLabel.text = base.title
-                    groupCell.secondLabel.text = base.hint
+                    groupCell.secondLabel.text = base.hint ?? ""
                     let valueList = base.valueList
                     for value in valueList{
                         groupCell.firstButton.setTitle(value.title, for: .normal)
@@ -388,6 +417,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 let assemblyCell = tableView.dequeueReusableCell(withIdentifier: fieldType!.identifier()) as! FieldCell
                 assemblyCell.firstLabel.text = base.title
                 assemblyCell.secondLabel.text = base.hint
+
                 cell = assemblyCell
             }
         }
@@ -427,6 +457,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 field0Editor.componentId = componentId!
                 field0Editor.instanceId = instanceId
                 field0Editor.fieldId = base.id
+                field0Editor.navigationItem.title = base.title
                 navigationController?.show(field0Editor, sender: nil)
             case .long:             //长文本
                 let field1Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field1Editor
@@ -434,6 +465,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 field1Editor.componentId = componentId!
                 field1Editor.instanceId = instanceId
                 field1Editor.fieldId = base.id
+                field1Editor.navigationItem.title = base.title
                 navigationController?.show(field1Editor, sender: nil)
             case .image:            //图片
                 let field2Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field2Editor
@@ -441,6 +473,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 field2Editor.componentId = componentId!
                 field2Editor.instanceId = instanceId
                 field2Editor.fieldId = base.id
+                field2Editor.navigationItem.title = base.title
                 navigationController?.show(field2Editor, sender: nil)
             case .enclosure:        //附件
                 let field3Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field3Editor
@@ -448,6 +481,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 field3Editor.componentId = componentId!
                 field3Editor.instanceId = instanceId
                 field3Editor.fieldId = base.id
+                field3Editor.navigationItem.title = base.title
                 navigationController?.show(field3Editor, sender: nil)
             case .single:           //单选
                 let field4Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field4Editor
@@ -455,6 +489,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 field4Editor.componentId = componentId!
                 field4Editor.instanceId = instanceId
                 field4Editor.fieldId = base.id
+                field4Editor.navigationItem.title = base.title
                 navigationController?.show(field4Editor, sender: nil)
             case .multi:            //多选
                 let field6Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field6Editor
@@ -462,6 +497,8 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 field6Editor.componentId = componentId!
                 field6Editor.instanceId = instanceId
                 field6Editor.fieldId = base.id
+                field6Editor.valueList = base.valueList
+                field6Editor.navigationItem.title = base.title
                 navigationController?.show(field6Editor, sender: nil)
             case .time:            //时间
                 let field7Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field7Editor
@@ -469,6 +506,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 field7Editor.componentId = componentId!
                 field7Editor.instanceId = instanceId
                 field7Editor.fieldId = base.id
+                field7Editor.navigationItem.title = base.title
                 navigationController?.show(field7Editor, sender: nil)
             default:                //联动
                 let field5Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field5Editor
@@ -476,6 +514,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 field5Editor.componentId = componentId!
                 field5Editor.instanceId = instanceId
                 field5Editor.fieldId = base.id
+                field5Editor.navigationItem.title = base.title
                 navigationController?.show(field5Editor, sender: nil)
             }
         }

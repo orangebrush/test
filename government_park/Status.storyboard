@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XmK-tF-bae">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="696"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -31,7 +31,7 @@
                             <constraint firstAttribute="trailing" secondItem="XmK-tF-bae" secondAttribute="trailing" id="B4R-hu-72R"/>
                             <constraint firstItem="XmK-tF-bae" firstAttribute="leading" secondItem="kbL-h6-UKJ" secondAttribute="leading" id="QLB-NX-w6s"/>
                             <constraint firstItem="XmK-tF-bae" firstAttribute="top" secondItem="c3V-ae-pqc" secondAttribute="bottom" id="rKa-XE-eKu"/>
-                            <constraint firstItem="k2Y-jh-zA7" firstAttribute="top" secondItem="XmK-tF-bae" secondAttribute="bottom" id="z6k-VD-VLI"/>
+                            <constraint firstItem="k2Y-jh-zA7" firstAttribute="top" secondItem="XmK-tF-bae" secondAttribute="bottom" constant="-49" id="z6k-VD-VLI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="rjH-Yi-mcL"/>
@@ -56,32 +56,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pxx-g7-KYf">
-                                <rect key="frame" x="62" y="20" width="250" height="105"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="105" id="LIf-b4-P8S"/>
-                                </constraints>
-                                <string key="text">你已经主动取消了这个申请，但你填写过的资料依然被妥善保存。你可以随时再次开启这个申请，你填写过的资料都将自动复原</string>
+                                <rect key="frame" x="62" y="28" width="250" height="101.5"/>
+                                <string key="text">你已经主动取消了这个申
+请，但你填写过的资料依然
+被妥善保存。你可以随时再
+次开启这个申请，你填写过
+的资料都将自动复原</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4uG-hH-YvO">
-                                <rect key="frame" x="62" y="133" width="250" height="30"/>
+                                <rect key="frame" x="62" y="137.5" width="250" height="30"/>
                                 <state key="normal" title="重启申请"/>
+                                <connections>
+                                    <action selector="clickButton:" destination="hml-Uu-Cca" eventType="touchUpInside" id="QmI-op-18j"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpF-Mm-ft5">
-                                <rect key="frame" x="62" y="207" width="250" height="105"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="105" id="nct-ym-Hv2"/>
-                                </constraints>
-                                <string key="text">如果你暂时不会申请这个政策，你可以点击下面的按钮把它从你的个人中心里清除掉。别担心，你填写过的数据可以随时还原。</string>
+                                <rect key="frame" x="62" y="211.5" width="250" height="101.5"/>
+                                <string key="text">如果你暂时不会申请这个政
+策，你可以点击下面的按钮
+把它从你的个人中心里清除
+掉。别担心，你填写过的数
+据可以随时还原。</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9vt-pa-jNR">
-                                <rect key="frame" x="62" y="320" width="250" height="30"/>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9vt-pa-jNR">
+                                <rect key="frame" x="62" y="321" width="250" height="30"/>
                                 <state key="normal" title="移除申请"/>
+                                <connections>
+                                    <action selector="clickButton:" destination="hml-Uu-Cca" eventType="touchUpInside" id="bYK-qm-gTI"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -93,7 +101,7 @@
                             <constraint firstItem="xpF-Mm-ft5" firstAttribute="width" secondItem="9Kc-Ft-AvR" secondAttribute="width" multiplier="2:3" id="U4z-eL-BMJ"/>
                             <constraint firstItem="4uG-hH-YvO" firstAttribute="centerX" secondItem="9Kc-Ft-AvR" secondAttribute="centerX" id="W6J-sD-YvP"/>
                             <constraint firstItem="9vt-pa-jNR" firstAttribute="centerX" secondItem="9Kc-Ft-AvR" secondAttribute="centerX" id="Xqx-Us-Tgx"/>
-                            <constraint firstItem="Pxx-g7-KYf" firstAttribute="top" secondItem="uSj-go-eox" secondAttribute="bottom" id="cE2-Ie-Y0a"/>
+                            <constraint firstItem="Pxx-g7-KYf" firstAttribute="top" secondItem="uSj-go-eox" secondAttribute="bottom" constant="8" id="cE2-Ie-Y0a"/>
                             <constraint firstItem="9vt-pa-jNR" firstAttribute="top" secondItem="xpF-Mm-ft5" secondAttribute="bottom" constant="8" id="ibW-dA-xdX"/>
                             <constraint firstItem="9vt-pa-jNR" firstAttribute="width" secondItem="xpF-Mm-ft5" secondAttribute="width" id="jWe-8p-yf1"/>
                             <constraint firstItem="4uG-hH-YvO" firstAttribute="top" secondItem="Pxx-g7-KYf" secondAttribute="bottom" constant="8" id="uwB-Kp-H4d"/>
@@ -105,9 +113,7 @@
                         <outlet property="button0" destination="4uG-hH-YvO" id="oPn-6r-qXx"/>
                         <outlet property="button1" destination="9vt-pa-jNR" id="yYF-fW-FNu"/>
                         <outlet property="label0" destination="Pxx-g7-KYf" id="hFn-kn-Drz"/>
-                        <outlet property="label0HeightConstraint" destination="LIf-b4-P8S" id="bQ1-uR-aPP"/>
                         <outlet property="label1" destination="xpF-Mm-ft5" id="4j5-1g-HOh"/>
-                        <outlet property="label1HeightConstraint" destination="nct-ym-Hv2" id="u0N-J5-HTP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qA4-2b-YL4" userLabel="First Responder" sceneMemberID="firstResponder"/>

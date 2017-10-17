@@ -11,10 +11,22 @@ import gov_sdk
 class NewsVC: UIViewController {
     
     @IBOutlet weak var webView: UIWebView!
+    private let ganAlert = GANAlertAction()
+    
     
     var news: News?
     
     //MARK:- init------------------------------------------------
+    override func viewDidLoad() {
+        view.addSubview(ganAlert)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(shareFromBotton(_:)), name: NSNotification.Name(rawValue: kNotifShared), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: kNotifShared), object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         
         guard let n = news else {
@@ -31,18 +43,24 @@ class NewsVC: UIViewController {
         }
     }
     
-    //MARK: 分享
-    @IBAction func share(_ sender: Any) {
-        
-        let ganAlert = GANAlertAction()
-        view.addSubview(ganAlert)
+    override func viewWillDisappear(_ animated: Bool) {
+        webView.stopLoading()
+        webView.delegate = nil
+        ganAlert.removeFromSuperview()
     }
     
-    func shareFramBotton(_ notif:Notification){
+    //MARK: 分享
+    @IBAction func share(_ sender: Any) {
+        ganAlert.swip()
+    }
+    
+    func shareFromBotton(_ notif:Notification){
         // 12345
-        let titleStr = "Come join me,kick balls！"
-        let urlStr = "https://itunes.apple.com/cn/app/freesball/id1073361604?l=zh&ls=1&mt=8"
-        print("\nshareBy:\(notif.object!)")
+        guard let n = news else {
+            return
+        }
+        let title = n.title
+
         switch notif.object as! Int{
         case 1:
             print("分享至微信好友")
@@ -52,14 +70,13 @@ class NewsVC: UIViewController {
             //            req.bText = true
             //            WXApi.sendReq(req)
             
-            let title = ""//"\(getData(.UserInfo, key: Key.Highscore))" + titleStr
             let message = WXMediaMessage()
             message.title = title
-            message.description = "FreesBall"
+            message.description = ""
             message.setThumbImage(UIImage(named: "180"))
             
             let ext = WXWebpageObject()
-            ext.webpageUrl = urlStr
+            ext.webpageUrl = n.url?.absoluteString ?? ""
             
             message.mediaObject = ext
             
@@ -72,14 +89,13 @@ class NewsVC: UIViewController {
         case 2:
             print("分享至朋友圈")
             
-            let title = "开发者的字体工具"//"\(getData(.UserInfo, key: Key.Highscore)!)" + titleStr
             let message = WXMediaMessage()
             message.title = title
-            message.description = "集合iOS所有系统字体，自定义选择收藏查看，对于开发途中预览大有益脾"//"FreesBall"
+            message.description = ""
             message.setThumbImage(UIImage(named: "fonticon"))
             
             let ext = WXWebpageObject()
-            ext.webpageUrl = "https://itunes.apple.com/us/app/fonts-for-designer/id1198088551?l=zh&ls=1&mt=8"//urlStr
+            ext.webpageUrl = n.url?.absoluteString ?? ""
             
             message.mediaObject = ext
             
