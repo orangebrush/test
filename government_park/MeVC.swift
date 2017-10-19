@@ -10,6 +10,8 @@ import UIKit
 import gov_sdk
 class MeVC: UIViewController {
     
+    @IBOutlet weak var createCompanyLabel: UILabel!
+    @IBOutlet weak var createCompanyButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     //状态列表
@@ -36,23 +38,72 @@ class MeVC: UIViewController {
     //MARK:- init----------------------------------------------
     override func viewDidLoad() {
         
+        config()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         navigationController?.isNavigationBarHidden = false
         
+        //判断用户状态
+        NetworkHandler.share().account.getUserinfo { (resultCode, message, user) in
+            DispatchQueue.main.async {
+                guard resultCode == .success else{
+                    self.notif(withTitle: message, closure: nil)
+                    self.login()
+                    return
+                }
+                
+                guard let userStatus = user?.status else{
+                    return
+                }
+                
+                switch userStatus{
+                case .normal:
+                    self.createContents()
+                case .notCertified:
+                    self.tableView.isHidden = true
+                    self.createCompanyLabel.isHidden = false
+                    self.createCompanyButton.isHidden = false
+                    self.createCompanyLabel.text = "你现在的账号尚未进行企业认证，暂时无法填写申请。"
+                case .auditing:
+                    self.tableView.isHidden = true
+                    self.createCompanyButton.isHidden = true
+                    self.createCompanyLabel.isHidden = false
+                    if let company = user?.company{
+                        self.createCompanyLabel.text = "你的企业认证资料已提交，企业名：" + company.name + "，请耐心等待审核，通常你将在一个工作日内得到结果。"
+                    }else{
+                        self.createCompanyLabel.text = "你的企业认证资料已提交，请耐心等待审核，通常你将在一个工作日内得到结果。"
+                    }
+                case .refuse:
+                    self.tableView.isHidden = true
+                    self.createCompanyButton.isHidden = false
+                    self.createCompanyLabel.isHidden = false
+                    self.createCompanyLabel.text = "你的企业认证未通过审核，请重新进行企业认证，只有通过认证的账号可以填写申请。"
+                }
+            }
+        }
+        
+        
+    }
+    
+    private func config(){
+        tableView.isHidden = true
+        createCompanyLabel.isHidden = true
+        createCompanyButton.isHidden = true
+        createCompanyLabel.font = .small
+        createCompanyLabel.textColor = .gray
+    }
+    
+    //MARK: 拉取内容
+    private func createContents(){
         //获取申请列表
         NetworkHandler.share().me.getAllApply { (resultCode, message, applyList) in
             DispatchQueue.main.async {
                 guard resultCode == .success else{
-                    self.notif(withTitle: message, closure: nil)
-                    if resultCode == .notCompany{
-                        //跳转到企业注册
-                    }else{
-                        //跳转到登陆
-                        self.login()
-                    }
+                    //self.notif(withTitle: message, closure: nil)
+                    //跳转到登陆
+                    //self.login()
                     return
                 }
                 
@@ -60,6 +111,10 @@ class MeVC: UIViewController {
                     self.notif(withTitle: message, closure: nil)
                     return
                 }
+                
+                self.tableView.isHidden = false
+                self.createCompanyButton.isHidden = true
+                self.createCompanyLabel.isHidden = true
                 
                 self.applyListMap.removeAll()
                 self.applyListList = Array(repeating: [Apply](), count: 4)
@@ -111,6 +166,11 @@ class MeVC: UIViewController {
                 }
             }
         }
+    }
+    
+    //MARK: 开始企业认证
+    @IBAction func certify(_ sender: Any){
+        createCompany()
     }
     
     //MARK: 个人设置

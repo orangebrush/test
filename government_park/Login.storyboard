@@ -273,7 +273,7 @@
         <!--Create CompanyVC-->
         <scene sceneID="jqo-yg-WkE">
             <objects>
-                <viewController id="giZ-ho-kic" customClass="CreateCompanyVC" customModule="government_park" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="createcompany" id="giZ-ho-kic" customClass="CreateCompanyVC" customModule="government_park" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SSO-18-v32"/>
                         <viewControllerLayoutGuide type="bottom" id="sRC-Tz-nyk"/>
@@ -289,6 +289,7 @@
                                 </constraints>
                                 <state key="normal" title="关闭"/>
                                 <connections>
+                                    <action selector="back:" destination="giZ-ho-kic" eventType="touchUpInside" id="ICg-rd-roX"/>
                                     <action selector="close:" destination="sit-qZ-Vif" eventType="touchUpInside" id="2OD-QX-wsR"/>
                                 </connections>
                             </button>
@@ -298,9 +299,9 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="NmA-uc-3WZ"/>
                                 </constraints>
-                                <state key="normal" title="修改密码"/>
+                                <state key="normal" title="认证企业"/>
                                 <connections>
-                                    <action selector="changePassword:" destination="X5U-fw-6Yz" eventType="touchUpInside" id="G1R-BF-efl"/>
+                                    <action selector="certify:" destination="giZ-ho-kic" eventType="touchUpInside" id="US7-rV-vEF"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ukb-yv-knw">
@@ -312,8 +313,9 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JEr-AH-BOq">
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JEr-AH-BOq">
                                         <rect key="frame" x="85.5" y="37" width="170.5" height="170.5"/>
+                                        <color key="backgroundColor" red="0.52110460069999998" green="0.69390190969999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="JEr-AH-BOq" secondAttribute="height" multiplier="1:1" id="Vyb-24-76N"/>
@@ -349,8 +351,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <action selector="valueChange:" destination="X5U-fw-6Yz" eventType="valueChanged" id="Vfj-qf-BF8"/>
-                                            <outlet property="delegate" destination="X5U-fw-6Yz" id="EVF-hn-CMO"/>
+                                            <outlet property="delegate" destination="giZ-ho-kic" id="UOy-5y-Swd"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -380,8 +381,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <action selector="valueChange:" destination="X5U-fw-6Yz" eventType="valueChanged" id="jPR-CU-ohy"/>
-                                            <outlet property="delegate" destination="X5U-fw-6Yz" id="5Gt-CM-2BO"/>
+                                            <outlet property="delegate" destination="giZ-ho-kic" id="9ls-sv-Rw4"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -416,9 +416,18 @@
                             <constraint firstAttribute="trailing" secondItem="Nm0-ws-y2G" secondAttribute="trailing" constant="16" id="vlp-Jp-Bsm"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="companyFileImageView" destination="JEr-AH-BOq" id="jKI-Uw-p49"/>
+                        <outlet property="companyNameTextfield" destination="LUv-BJ-3NJ" id="2ES-ba-pac"/>
+                        <outlet property="companyOrgCodeTextfield" destination="Spt-4Z-Av6" id="ffQ-QU-Sul"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JYN-se-4tA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="7X2-pk-aHs"/>
+                <tapGestureRecognizer id="7X2-pk-aHs">
+                    <connections>
+                        <action selector="addFile:" destination="giZ-ho-kic" id="7dM-sl-b7W"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="48.799999999999997" y="1077.2113943028487"/>
         </scene>

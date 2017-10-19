@@ -19,7 +19,7 @@ extension CGFloat {
     //控件
     static let labelHeight: CGFloat = 21                        //标签高度
     static let buttonHeight: CGFloat = 30                       //按钮高度
-    static let imageHeight: CGFloat = 88                        //图片高度
+    static let imageHeight: CGFloat = 80                        //图片高度
     static let cellHeight: CGFloat = 44                         //cell高度
     
     //我的申请状态高度

@@ -39,11 +39,7 @@ class Session {
                 let data = result["result"]
                 
                 //根据返回码判断
-                if code == 401111 {
-                    closure(.notCompany, message, data)
-                }else{
-                    closure(code == 0 ? .success : .failure, message, data)
-                }
+                closure(code == 0 ? .success : .failure, message, data)
                 
             }catch let responseError{
                 debugPrint("<Session> 数据处理错误: \(responseError)")
@@ -163,7 +159,7 @@ class Session {
         
         
         //裸上传
-        let boundary = "gansdlfajlsjdfa12"
+        let boundary = "ganyiisbestplayerintheworld"
         let headerString = "multipart/form-data; charset=utf-8; boundary=" + boundary
         
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
@@ -178,18 +174,20 @@ class Session {
         
         //添加参数
         for (offset: index, element: (key: key, value: value)) in dict.enumerated() {
-            myString += "Content-Disposition: form-data; name=\"" + key + "\"\r\n"
-            myString += "Content-Type: text/plain; charset=UTF-8\r\n"
-            myString += "Content-Transfer-Encoding: 8bit\r\n\r\n"
+            myString += "Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n"
+//            myString += "Content-Type: text/plain; charset=UTF-8\r\n"
+//            myString += "Content-Transfer-Encoding: 8bit\r\n\r\n"
             myString += value as! String
             myString += "\r\n--" + boundary + "\r\n"
 
         }
         
+        let interval = Int(Date().timeIntervalSince1970)
+        
         //添加文件
-        myString += "Content-Disposition: form-data; userID=\"file\"; filename=\"" + "yinyezhizhao" + ".png\"\r\n"
-        myString += "Content-Type: image/png\r\n"
-        myString += "Content-Transfer-Encoding: binary\r\n\r\n"
+        myString += "Content-Disposition: form-data; name=\"file\"; filename=\"" + "\(interval)" + ".png\"\r\n"
+        myString += "Content-Type: image/png\r\n\r\n"
+//        myString += "Content-Transfer-Encoding: binary\r\n\r\n"
         
         mutableData.append(myString.data(using: .utf8)!)
         mutableData.append(imgData)
@@ -200,21 +198,5 @@ class Session {
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: completionHandler)
         task.resume()
- 
-        
-         /*
-         //原生上传
-        var request = URLRequest(url: url, cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 20)
-        request.httpMethod = "POST"
-        request.addValue("image/png", forHTTPHeaderField: "Content-Type")
-        request.httpBody = imgData
-        
-        request.addValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONSerialization.data(withJSONObject: param, options: JSONSerialization.WritingOptions.prettyPrinted)
-        
-        let session = URLSession.shared
-        let task = session.uploadTask(with: request, from: imgData, completionHandler: completionHandler)
-        task.resume()
-         */
     }
 }

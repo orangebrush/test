@@ -286,6 +286,12 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 case .multi:
                     //添加条目按钮
                     return (baseItem.groupType?.height() ?? .cellHeight) + CGFloat(base.valueList.count) * (.buttonHeight + .edge8)
+//                case .image:
+//                    let maxValueCount = base.maxValueCount
+//                    let curCount = base.valueList.count
+//                    let originHeight = baseItem.groupType?.height() ?? .cellHeight
+//                    let addHeight = CGFloat(ceil(Double(curCount) / Double(maxValueCount / 2)))
+//                    return originHeight + addHeight
                 default:
                     return baseItem.groupType?.height() ?? .cellHeight
                 }
@@ -400,7 +406,11 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                             let subviews = group2Cell.contentView.subviews
                             let oldTagList = subviews.map({$0.tag})
                             if oldTagList.contains(value.id){
-                                
+                                if let oldView = subviews.filter({$0.tag == value.id}).first{
+                                    if let oldButton = oldView as? UIButton{
+                                        oldButton.setTitle(value.title, for: .normal)
+                                    }
+                                }
                             }else{
                                 let buttonFrame = CGRect(x: x, y: y, width: width, height: height)
                                 let button = UIButton(type: .custom)
@@ -443,14 +453,81 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                     }
                     cell = group2Cell
                 case .image:
-                    let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
-                    groupCell.firstLabel.text = base.title
-                    groupCell.secondLabel.text = "限\(base.maxLength)张"
-                    groupCell.closure = {
-                        instanceId in
-                        self.clickGroup(withInstanceId: self.instanceId, withComponentId: self.componentId!, withGroupId: base.id)
+                    let group3Cell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! Group3Cell
+                    group3Cell.firstLabel.text = base.title
+                    let maxValueCount = base.maxValueCount
+                    group3Cell.secondLabel.text = "限\(maxValueCount)张"
+                    let curCount = base.valueList.count
+                    
+                    //创建图片列表
+                    for (index, value) in base.valueList.enumerated(){
+                        let subviews = group3Cell.imagesView.subviews
+                        let oldTagList = subviews.map({$0.tag})
+                        if oldTagList.contains(value.id){
+                            if let oldView = subviews.filter({$0.tag == value.id}).first{
+                                if let oldImageView = oldView as? UIImageView{
+                                    if let imageStr = value.title{
+                                        if let imageURL = URL(string: imageStr){
+                                            DispatchQueue.global().async {
+                                                let imageData = try! Data(contentsOf: imageURL)
+                                                let image = UIImage(data: imageData)
+                                                DispatchQueue.main.async {
+                                                    oldImageView.image = image
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }else{
+                            
+                            let x = CGFloat.edge8 + CGFloat(index) * ((group3Cell.frame.width - .imageHeight - .edge8 * 2) / CGFloat(curCount))
+                            let y = CGFloat.edge8// + CGFloat(index / Int(maxValueCount / 2)) * (.imageHeight + .edge8)
+                            let width = CGFloat.imageHeight
+                            let imageFrame = CGRect(x: x , y: y, width: width, height: width)
+                            let imageView = UIImageView(frame: imageFrame)
+                            imageView.tag = value.id
+                            imageView.contentMode = .scaleToFill
+                            if let imageStr = value.title{
+                                if let imageURL = URL(string: imageStr){
+                                    DispatchQueue.global().async {
+                                        do{
+                                            if let imageData = try? Data(contentsOf: imageURL){                                                
+                                                let image = UIImage(data: imageData)
+                                                DispatchQueue.main.async {
+                                                    imageView.image = image
+                                                }
+                                            }
+                                        }catch let error{
+                                            print("load image error: \(error)")
+                                        }
+                                    }
+                                }
+                            }
+                            //为单个图片添加点击事件
+                            let tap = UITapGestureRecognizer(target: group3Cell, action: #selector(group3Cell.tap(_:)))
+                            tap.numberOfTapsRequired = 1
+                            tap.numberOfTouchesRequired = 1
+                            imageView.isUserInteractionEnabled = true
+                            imageView.addGestureRecognizer(tap)
+                            group3Cell.imagesView?.addSubview(imageView)
+                        }
                     }
-                    cell = groupCell
+                    group3Cell.closure = {
+                        imageViewTag in
+                        
+                        let group3Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: "group3") as! Group3Editor
+                        group3Editor.maxCount = maxValueCount
+                        group3Editor.instanceId = base.instanceId
+                        group3Editor.applyId = self.applyId
+                        group3Editor.componentId = self.componentId!
+                        group3Editor.groupId = base.id
+                        group3Editor.valueList = base.valueList
+                        group3Editor.navigationItem.title = base.title
+                        self.navigationController?.show(group3Editor, sender: nil)
+                        
+                    }
+                    cell = group3Cell
                 case .time:     //done
                     let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
                     groupCell.firstLabel.text = base.title

@@ -115,4 +115,10 @@ extension UIViewController{
         let changePasswordVC = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateViewController(withIdentifier: "changepassword") as! ChangePasswordVC
         navigationController?.show(changePasswordVC, sender: nil)
     }
+    
+    //MARK:- 认证企业弹窗
+    func createCompany(){
+        let createCompanyVC = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateViewController(withIdentifier: "createcompany") as! CreateCompanyVC
+        navigationController?.show(createCompanyVC, sender: nil)
+    }
 }

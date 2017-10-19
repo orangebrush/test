@@ -22,5 +22,5 @@ extension CGFloat{
     static let group0: CGFloat = 8 + 21 + 8 + 30 + 8            //普通组less   75
     static let group1: CGFloat = 8 + 21 + 8 + 30 + 8 + 30 + 8   //时间组       113
     static let group2: CGFloat = 8 + 21 + 8 + 30 + 8 + 30 + 8   //多条组less   113
-    static let group3: CGFloat = 8 + 21 + 8 + 21 + 8 + 88 + 8   //图片组       162
+    static let group3: CGFloat = 8 + 21 + 8 + 21 + 8 + 96 + 8   //图片组       162
 }

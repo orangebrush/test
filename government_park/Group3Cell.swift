@@ -8,6 +8,6 @@
 
 import UIKit
 class Group3Cell: GroupCell {
-    
+    @IBOutlet weak var imagesView: UIView!
 }
 

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -126,12 +127,32 @@
                                     <outlet property="delegate" destination="oJ6-Gd-tFc" id="vYy-bO-ami"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lcs-QV-rtT">
+                                <rect key="frame" x="94" y="318.5" width="187.5" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.76429578990000002" blue="0.33299195770000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="开始企业认证"/>
+                                <connections>
+                                    <action selector="certify:" destination="oJ6-Gd-tFc" eventType="touchUpInside" id="MxF-Mb-a16"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5D-TO-yfZ">
+                                <rect key="frame" x="94" y="290.5" width="187.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aeY-LG-uKX" firstAttribute="leading" secondItem="Nmd-Al-vVM" secondAttribute="leading" id="D4G-gi-9da"/>
+                            <constraint firstItem="lcs-QV-rtT" firstAttribute="top" secondItem="F5D-TO-yfZ" secondAttribute="bottom" constant="7.5" id="JZP-OI-oK4"/>
                             <constraint firstAttribute="trailing" secondItem="aeY-LG-uKX" secondAttribute="trailing" id="Jv9-Sf-c0f"/>
+                            <constraint firstItem="lcs-QV-rtT" firstAttribute="centerY" secondItem="Nmd-Al-vVM" secondAttribute="centerY" id="YH0-U4-uww"/>
+                            <constraint firstItem="F5D-TO-yfZ" firstAttribute="centerX" secondItem="lcs-QV-rtT" secondAttribute="centerX" id="a7n-UZ-zTl"/>
+                            <constraint firstItem="F5D-TO-yfZ" firstAttribute="width" secondItem="lcs-QV-rtT" secondAttribute="width" id="gFJ-IS-Yaf"/>
                             <constraint firstItem="aeY-LG-uKX" firstAttribute="top" secondItem="q9Z-hv-8vk" secondAttribute="bottom" id="h5C-8s-TIt"/>
+                            <constraint firstItem="lcs-QV-rtT" firstAttribute="width" secondItem="Nmd-Al-vVM" secondAttribute="width" multiplier="1/2" id="lMb-sf-he6"/>
+                            <constraint firstItem="lcs-QV-rtT" firstAttribute="centerX" secondItem="Nmd-Al-vVM" secondAttribute="centerX" id="n8l-u0-4Sm"/>
                             <constraint firstItem="f2a-Ki-kQk" firstAttribute="top" secondItem="aeY-LG-uKX" secondAttribute="bottom" id="w2O-9d-tWy"/>
                         </constraints>
                     </view>
@@ -143,6 +164,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="createCompanyButton" destination="lcs-QV-rtT" id="Pc3-ND-2hl"/>
+                        <outlet property="createCompanyLabel" destination="F5D-TO-yfZ" id="Ysk-VJ-zbz"/>
                         <outlet property="tableView" destination="aeY-LG-uKX" id="jbb-LK-Ihu"/>
                     </connections>
                 </viewController>

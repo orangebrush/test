@@ -537,18 +537,15 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kTS-RC-s5d">
-                                                    <rect key="frame" x="24" y="66" width="343" height="88"/>
+                                                    <rect key="frame" x="24" y="66" width="343" height="79.5"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="rbl-6H-nOf" appends="YES" id="VIK-Yq-Web"/>
-                                                    </connections>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="kTS-RC-s5d" firstAttribute="leading" secondItem="xfB-eW-UgZ" secondAttribute="leadingMargin" constant="16" id="84x-ty-8pA"/>
                                                 <constraint firstAttribute="topMargin" secondItem="cao-55-G42" secondAttribute="top" id="A7i-IQ-Qf5"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="kTS-RC-s5d" secondAttribute="bottom" constant="-0.5" id="Fkm-6W-ViQ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="kTS-RC-s5d" secondAttribute="bottom" constant="8" id="Fkm-6W-ViQ"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="2Np-us-iL1" secondAttribute="trailing" id="Law-Rq-Fjl"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="cao-55-G42" secondAttribute="trailing" id="ZcD-uE-y6d"/>
                                                 <constraint firstItem="2Np-us-iL1" firstAttribute="leading" secondItem="xfB-eW-UgZ" secondAttribute="leadingMargin" constant="16" id="bM4-FO-fXd"/>
@@ -560,6 +557,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="firstLabel" destination="cao-55-G42" id="V9v-DZ-uq2"/>
+                                            <outlet property="imagesView" destination="kTS-RC-s5d" id="px8-k4-913"/>
                                             <outlet property="secondLabel" destination="2Np-us-iL1" id="CoF-RE-Inw"/>
                                         </connections>
                                     </tableViewCell>
@@ -606,12 +604,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F88-EV-1er" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="lwv-eo-fUh" userLabel="Exit" sceneMemberID="exit"/>
-                <tapGestureRecognizer id="rbl-6H-nOf">
-                    <connections>
-                        <action selector="tap:" destination="lwv-eo-fUh" id="UML-jM-a2p"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="112.8" y="165.06746626686657"/>
         </scene>

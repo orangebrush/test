@@ -26,8 +26,10 @@ class GroupCell: UITableViewCell {
     private func config(){
         
         firstLabel.font = .middle
-        if firstButton.currentTitle == "Button" {            
-            firstButton.setTitle("进入编辑组>>", for: .normal)
+        if firstButton != nil{            
+            if firstButton.currentTitle == "Button" {
+                firstButton.setTitle("进入编辑组>>", for: .normal)
+            }
         }
     }
     

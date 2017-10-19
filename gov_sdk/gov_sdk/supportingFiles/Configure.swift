@@ -83,7 +83,6 @@ public typealias Closure = (_ resultCode: ResultCode, _ message: String, _ data:
 public enum ResultCode{
     case failure
     case success
-    case notCompany
 }
 
 //获取本地存储的账户与密码
@@ -96,6 +95,12 @@ public var localPassword: String? {
 }
 public var originPassword: String? {
     return userDefaults.string(forKey: "originalPassword")
+}
+public var localCompanyName: String? {
+    return userDefaults.string(forKey: "companyName")
+}
+public var localOrg: String? {
+    return userDefaults.string(forKey: "org")
 }
 
 
