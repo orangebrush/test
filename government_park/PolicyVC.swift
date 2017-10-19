@@ -13,6 +13,8 @@ class PolicyVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var applyButton: UIButton!
     @IBOutlet weak var collectionButton: UIButton!
+    private let ganAlert = GANAlertAction()
+    
     
     private var image: UIImage?{
         didSet{
@@ -126,12 +128,12 @@ class PolicyVC: UIViewController {
                             return
                         }
                         
-                        self.applyButton.isEnabled = true
                         self.tableView.isHidden = false
                         
                         guard let apl = apply else{
                             //新建申请
                             //NetworkHandler.share().policy.addApply(withPolicyId: self.id, closure: self.getApplyClosure(resultCode:message:apply:))
+                            self.applyButton.isEnabled = true
                             return
                         }
                         
@@ -154,6 +156,7 @@ class PolicyVC: UIViewController {
                 return
             }
             
+            self.applyButton.isEnabled = true
             self.applyId = apl.id
             self.apply = apl
         }
@@ -164,18 +167,32 @@ class PolicyVC: UIViewController {
         automaticallyAdjustsScrollViewInsets = false
         
         collectionButton.isHidden = true
-        applyButton.isEnabled = false
         applyButton.setTitle("申请", for: .normal)
+        applyButton.isEnabled = false
         
         tableView.isHidden = true
     }
     
     private func createContents(){
         
+        view.addSubview(ganAlert)
     }
     
     //MARK: 收藏
     @IBAction func collection(_ sender: UIButton) {
+
+        let isSelected = sender.isSelected
+        collectionButton.isEnabled = false
+        NetworkHandler.share().policy.bookmarkPolicy(withPolicyId: id, isBookmark: !isSelected) { (resultCode, message, dataf) in
+            DispatchQueue.main.async {
+                self.notif(withTitle: message, closure: nil)
+                self.collectionButton.isEnabled = true
+                self.collectionButton.isSelected = !isSelected
+                guard resultCode == .success else{
+                    return
+                }
+            }
+        }
         collectionButton.isSelected = !collectionButton.isSelected
     }
     
@@ -219,7 +236,7 @@ class PolicyVC: UIViewController {
     
     //MARK: 分享
     @IBAction func share(_ sender: Any) {
-        
+        ganAlert.swip()
     }
 }
 

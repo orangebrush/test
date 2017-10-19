@@ -68,9 +68,11 @@ public class NWHPolicy: NSObject {
         ]
         
         Session.session(withAction: Actions.bookmark, withMethod: Method.get, withParam: dic) { (resultCode, message, data) in
-            var existed = false
-            if let flag = data as? Bool{
-                existed = flag
+            var existed = true
+            if let flag = data as? Int{
+                if flag == 0{
+                    existed = false
+                }
             }
             closure(resultCode, message, existed)
         }
@@ -109,7 +111,7 @@ public class NWHPolicy: NSObject {
             "policyId": "\(policyId)",
             "userId": account,
             "password": password,
-            "bookmark": isBookmark
+            "bookmark": isBookmark ? "true" : "false"
         ]
         
         Session.session(withAction: Actions.bookmark, withMethod: Method.post, withParam: dic, closure: closure)

@@ -28,8 +28,7 @@ class Session {
                     return
                 }
                 
-                debugPrint("<Session> result:")
-                print(result)
+                debugPrint("<Session> result: \(result)")
                 
                 guard let code = result["code"] as? Int, let message = result["message"] as? String else {
                     closure(.failure, "解析数据错误", nil)
@@ -63,7 +62,7 @@ class Session {
                     urlStr.append(key + "=" + v)
                 }
                 
-                print("<Session> \(action)- url: \(urlStr)")
+                print("<Session> GET \(action)- url: \(urlStr)")
             }
             
             //生成url
@@ -90,7 +89,7 @@ class Session {
                 }
                 request.httpBody = form.data(using: .utf8)
                 
-                print("<Session> \(action)- url: \(url)")
+                print("<Session> POST \(action)- url: \(url)")
                 /*
                  let body = try JSONSerialization.data(withJSONObject: param, options: JSONSerialization.WritingOptions.prettyPrinted)
                  request.setValue("application/json", forHTTPHeaderField: "Content-Type")

@@ -32,6 +32,7 @@
 		324A91A31F73DD4600A1F721 /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */; };
 		324A91A51F73E9A700A1F721 /* Field5SubEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A41F73E9A700A1F721 /* Field5SubEditor.swift */; };
 		3254603E1F98ECC20091D65D /* TableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3254603D1F98ECC20091D65D /* TableViewCell+Extension.swift */; };
+		3254603F1F98F92B0091D65D /* resource in Resources */ = {isa = PBXBuildFile; fileRef = 322BD3131F95B28E003C650E /* resource */; };
 		3269DF3A1F7A825700C14FC3 /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3269DF391F7A825700C14FC3 /* List.storyboard */; };
 		3269DF3E1F7A826D00C14FC3 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3269DF3D1F7A826D00C14FC3 /* ListVC.swift */; };
 		3269DF411F7B3FD200C14FC3 /* PolicyCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3269DF401F7B3FD200C14FC3 /* PolicyCells.swift */; };
@@ -681,6 +682,7 @@
 				321115C01F7928A8005EA426 /* Finished.storyboard in Resources */,
 				329D88171F6F6F7A00D304FF /* LaunchScreen.storyboard in Resources */,
 				32EE31E51F70FA8900939EE8 /* Policy.storyboard in Resources */,
+				3254603F1F98F92B0091D65D /* resource in Resources */,
 				329D88481F6F7BEB00D304FF /* Me.storyboard in Resources */,
 				329D88141F6F6F7A00D304FF /* Assets.xcassets in Resources */,
 				329D880F1F6F6F7A00D304FF /* Root.storyboard in Resources */,
