@@ -171,7 +171,8 @@ public class NWHMe: NSObject {
             return
         }
         
-        Session.upload(img, withParams: dic) { (resultCode, message, data) in
+        
+        Session.upload(img, withAction: Actions.registerCompany, withParams: dic) { (resultCode, message, data) in
             closure(resultCode, message, nil)
         }
     }

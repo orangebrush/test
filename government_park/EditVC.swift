@@ -452,7 +452,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                         }
                     }
                     cell = group2Cell
-                case .image:
+                case .image:    //done
                     let group3Cell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! Group3Cell
                     group3Cell.firstLabel.text = base.title
                     let maxValueCount = base.maxValueCount
@@ -469,10 +469,12 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                                     if let imageStr = value.title{
                                         if let imageURL = URL(string: imageStr){
                                             DispatchQueue.global().async {
-                                                let imageData = try! Data(contentsOf: imageURL)
-                                                let image = UIImage(data: imageData)
-                                                DispatchQueue.main.async {
-                                                    oldImageView.image = image
+                                                
+                                                if let imageData = try? Data(contentsOf: imageURL){
+                                                    let image = UIImage(data: imageData)
+                                                    DispatchQueue.main.async {
+                                                        oldImageView.image = image
+                                                    }
                                                 }
                                             }
                                         }
@@ -583,6 +585,18 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 assemblyCell.secondLabel.sizeToFit()
                 cell = assemblyCell
                 cell.sizeToFit()
+            }
+        }
+        
+        //通过颜色区分完成度
+        if let baseStatus = base.status{
+            switch baseStatus{
+            case .finished:
+                cell.backgroundColor = UIColor(colorHex: 0xa8fe82)
+            case .unfinished:
+                cell.backgroundColor = UIColor(colorHex: 0xfda8a8)
+            case .each:
+                cell.backgroundColor = UIColor(colorHex: 0xe8e8de)
             }
         }
         return cell

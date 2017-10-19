@@ -112,7 +112,7 @@ class Session {
     }
     
     //MARK:-上传图片
-    class func upload(_ image: UIImage, withParams param: Any, closure: @escaping (_ resultCode: ResultCode, _ message:String, _ data: Any?) -> ()){
+    class func upload(_ image: UIImage, withAction action: String, withParams param: Any, closure: @escaping (_ resultCode: ResultCode, _ message:String, _ data: Any?) -> ()){
         //回调函数
         let completionHandler = {(binaryData: Data?, response: URLResponse?, error: Error?) in
             guard error == nil else{
@@ -150,7 +150,7 @@ class Session {
             return
         }
         
-        let urlStr = host + Actions.registerCompany
+        let urlStr = host + action
         
         //生成url
         guard let url = URL(string: urlStr) else{
@@ -162,7 +162,7 @@ class Session {
         let boundary = "ganyiisbestplayerintheworld"
         let headerString = "multipart/form-data; charset=utf-8; boundary=" + boundary
         
-        var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
+        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "POST"
         
         request.setValue(headerString, forHTTPHeaderField: "Content-Type")

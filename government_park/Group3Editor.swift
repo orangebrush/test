@@ -11,6 +11,8 @@ class Group3Editor: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    fileprivate var selectedValue: Value?
+    
     var maxCount = 10
     var valueList = [Value]()           //图片数据
     
@@ -44,11 +46,30 @@ class Group3Editor: UIViewController {
     //MARK: 删除已有图片
     @IBAction func deleteSelectedPhoto(_ sender: Any) {
         
-//        guard let index = selectorIndex, index < maxCount else {
-//            return
-//        }
-//
-//        data.remove(at: index)
+        guard let selValue = selectedValue else {
+            notif(withTitle: "未选择", closure: nil)
+            return
+        }
+        
+        //删除图片
+        let deleteInstanceParams = DeleteInstanceParams()
+        deleteInstanceParams.applyId = applyId
+        deleteInstanceParams.componentId = componentId
+        deleteInstanceParams.groupId = groupId
+        deleteInstanceParams.instanceId = selValue.id
+        NetworkHandler.share().editor.deleteInstance(withDeleteInstanceParams: deleteInstanceParams) { (resultCode, message, data) in
+            DispatchQueue.main.async {
+                self.notif(withTitle: message, closure: nil)
+                guard resultCode == .success else{
+                    return
+                }
+                
+                if let index = self.valueList.index(of: selValue){
+                    self.valueList.remove(at: index)
+                    self.collectionView.reloadData()
+                }
+            }
+        }
     }
 }
 
@@ -77,8 +98,10 @@ extension Group3Editor: UICollectionViewDelegate, UICollectionViewDataSource, UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: id, for: indexPath) as! Group3CollectionCell
         if row == valueList.count {
             //添加加号按钮图标
+            cell.imageView.image = nil
             cell.backgroundColor = .green
         }else{
+            cell.backgroundColor = nil
             let value = valueList[row]
             if let imageStr = value.title{
                 if let imageURL = URL(string: imageStr){
@@ -103,10 +126,14 @@ extension Group3Editor: UICollectionViewDelegate, UICollectionViewDataSource, UI
     //MARK: 点击展开图片
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let row = indexPath.row
-        if valueList.count < maxCount && row + 1 == valueList.count{
+        if row == valueList.count{
             //添加新照片
+            let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: nil, otherButtonTitles: "相册", "拍照")
+            actionSheet.show(in: view)
         }else{
             //展开操作
+            let value = valueList[row]
+            selectedValue = value
         }
     }
     
@@ -133,5 +160,94 @@ extension Group3Editor: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+//MARK:- action sheet delegate
+extension Group3Editor: UIActionSheetDelegate{
+    func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int) {
+        switch buttonIndex {
+        case 0:
+            print("close")
+        case 1:
+            selectPhotoFromLibrary()
+        case 2:
+            selectPhotoFromCamera()
+        default:
+            print("other")
+        }
+    }
+    
+    //MARK:从照片库中挑选图片
+    fileprivate func selectPhotoFromLibrary(){
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else{
+            let alertController = UIAlertController(title: "拍照", message: "相机获取图片失效", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "确定", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true, completion: nil)
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        imagePicker.modalPresentationStyle = .currentContext
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    //MARK:从相机中拍摄图片
+    fileprivate func selectPhotoFromCamera(){
+        
+        guard UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) else{
+            let alertController = UIAlertController(title: "相册", message: "获取相册图片失效", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "确定", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true, completion: nil)
+            return
+        }
+        let cameraPicker = UIImagePickerController()
+        cameraPicker.delegate = self
+        cameraPicker.sourceType = UIImagePickerControllerSourceType.camera
+        cameraPicker.modalPresentationStyle = .currentContext
+        cameraPicker.allowsEditing = false
+        //        cameraPicker.cameraOverlayView = ? 覆盖在相机上
+        cameraPicker.showsCameraControls = true
+        cameraPicker.cameraDevice = .rear
+        present(cameraPicker, animated: true, completion: nil)
+    }
+}
+
+//MARK:照片库delegate
+extension Group3Editor: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        
+        //上传照片
+        let saveFileParams = SaveFileParams()
+        saveFileParams.image = image
+        saveFileParams.applyId = applyId
+        saveFileParams.componentId = componentId
+        saveFileParams.fromItemId = groupId
+        saveFileParams.instanceId = instanceId
+        NetworkHandler.share().field.saveFile(withSaveFileParams: saveFileParams) { (resultCode, message, tuple) in
+            DispatchQueue.main.async {
+                self.notif(withTitle: message, closure: nil)
+                guard resultCode == .success else{
+                    return
+                }
+                guard let urlStr = tuple?.0, let id = tuple?.1 else{
+                    return
+                }
+                let newValue = Value()
+                newValue.id = id
+                newValue.title = urlStr
+                self.valueList.append(newValue)
+                self.collectionView.reloadData()
+            }
+        }
+        picker.dismiss(animated: true){}
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true){}
     }
 }

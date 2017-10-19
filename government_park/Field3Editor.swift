@@ -10,6 +10,7 @@ import UIKit
 class Field3Editor: FieldEditor {
     
     @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var remindLabel: UILabel!
     
     var urlString: String?
     
@@ -22,13 +23,15 @@ class Field3Editor: FieldEditor {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        if let urlStr = urlString {
-            let url = URL(string: urlStr)
-        }
+//        if let urlStr = urlString {
+//            let url = URL(string: urlStr)
+//        }
     }
     
     private func config(){
-        
+        remindLabel.text = "请使用网页版上传"
+        remindLabel.font = .middle
+        remindLabel.textColor = .gray
     }
     
     private func createContents(){

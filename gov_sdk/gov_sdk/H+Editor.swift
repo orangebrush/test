@@ -23,13 +23,13 @@ public class AddInstanceParams: NSObject{
     public var instanceId: Int?
     public var instanceTitle = "unknown"        //新建的条目的名称
 }
-public class deleteInstanceParams: NSObject{
+public class DeleteInstanceParams: NSObject{
     public var componentId = 0
     public var applyId = 0
     public var groupId = 0
     public var instanceId = 0
 }
-public class rollInstanceParams: NSObject{
+public class RollInstanceParams: NSObject{
     public var componentId = 0
     public var applyId = 0
     public var groupId = 0
@@ -130,7 +130,7 @@ public class NWHEditor: NSObject {
     }
     
     //MARK: 删除条目
-    public func deleteInstance(withDeleteInstanceParams params: deleteInstanceParams, closure: @escaping Closure){
+    public func deleteInstance(withDeleteInstanceParams params: DeleteInstanceParams, closure: @escaping Closure){
         guard let account = localAccount, let password = localPassword else {
             closure(.failure, "未登录", nil)
             return
@@ -149,7 +149,7 @@ public class NWHEditor: NSObject {
     }
     
     //MARK: 调整条目顺序
-    public func rollInstance(withRollInstanceParams params: rollInstanceParams, closure: @escaping Closure){
+    public func rollInstance(withRollInstanceParams params: RollInstanceParams, closure: @escaping Closure){
         guard let account = localAccount, let password = localPassword else {
             closure(.failure, "未登录", nil)
             return

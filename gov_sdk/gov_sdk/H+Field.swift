@@ -85,7 +85,7 @@ public class NWHField: NSObject {
     }
     
     //MARK: 提交图片
-    public func saveFile(withSaveFileParams params: SaveFileParams, closure: @escaping (_ resultCode: ResultCode, _ message: String, _ data: (URL?, Int)?) -> ()){
+    public func saveFile(withSaveFileParams params: SaveFileParams, closure: @escaping (_ resultCode: ResultCode, _ message: String, _ data: (String?, Int)?) -> ()){
         guard let account = localAccount, let password = localPassword else {
             closure(.failure, "未登录", nil)
             return
@@ -99,7 +99,7 @@ public class NWHField: NSObject {
         var dic: [String: Any] = [
             "applyId": "\(params.applyId)",
             "componentId": "\(params.componentId)",
-            "fromItemId": "\(params.fromItemId)",
+            "formItemId": "\(params.fromItemId)",
             "userId": account,
             "password": password
         ]
@@ -108,12 +108,10 @@ public class NWHField: NSObject {
             dic["itemInstance"] = "\(instanceId)"
         }
         
-        Session.upload(image, withParams: dic) { (resultCode, message, data) in
-            var tuple: (url: URL?, instanceId: Int) = (nil, 0)
+        Session.upload(image, withAction: Actions.saveFile, withParams: dic) { (resultCode, message, data) in
+            var tuple: (urlStr: String?, instanceId: Int) = (nil, 0)
             if let d = data as? [String: Any]{
-                if let urlStr = d["url"] as? String{
-                    tuple.url = URL(string: urlStr)
-                }
+                tuple.urlStr = d["title"] as? String
                 if let instanceId = d["id"] as? Int{
                     tuple.instanceId = instanceId
                 }

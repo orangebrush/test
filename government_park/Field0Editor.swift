@@ -78,16 +78,16 @@ class Field0Editor: FieldEditor {
             return
         }
         
-        //判断大小
-        guard let number = Int(text) else{
-            self.notif(withTitle: "输入错误", closure: nil)
-            return
-        }
-
-        guard number <= maxValue! else {
-            self.notif(withTitle: "超出范围", closure: nil)
-            return
-        }
+//        //判断大小
+//        guard let number = Int(text) else{
+//            self.notif(withTitle: "输入错误", closure: nil)
+//            return
+//        }
+//
+//        guard number <= maxValue! else {
+//            self.notif(withTitle: "超出范围", closure: nil)
+//            return
+//        }
         
         let saveFieldParams = SaveFieldParams()
         saveFieldParams.applyId = applyId
