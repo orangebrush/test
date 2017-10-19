@@ -63,7 +63,7 @@ public class NWHEditor: NSObject {
         if params.isInstance{                       //获取条目下内容
             if let groupId = params.groupId, let instanceId = params.instanceId{
                 dic["groupId"] = "\(groupId)"
-                dic["instanceId"] = "\(instanceId)"
+                dic["itemInstance"] = "\(instanceId)"
                 
                 Session.session(withAction: Actions.getInstance, withMethod: Method.get, withParam: dic, closure: { (resultCode, message, data) in
                     var item: Item?
@@ -107,11 +107,12 @@ public class NWHEditor: NSObject {
             "applyId": "\(params.applyId)",
             "componentId": "\(params.componentId)",
             "groupId": "\(params.groupId)",
+            "value": params.instanceTitle,
             "userId": account,
             "password": password
         ]
         if let instanceId = params.instanceId{
-            dic["itemInstanceId"] = instanceId
+            dic["itemInstance"] = "\(instanceId)"
         }
         
         Session.session(withAction: Actions.addInstance, withMethod: Method.post, withParam: dic) { (resultCode, message, data) in

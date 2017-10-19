@@ -64,7 +64,7 @@ class LoginVC: UIViewController {
     }
     
     //MARK: 登录
-    @IBAction func login(_ sender: Any){
+    @IBAction func login(_ sender: Any){        
         
         let accountTuple = isAccountLegal(withString: account)
         let passwordTuple = isPasswordLegal(withString: password)

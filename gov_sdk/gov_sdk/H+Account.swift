@@ -101,7 +101,7 @@ public class NWHAccount: NSObject {
         }
         
         let dic: [String: Any] = [
-            "moblie": account,
+            "mobile": account,
             "verifyCode": verifyCode
         ]
         
@@ -123,7 +123,7 @@ public class NWHAccount: NSObject {
         
         //sha1
         let dic = [
-            "moblie": account,
+            "mobile": account,
             "password": password
         ]
         
@@ -157,7 +157,7 @@ public class NWHAccount: NSObject {
         }
         
         let dic: [String: Any] = [
-            "moblie": account,
+            "mobile": account,
             "verifyCode": verifyCode
         ]
         
@@ -179,8 +179,8 @@ public class NWHAccount: NSObject {
         
         //sha1
         let dic = [
-            "moblie": account,
-            "password": password
+            "mobile": account,
+            "newPassword": password
         ]
         
         Session.session(withAction: Actions.reset, withMethod: Method.post, withParam: dic, closure: closure)

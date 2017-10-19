@@ -36,11 +36,23 @@ class EditVC: UIViewController {
         super.viewDidLoad()
         
         config()
-        createContents()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
+        createContents()
+    }
+    
+    private func config(){
+        
+        infoLabel.font = .small
+        infoLabel.textColor = .gray
+        applyButton.isHidden = true
+        
+        topView.layer.cornerRadius = .cornerRadius
+    }
+    
+    fileprivate func createContents() {
         if isRootEdit{
             topView.isHidden = false
             
@@ -121,21 +133,6 @@ class EditVC: UIViewController {
                 }
             })
         }
-        
-        
-    }
-    
-    private func config(){
-        
-        infoLabel.font = .small
-        infoLabel.textColor = .gray
-        applyButton.isHidden = true
-        
-        topView.layer.cornerRadius = .cornerRadius
-    }
-    
-    private func createContents() {
-        
     }
     
     //MARK:- 提交申请
@@ -281,7 +278,23 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
         if let baseItemList = item?.baseItemList{
             let baseItem = baseItemList[indexPath.row]
             if baseItem.isGroup{
-                return baseItem.groupType?.height() ?? .cellHeight
+                let base = (baseItem as? BaseItem)!
+                let groupType = base.groupType
+                
+                //创建group cell
+                switch groupType!{
+                case .multi:
+                    //添加条目按钮
+                    return (baseItem.groupType?.height() ?? .cellHeight) + CGFloat(base.valueList.count) * (.buttonHeight + .edge8)
+                default:
+                    return baseItem.groupType?.height() ?? .cellHeight
+                }
+            }
+            
+            if let text = baseItem.hint{    //子标签内容
+                let size = CGSize(width: view_size.width, height: view_size.width)
+                let rect = NSString(string: text).boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont(name: UIFont.mainName, size: .labelHeight)!], context: nil)
+                return .edge8 + .labelHeight + .edge8 + rect.height + .edge8
             }
             return baseItem.fieldType?.height() ?? .cellHeight
         }
@@ -358,7 +371,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 
                 //创建group cell
                 switch groupType!{
-                case .normal:
+                case .normal:       //done
                     let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
                     groupCell.firstLabel.text = base.title
                     if groupCell.secondLabel != nil{
@@ -369,15 +382,66 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                         self.clickGroup(withInstanceId: self.instanceId, withComponentId: self.componentId!, withGroupId: base.id)
                     }
                     cell = groupCell
-                case .multi:
-                    let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
-                    groupCell.firstLabel.text = base.title
-                    groupCell.secondLabel.text = base.hint
-                    groupCell.closure = {
-                        instanceId in
-                        self.clickGroup(withInstanceId: instanceId == 0 ? self.instanceId : instanceId, withComponentId: self.componentId!, withGroupId: base.id)
+                case .multi:        //done
+                    let group2Cell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! Group2Cell
+                    group2Cell.firstLabel.text = base.title
+                    group2Cell.secondLabel.text = base.hint
+                    group2Cell.firstButton.tag = 0              //add按钮
+                    group2Cell.firstButton.layer.cornerRadius = .cornerRadius
+                    //添加条目按钮
+                    if !group2Cell.addedInstanceButtons{
+                        group2Cell.addedInstanceButtons = true
+                        let x = CGFloat.edge16 + .edge8
+                        var y = group2Cell.secondLabel.frame.origin.y
+                        let width = group2Cell.frame.width - x - .edge8
+                        let height = CGFloat.buttonHeight
+                        for value in base.valueList{
+                            y += (.buttonHeight + .edge8)
+                            let subviews = group2Cell.contentView.subviews
+                            let oldTagList = subviews.map({$0.tag})
+                            if oldTagList.contains(value.id){
+                                
+                            }else{
+                                let buttonFrame = CGRect(x: x, y: y, width: width, height: height)
+                                let button = UIButton(type: .custom)
+                                button.frame = buttonFrame
+                                button.layer.cornerRadius = .cornerRadius
+                                button.backgroundColor = .gray
+                                button.setTitle(value.title, for: .normal)
+                                button.tag = value.id
+                                button.addTarget(group2Cell, action: #selector(group2Cell.click(_:)), for: .touchUpInside)
+                                group2Cell.addSubview(button)
+                            }
+                        }
                     }
-                    cell = groupCell
+                    group2Cell.closure = {
+                        instanceId in
+                        if instanceId == 0{     //新建条目
+                            guard let text = group2Cell.instanceTextfield.text else{
+                                self.notif(withTitle: "条目名不能为空", closure: nil)
+                                return
+                            }
+                            let addInstanceParams = AddInstanceParams()
+                            addInstanceParams.applyId = self.applyId
+                            addInstanceParams.componentId = self.componentId!
+                            addInstanceParams.groupId = base.id
+                            addInstanceParams.instanceId = self.instanceId
+                            addInstanceParams.instanceTitle = text
+                            NetworkHandler.share().editor.addInstance(withAddInstanceParams: addInstanceParams, closure: { (resultCode, message, newInstance) in
+                                DispatchQueue.main.async {
+                                    self.notif(withTitle: message, closure: nil)
+                                    guard resultCode == .success else{
+                                        return
+                                    }
+                                    group2Cell.addedInstanceButtons = false
+                                    self.createContents()
+                                }
+                            })
+                        }else{                  //获取条目内容
+                            self.clickGroup(withInstanceId: instanceId == 0 ? self.instanceId : instanceId, withComponentId: self.componentId!, withGroupId: base.id)
+                        }
+                    }
+                    cell = group2Cell
                 case .image:
                     let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
                     groupCell.firstLabel.text = base.title
@@ -387,23 +451,45 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                         self.clickGroup(withInstanceId: self.instanceId, withComponentId: self.componentId!, withGroupId: base.id)
                     }
                     cell = groupCell
-                case .time:
+                case .time:     //done
                     let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
                     groupCell.firstLabel.text = base.title
-                    groupCell.secondLabel.text = base.hint ?? ""
+                    if groupCell.secondLabel != nil{
+                        groupCell.secondLabel.text = base.hint ?? ""
+                    }
                     let valueList = base.valueList
-                    for value in valueList{
-                        groupCell.firstButton.setTitle(value.title, for: .normal)
+                    groupCell.firstButton.isHidden = true
+                    groupCell.secondButton.isHidden = true
+                    for (index, value) in valueList.enumerated(){
+                        if index == 0{
+                            groupCell.firstButton.isHidden = false
+                            groupCell.firstButton.setTitle(value.title, for: .normal)
+                            groupCell.firstButton.tag = value.id
+                        }else{
+                            groupCell.secondButton.isHidden = false
+                            groupCell.secondButton.setTitle(value.title, for: .normal)
+                            groupCell.secondButton.tag = value.id
+                        }
                     }
                     groupCell.closure = {
                         instanceId in
                         self.clickGroup(withInstanceId: instanceId, withComponentId: self.componentId!, withGroupId: base.id)
                     }
                     cell = groupCell
-                default:
+                default:    //timepoint done
                     let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
                     groupCell.firstLabel.text = base.title
-                    groupCell.secondLabel.text = base.hint
+                    
+                    for (index, value) in base.valueList.enumerated(){
+                        if index == 0{
+                            groupCell.firstButton.tag = value.id
+                            groupCell.firstButton.setTitle(value.title, for: .normal)
+                        }else{
+                            groupCell.secondButton.tag = value.id
+                            groupCell.secondButton.setTitle(value.title, for: .normal)
+                        }
+                    }
+
                     groupCell.closure = {
                         instanceId in
                         self.clickGroup(withInstanceId: instanceId == 0 ? self.instanceId : instanceId, withComponentId: self.componentId!, withGroupId: base.id)
@@ -417,8 +503,9 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 let assemblyCell = tableView.dequeueReusableCell(withIdentifier: fieldType!.identifier()) as! FieldCell
                 assemblyCell.firstLabel.text = base.title
                 assemblyCell.secondLabel.text = base.hint
-
+                assemblyCell.secondLabel.sizeToFit()
                 cell = assemblyCell
+                cell.sizeToFit()
             }
         }
         return cell
@@ -438,6 +525,9 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
             
             let fieldType = base.fieldType
             
+            guard !base.isGroup else{
+                return
+            }
             /*
              case .enclosure:
              return "field3"
@@ -451,21 +541,28 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
              return "field5"
              */
             switch fieldType! {
-            case .short:            //短文本
+            case .short:            //短文本done
                 let field0Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field0Editor
                 field0Editor.applyId = applyId
                 field0Editor.componentId = componentId!
                 field0Editor.instanceId = instanceId
                 field0Editor.fieldId = base.id
                 field0Editor.navigationItem.title = base.title
+                field0Editor.prefix = base.prefix
+                field0Editor.suffix = base.suffix
+                field0Editor.maxLength = base.maxLength
+                field0Editor.maxValue = base.maxValue
                 navigationController?.show(field0Editor, sender: nil)
-            case .long:             //长文本
+            case .long:             //长文本done
                 let field1Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field1Editor
                 field1Editor.applyId = applyId
                 field1Editor.componentId = componentId!
                 field1Editor.instanceId = instanceId
                 field1Editor.fieldId = base.id
                 field1Editor.navigationItem.title = base.title
+                field1Editor.fieldTypeValue = base.fieldTypeValue
+                field1Editor.text = base.hint
+                field1Editor.maxLength = base.maxLength
                 navigationController?.show(field1Editor, sender: nil)
             case .image:            //图片
                 let field2Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field2Editor
@@ -483,38 +580,45 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 field3Editor.fieldId = base.id
                 field3Editor.navigationItem.title = base.title
                 navigationController?.show(field3Editor, sender: nil)
-            case .single:           //单选
+            case .single:           //单选done
                 let field4Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field4Editor
                 field4Editor.applyId = applyId
                 field4Editor.componentId = componentId!
                 field4Editor.instanceId = instanceId
                 field4Editor.fieldId = base.id
+                field4Editor.fieldTypeValue = base.fieldTypeValue
                 field4Editor.navigationItem.title = base.title
                 navigationController?.show(field4Editor, sender: nil)
-            case .multi:            //多选
+            case .multi:            //多选done
                 let field6Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field6Editor
                 field6Editor.applyId = applyId
                 field6Editor.componentId = componentId!
                 field6Editor.instanceId = instanceId
                 field6Editor.fieldId = base.id
+                field6Editor.fieldTypeValue = base.fieldTypeValue
+                if field6Editor.fieldTypeValue == 9390{
+                    field6Editor.policyId = policyId
+                }
                 field6Editor.valueList = base.valueList
                 field6Editor.navigationItem.title = base.title
                 navigationController?.show(field6Editor, sender: nil)
-            case .time:            //时间
+            case .time:            //时间done
                 let field7Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field7Editor
                 field7Editor.applyId = applyId
                 field7Editor.componentId = componentId!
                 field7Editor.instanceId = instanceId
                 field7Editor.fieldId = base.id
+                field7Editor.fieldTypeValue = base.fieldTypeValue
                 field7Editor.navigationItem.title = base.title
                 navigationController?.show(field7Editor, sender: nil)
-            default:                //联动
+            default:                //联动done
                 let field5Editor = UIStoryboard(name: "Editor", bundle: Bundle.main).instantiateViewController(withIdentifier: fieldType!.identifier()) as! Field5Editor
                 field5Editor.applyId = applyId
                 field5Editor.componentId = componentId!
                 field5Editor.instanceId = instanceId
                 field5Editor.fieldId = base.id
-                field5Editor.navigationItem.title = base.title
+                field5Editor.fieldTypeValue = base.fieldTypeValue
+                field5Editor.navigationItem.title = base.title                
                 navigationController?.show(field5Editor, sender: nil)
             }
         }

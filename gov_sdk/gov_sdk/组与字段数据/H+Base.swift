@@ -141,6 +141,7 @@ public class BaseItem: NSObject{
     public var isGroup = false
     public var groupType: ItemType.GroupType?
     public var fieldType: ItemType.FieldType?
+    public var fieldTypeValue = 0                  //字段类型值
     
     public var id = 0                              //组或字段实例id
     public var instanceId: Int?                    //条目id
@@ -158,7 +159,8 @@ public class BaseItem: NSObject{
     public var number: Int = 0                     //值
     
     //字段
-    public var maxLength = 0                       //位数限制
+    public var maxLength = 500                     //位数限制(默认500)
+    public var maxValue: Int?                       //最大值(短文本)
     public var prefix: String?
     public var suffix: String?
 }

@@ -13,22 +13,26 @@ class Field5SubEditor: UIViewController {
     
     fileprivate let identifer = "cell"
     
-    var dataList = [String]()
-    var closure: ((Int, String)->())?
+    var optionList = [Option]()
+    var closure: ((Option)->())?
     
     //MARK:- init----------------------------------------
     override func viewDidLoad() {
-        
         config()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         createContents()
     }
     
     private func config(){
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifer)
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     private func createContents(){
-        
+        tableView.reloadData()
     }
 }
 
@@ -39,22 +43,22 @@ extension Field5SubEditor: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataList.count
+        return optionList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifer) ?? UITableViewCell(style: .default, reuseIdentifier: identifer)
-        cell.textLabel?.text = dataList[row]
+        cell.textLabel?.text = optionList[row].title
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         
-        let data = dataList[row]
-        closure?(row, data)
+        let selectedOption = optionList[row]
+        closure?(selectedOption)
         navigationController?.popViewController(animated: true)
     }
 }

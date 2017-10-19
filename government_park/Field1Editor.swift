@@ -11,12 +11,9 @@ import gov_sdk
 class Field1Editor: FieldEditor {
     
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var charactersLabel: UILabel!
+    @IBOutlet weak var charactersLabel: UILabel!        
     
-    
-    var maxLength = 500
-    var minLength = 1
-    
+    var text: String?
     
     //MARK:- init---------------------------------------------------
     override func viewDidLoad() {
@@ -26,21 +23,30 @@ class Field1Editor: FieldEditor {
     }
     
     private func config(){
-        
+        charactersLabel.font = .small
+        charactersLabel.textColor = .lightGray
     }
     
     private func createContents(){
+        textView.text = text
         
+        if let t = text{
+            let leftCharactersCount = maxLength * 4 - t.characters.count
+            charactersLabel.text = "剩余\(leftCharactersCount)字符"
+        }
     }
     
     //MARK: 保存
     @IBAction func save(_ sender: Any) {
+        guard let t = textView.text else {
+            return
+        }
         let saveFieldParams = SaveFieldParams()
         saveFieldParams.applyId = applyId
         saveFieldParams.componentId = componentId
         saveFieldParams.fieldId = fieldId
         saveFieldParams.instanceId = instanceId
-        saveFieldParams.value = textView.text
+        saveFieldParams.value = t
         NetworkHandler.share().field.saveField(withSaveFieldParams: saveFieldParams) { (resultCode, message, data) in
             DispatchQueue.main.async {
                 guard resultCode == .success else{
@@ -62,12 +68,12 @@ extension Field1Editor: UITextViewDelegate{
         let replaceLength = text.lengthOfBytes(using: .utf8)
         
         let currentLength = existedLength! - selectedLength + replaceLength
-        if currentLength > maxLength{
+        if currentLength > maxLength * 4{
             return false
         }
         
         //计算剩余字符
-        let leftCharactersCount = maxLength - currentLength
+        let leftCharactersCount = maxLength * 4 - currentLength
         charactersLabel.text = "剩余\(leftCharactersCount)字符"
         
         return true

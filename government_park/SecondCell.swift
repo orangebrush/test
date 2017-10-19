@@ -33,14 +33,12 @@ class SecondCell: UITableViewCell {
         createContents()
     }        
     
-    static var i = 0
     override func layoutIfNeeded() {
         
         guard let tuple = policyTuple else{
             return
         }
-        SecondCell.i += 1
-        print("----\(SecondCell.i)")
+    
         if tuple.isOpen {
             let oldButtonFrame = buttonView.frame
             buttonView.frame.origin = CGPoint(x: oldButtonFrame.origin.x, y: frame.height - oldButtonFrame.height - .edge8)

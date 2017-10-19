@@ -11,135 +11,108 @@ import gov_sdk
 class Field0Editor: FieldEditor {
     
     @IBOutlet weak var textField: UITextField!
-    
-    var maxLength = 500
-    var minLength = 0
-    
-    var suffix: String?
+    @IBOutlet weak var prefixLabelWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var suffixLabelWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var prefixLabel: UILabel!
+    @IBOutlet weak var suffixLabel: UILabel!
     
     //MARK:- init-----------------------------------------------
     override func viewDidLoad() {
-        
+        super.viewDidLoad()
         config()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         createContents()
     }
     
     private func config(){
 
-        //键盘事件
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notif:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notif:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
     }
     
     private func createContents(){
         
+        //maxValue
+        if maxValue != nil{
+            textField.keyboardType = .decimalPad
+        }
+        
+        //前缀
+        if let pre = prefix {
+            prefixLabelWidthConstraint.constant = .labelHeight * CGFloat(pre.characters.count)
+            prefixLabel.text = pre
+            prefixLabel.font = .small
+            prefixLabel.textColor = .gray
+            textField.textAlignment = .left
+        }else{
+            prefixLabelWidthConstraint.constant = 0
+            prefixLabel.isHidden = true
+            textField.textAlignment = .center
+        }
+        
+        //后缀
+        if let suf = suffix {
+            suffixLabelWidthConstraint.constant = .labelHeight * CGFloat(suf.characters.count)
+            suffixLabel.text = suf
+            suffixLabel.font = .small
+            suffixLabel.textColor = .gray
+            textField.textAlignment = .right
+        }else{
+            suffixLabelWidthConstraint.constant = 0
+            suffixLabel.isHidden = true
+            textField.textAlignment = .center
+        }
     }
     
     //MARK: 保存
     @IBAction func save(_ sender: Any) {
+        
+        guard let text = textField.text else {
+            return
+        }
+        
+        //验证
+        if maxValue != nil && !text.isNumber(){
+            self.notif(withTitle: "请输入数字", closure: nil)
+            return
+        }
+        
+        //判断大小
+        guard let number = Int(text) else{
+            self.notif(withTitle: "输入错误", closure: nil)
+            return
+        }
+
+        guard number <= maxValue! else {
+            self.notif(withTitle: "超出范围", closure: nil)
+            return
+        }
+        
         let saveFieldParams = SaveFieldParams()
         saveFieldParams.applyId = applyId
         saveFieldParams.componentId = componentId
         saveFieldParams.fieldId = fieldId
         saveFieldParams.instanceId = instanceId
-        saveFieldParams.value = textField.text
+        saveFieldParams.value = text
+        /*
+         简单字段：
+         value = '1234';
+         单选字段 / 联动单选字段：
+         value = '{"id": 1234, "title": "XXXX"}';
+         多选字段：
+         value = '[{"id": 1234, "title": "XXXX", "extraValue": "2345"}, {"id": 5678, "title": "XXXX", "extraValue": "6789"}]';
+         多选字段示例二（可能没有extraValue的情况）：
+         value = '[{"id": 1234, "title": "XXXX", "extraValue": "2345"}, {"id": 5678, "title": "XXXX"}]';
+         */
         NetworkHandler.share().field.saveField(withSaveFieldParams: saveFieldParams) { (resultCode, message, data) in
             DispatchQueue.main.async {
+                self.notif(withTitle: message, closure: nil)
                 guard resultCode == .success else{
-                    self.notif(withTitle: message, closure: nil)
                     return
                 }
-                
                 self.navigationController?.popViewController(animated: true)
             }
         }
-    }
-    
-    //MARK:- 复制判断
-    @IBAction func valueChanged(_ sender: UITextField) {
-        guard sender.text != nil else{
-            return
-        }
-        
-        //限制字符数
-        if (sender.text?.lengthOfBytes(using: String.Encoding.utf8))! > maxLength{
-            while sender.text!.lengthOfBytes(using: String.Encoding.utf8) > maxLength {
-                
-                let endIndex = sender.text!.index(sender.text!.endIndex, offsetBy: -1)
-                let range = Range(sender.text!.startIndex..<endIndex)
-                sender.text = sender.text!.substring(with: range)
-            }
-        }
-    }
-}
-
-//MARK:- text field delegate
-extension Field0Editor: UITextFieldDelegate{
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-
-    }
-    
-    //点击return事件
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return false
-    }
-    
-    //键盘弹出
-    func keyboardWillShow(notif:NSNotification){
-        let userInfo = notif.userInfo
-        
-        let keyboardBounds = (userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let duration = (userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        
-        let offset = keyboardBounds.size.height
-        
-        /*
-        let animations = {
-            let keyboardTransform = CGAffineTransform(translationX: 0, y: -offset)
-            self.lowNiavigation.transform = keyboardTransform
-        }
-        
-        if duration > 0 {
-            let options = UIViewAnimationOptions(rawValue: UInt((userInfo![UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue << 16))
-            UIView.animate(withDuration: duration, delay: 0, options: options, animations: animations, completion: nil)
-        }else{
-            animations()
-        }
-        */
-    }
-    
-    //键盘回收
-    func keyboardWillHide(notif:NSNotification){
-        let userInfo = notif.userInfo
-        
-        let duration = (userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        
-        /*
-        let animations = {
-            let keyboardTransform = CGAffineTransform.identity
-            self.lowNiavigation.transform = keyboardTransform
-        }
-        
-        if duration > 0 {
-            let options = UIViewAnimationOptions(rawValue: UInt((userInfo![UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue << 16))
-            UIView.animate(withDuration: duration, delay: 0, options: options, animations: animations, completion: nil)
-        }else{
-            animations()
-        }
-        */
-    }
-    
-    //复制判断
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let existedLength = textField.text?.lengthOfBytes(using: .utf8)
-        let selectedLength = range.length
-        let replaceLength = string.lengthOfBytes(using: .utf8)
-        
-        if existedLength! - selectedLength + replaceLength > maxLength{
-            return false
-        }
-        
-        return true
-    }
+    }        
 }

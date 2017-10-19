@@ -80,28 +80,68 @@ class RegisterVC: UIViewController {
             return
         }
         
-        legalAcctoun = account
+        NetworkHandler.share().account.getVerifyCode(withAccount: account!) { (resultCode, message, data) in
+            DispatchQueue.main.async {
+                self.notif(withTitle: message, closure: nil)
+                guard resultCode == .success else{
+                    return
+                }
+                self.legalAcctoun = self.account
+                
+                //存储账号
+                userDefaults.set(self.account!, forKey: "account")
+            }
+        }
     }
     
     //MARK: 注册
     @IBAction func register(_ sender: Any){
         
+        //验证码
+        verification = verificationTextField.text
+        let verificationTuple = isVerifyCodeLegal(withString: verification)
+        guard verificationTuple.isLegal else {
+            notif(withTitle: verificationTuple.message, closure: nil)
+            return
+        }
+        
+        //密码
+        password = passwordTextField.text
         let passwordTuple = isPasswordLegal(withString: password)
         
         guard passwordTuple.isLegal else {
-            notif(withTitle: passwordTuple.message, duration: 1, closure: nil)
+            notif(withTitle: passwordTuple.message, closure: nil)
             return
         }
         
         //判断是否修改过用户名
         guard account == legalAcctoun else {
-            notif(withTitle: "需为新账号重新获取验证码", duration: 1, closure: nil)
+            notif(withTitle: "需为新账号重新获取验证码", closure: nil)
             return
         }
         
         //存储账号密码
-        userDefaults.set(account!, forKey: "account")
         userDefaults.set(password!.sha1(), forKey: "password")
         userDefaults.set(password!, forKey: "originalPassword")
+        
+        //验证验证码
+        NetworkHandler.share().account.checkVerifyCode(withVerfiyCode: verification!) { (resultCode, message, data) in
+            DispatchQueue.main.async {
+                guard resultCode == .success else{
+                    self.notif(withTitle: message, closure: nil)
+                    return
+                }
+                NetworkHandler.share().account.register(withPassword: self.password!.sha1()) { (resultCode, message, data) in
+                    DispatchQueue.main.async {
+                        self.notif(withTitle: message, closure: nil)
+                        guard resultCode == .success else{
+                            return
+                        }
+                        
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+            }
+        }
     }
 }

@@ -43,6 +43,8 @@ struct Actions{
     //录入器
     static let saveField            = "/component/update"               //更新组件数据（普通）
     static let saveFile             = "/component/update/attachment"    //更新组件数据（图片）
+    static let pullFieldList         = "/dictionary"                     //获取字典表
+    static let pullFieldPriceList    = "/dictionary/prize"               //获取资助勾选选项
     
     //政策详情
     static let getPolicy            = "/policy"                 //获取政策
@@ -81,6 +83,7 @@ public typealias Closure = (_ resultCode: ResultCode, _ message: String, _ data:
 public enum ResultCode{
     case failure
     case success
+    case notCompany
 }
 
 //获取本地存储的账户与密码
@@ -103,14 +106,14 @@ public let passwordMinLength    = 6
 public let verifyCodeLength     = 4
 
 //MARK:- 正则表达式
-struct Regex {
+public struct Regex {
     let regex: NSRegularExpression?
     
-    init(_ pattern: String) {
+    public init(_ pattern: String) {
         regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
     }
     
-    func match(input: String) -> Bool {
+    public func match(input: String) -> Bool {
         if let matches = regex?.matches(in: input, options: [], range: NSMakeRange(0, (input as NSString).length)) {
             return matches.count > 0
         }

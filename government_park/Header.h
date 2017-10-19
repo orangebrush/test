@@ -10,6 +10,7 @@
 #define Header_h
 
 @import UIKit;
+@import gov_sdk;
 
 #import <CommonCrypto/CommonDigest.h>
 

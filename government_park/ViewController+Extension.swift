@@ -109,4 +109,10 @@ extension UIViewController{
         let loginVC = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateViewController(withIdentifier: "login") as! LoginVC
         navigationController?.show(loginVC, sender: nil)
     }
+    
+    //MARK:- 修改密码
+    func changePassword(){
+        let changePasswordVC = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateViewController(withIdentifier: "changepassword") as! ChangePasswordVC
+        navigationController?.show(changePasswordVC, sender: nil)
+    }
 }

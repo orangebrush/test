@@ -25,6 +25,29 @@ public class SaveFileParams: NSObject{
     public var image: UIImage?
 }
 
+public class ExtraField: NSObject{
+    public var title: String?
+    public var fieldTypeValue: Int?
+    public var maxLength: Int?          //值长度限制
+    public var maxValue: Int?           //值大小限制
+    public var prefix: String?          //资助勾选无此选项
+    public var suffix: String?          //如果是资助勾选则固定显示万元万元
+}
+public class Option: NSObject{  //选项
+    //单选
+    public var id = 0                   //选项值
+    public var title: String?           //标题选项
+    //联动选项(专属)
+    public var optionList = [Option]()  //层级
+    //多选+附加字段(专属)
+    public var extraField: ExtraField?  //附加属性
+}
+//public class Content: NSObject{ //字典表
+//    public var id = 0
+//    public var title: String?
+//    public var optionList = [Option]()  //联动
+//}
+
 public class NWHField: NSObject {
     
     //MARK:- init ------------------------------------------------------------
@@ -33,6 +56,7 @@ public class NWHField: NSObject {
         return __once
     }
     
+    //MARK: 提交字段
     public func saveField(withSaveFieldParams params: SaveFieldParams, closure: @escaping Closure){
         guard let account = localAccount, let password = localPassword else {
             closure(.failure, "未登录", nil)
@@ -54,12 +78,13 @@ public class NWHField: NSObject {
         ]
         
         if let instanceId = params.instanceId{
-            dic["itemInstance"] = instanceId
+            dic["itemInstance"] = "\(instanceId)"
         }
         
         Session.session(withAction: Actions.saveField, withMethod: Method.post, withParam: dic, closure: closure)
     }
     
+    //MARK: 提交图片
     public func saveFile(withSaveFileParams params: SaveFileParams, closure: @escaping (_ resultCode: ResultCode, _ message: String, _ data: (URL?, Int)?) -> ()){
         guard let account = localAccount, let password = localPassword else {
             closure(.failure, "未登录", nil)
@@ -80,7 +105,7 @@ public class NWHField: NSObject {
         ]
         
         if let instanceId = params.instanceId{
-            dic["itemInstance"] = instanceId
+            dic["itemInstance"] = "\(instanceId)"
         }
         
         Session.upload(image, withParams: dic) { (resultCode, message, data) in
@@ -94,6 +119,36 @@ public class NWHField: NSObject {
                 }
             }
             closure(resultCode, message, tuple)
+        }
+    }
+    
+    //MARK: 下拉选项列表
+    public func pullOptionList(withFieldTypeValue fieldTypeValue: Int, closure: @escaping (_ resultCode: ResultCode, _ message: String, _ optionList: [Option])->()){
+        let dic = ["fieldType": "\(fieldTypeValue)"]
+        Session.session(withAction: Actions.pullFieldList, withMethod: Method.get, withParam: dic) { (resultCode, message, data) in
+            var optionList = [Option]()
+            if let optionListData = data as? [[String: Any]]{
+                for optionData in optionListData{
+                    let option = DataEncode.option(withOptionData: optionData)
+                    optionList.append(option)
+                }
+            }
+            closure(resultCode, message, optionList)
+        }
+    }
+    
+    //MARK: 下拉资助列表
+    public func pullPrizeList(withPolicyId policyId: Int, closure: @escaping (_ resultCode: ResultCode, _ message: String, _ optionList: [Option])->()){
+        let dic = ["policyId": "\(policyId)"]
+        Session.session(withAction: Actions.pullFieldPriceList, withMethod: Method.get, withParam: dic) { (resultCode, message, data) in
+            var optionList = [Option]()
+            if let optionListData = data as? [[String: Any]]{
+                for optionData in optionListData{
+                    let option = DataEncode.option(withOptionData: optionData)
+                    optionList.append(option)
+                }
+            }
+            closure(resultCode, message, optionList)
         }
     }
 }

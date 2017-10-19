@@ -37,7 +37,13 @@ class Session {
                 }
                 
                 let data = result["result"]
-                closure(code == 0 ? .success : .failure, message, data)
+                
+                //根据返回码判断
+                if code == 401111 {
+                    closure(.notCompany, message, data)
+                }else{
+                    closure(code == 0 ? .success : .failure, message, data)
+                }
                 
             }catch let responseError{
                 debugPrint("<Session> 数据处理错误: \(responseError)")

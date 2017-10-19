@@ -12,12 +12,12 @@ class Field6EditorCell0: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
     
-    var value: Value?{
+    var option: Option?{
         didSet{
-            guard let val = value else {
+            guard let opt = option else {
                 return
             }
-            label.text = val.title
+            label.text = opt.title
         }
     }
 }
@@ -25,17 +25,36 @@ class Field6EditorCell0: UITableViewCell {
 class Field6EditorCell1: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var suffixLabel: UILabel!
+    @IBOutlet weak var suffixWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var textField: UITextField!
     
-    var value: Value?{
+    var option: Option?{
         didSet{
-            guard let val = value else {
+            guard let opt = option else {
                 return
             }
-            if val.extraValue.isEmpty{
+
+            if let extraField = opt.extraField{
+                titleLabel.text = extraField.title
+                titleLabel.font = .small
+                titleLabel.textColor = .gray
+                
+                if let suffix = extraField.suffix{
+                    suffixLabel.text = extraField.suffix
+                    suffixLabel.font = .small
+                    suffixLabel.textColor = .gray
+                    suffixWidthConstraint.constant = 21 * CGFloat(suffix.characters.count)
+                }else{
+                    suffixWidthConstraint.constant = 0
+                }
+            }else{
+                titleLabel.isHidden = true
+                suffixLabel.isHidden = true
                 textField.isHidden = true
             }
-            label.text = val.title
+            label.text = opt.title
         }
     }
 }

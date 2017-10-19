@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import gov_sdk
 extension String {
     //MARK: - MD5
     func md5() -> String {
@@ -36,5 +37,10 @@ extension String {
         return output as String
     }
     
-    
+    //MARK: 判断是否为纯数字02x
+    func isNumber() -> Bool{
+        let mailPattern = "^[0-9]*$"
+        let matcher = Regex(mailPattern)
+        return matcher.match(input: self)
+    }
 }

@@ -124,9 +124,14 @@ class FindPasswordVC: UIViewController {
             userDefaults.set(account!, forKey: "account")
             userDefaults.set(newPassword!.sha1(), forKey: "password")
             userDefaults.set(newPassword!, forKey: "originalPassword")
-            NetworkHandler.share().account.reset(withPassword: newPassword!, closure: { (resultCode, message, data) in
+            NetworkHandler.share().account.reset(withPassword: newPassword!.sha1(), closure: { (resultCode, message, data) in
                 DispatchQueue.main.async {
                     self.isLagel = false        //重置验证码为未验证
+                    guard resultCode == .success else{
+                        self.notif(withTitle: message, closure: nil)
+                        return
+                    }
+                    
                     self.navigationController?.popViewController(animated: true)
                 }
             })
@@ -141,6 +146,10 @@ class FindPasswordVC: UIViewController {
             
             NetworkHandler.share().account.checkResetVerifyCode(withVerfiyCode: verification!, closure: { (resultCode, message, data) in
                 DispatchQueue.main.async {
+                    guard resultCode == .success else{
+                        self.notif(withTitle: message, closure: nil)
+                        return
+                    }
                     self.isLagel = true     //设置验证码通过
                 }
             })

@@ -40,12 +40,19 @@ class MeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        navigationController?.isNavigationBarHidden = false
+        
         //获取申请列表
         NetworkHandler.share().me.getAllApply { (resultCode, message, applyList) in
             DispatchQueue.main.async {
                 guard resultCode == .success else{
                     self.notif(withTitle: message, closure: nil)
-                    self.login()
+                    if resultCode == .notCompany{
+                        //跳转到企业注册
+                    }else{
+                        //跳转到登陆
+                        self.login()
+                    }
                     return
                 }
                 
@@ -266,8 +273,12 @@ extension MeVC: UIActionSheetDelegate{
             print("click 取消")
         case 1:
             print("click 修改密码")
+            self.changePassword()
         case 2:
             print("click 退出登录")
+            userDefaults.set(nil, forKey: "password")
+            self.notif(withTitle: "已注销", closure: nil)
+            login()
         default:
             print("click other")
         }

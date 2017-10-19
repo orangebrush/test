@@ -27,6 +27,7 @@
 		322BD3121F94D37B003C650E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 322BD3051F94C357003C650E /* libWeChatSDK.a */; };
 		322F48631F946511006C724B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322F48621F946511006C724B /* Date+Extension.swift */; };
 		322F48651F94B016006C724B /* FieldEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322F48641F94B016006C724B /* FieldEditor.swift */; };
+		32454BE11F975D7100DC3920 /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32454BE01F975D7100DC3920 /* ChangePasswordVC.swift */; };
 		324A91A11F73DBFF00A1F721 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A01F73DBFF00A1F721 /* Timer.swift */; };
 		324A91A31F73DD4600A1F721 /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */; };
 		324A91A51F73E9A700A1F721 /* Field5SubEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A41F73E9A700A1F721 /* Field5SubEditor.swift */; };
@@ -83,6 +84,7 @@
 		32BB6E5F1F7F7EC100FC47F2 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB6E5E1F7F7EC100FC47F2 /* LoginVC.swift */; };
 		32BB6E611F7F972300FC47F2 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB6E601F7F972300FC47F2 /* RegisterVC.swift */; };
 		32BB6E631F7F9BB600FC47F2 /* FindPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BB6E621F7F9BB600FC47F2 /* FindPasswordVC.swift */; };
+		32BE0E7E1F98579F00525E6C /* CreateCompanyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BE0E7D1F98579F00525E6C /* CreateCompanyVC.swift */; };
 		32DB0A911F92702A0099481A /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DB0A901F92702A0099481A /* String+Extension.swift */; };
 		32DB0A941F9271120099481A /* Header.h in Sources */ = {isa = PBXBuildFile; fileRef = 32DB0A931F9270F30099481A /* Header.h */; };
 		32EE31E51F70FA8900939EE8 /* Policy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32EE31E41F70FA8900939EE8 /* Policy.storyboard */; };
@@ -153,6 +155,7 @@
 		322BD3131F95B28E003C650E /* resource */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resource; sourceTree = "<group>"; };
 		322F48621F946511006C724B /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		322F48641F94B016006C724B /* FieldEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldEditor.swift; sourceTree = "<group>"; };
+		32454BE01F975D7100DC3920 /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		324A91A01F73DBFF00A1F721 /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
 		324A91A41F73E9A700A1F721 /* Field5SubEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field5SubEditor.swift; sourceTree = "<group>"; };
@@ -215,6 +218,7 @@
 		32BB6E5E1F7F7EC100FC47F2 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		32BB6E601F7F972300FC47F2 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		32BB6E621F7F9BB600FC47F2 /* FindPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordVC.swift; sourceTree = "<group>"; };
+		32BE0E7D1F98579F00525E6C /* CreateCompanyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompanyVC.swift; sourceTree = "<group>"; };
 		32DB0A901F92702A0099481A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		32DB0A931F9270F30099481A /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		32EE31E41F70FA8900939EE8 /* Policy.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Policy.storyboard; sourceTree = "<group>"; };
@@ -277,6 +281,8 @@
 				32BB6E5E1F7F7EC100FC47F2 /* LoginVC.swift */,
 				32BB6E601F7F972300FC47F2 /* RegisterVC.swift */,
 				32BB6E621F7F9BB600FC47F2 /* FindPasswordVC.swift */,
+				32454BE01F975D7100DC3920 /* ChangePasswordVC.swift */,
+				32BE0E7D1F98579F00525E6C /* CreateCompanyVC.swift */,
 			);
 			name = "登陆注册、验证";
 			sourceTree = "<group>";
@@ -550,8 +556,8 @@
 		32EE31EE1F7120A600939EE8 /* 编辑页 */ = {
 			isa = PBXGroup;
 			children = (
-				32EE31EF1F7120BF00939EE8 /* EditVC.swift */,
 				32EE31F11F7120CF00939EE8 /* Edit.storyboard */,
+				32EE31EF1F7120BF00939EE8 /* EditVC.swift */,
 				3293399F1F72071B00D3D88B /* 查看政策页 */,
 			);
 			name = "编辑页";
@@ -706,6 +712,7 @@
 			files = (
 				329D88441F6F7AFC00D304FF /* RootNC.swift in Sources */,
 				329D88551F6FA75000D304FF /* Color+Extension.swift in Sources */,
+				32454BE11F975D7100DC3920 /* ChangePasswordVC.swift in Sources */,
 				32BB6E5F1F7F7EC100FC47F2 /* LoginVC.swift in Sources */,
 				3269DF451F7B882600C14FC3 /* ListCell.swift in Sources */,
 				32933A131F726B1600D3D88B /* Field4Editor.swift in Sources */,
@@ -727,6 +734,7 @@
 				321115C21F7928CF005EA426 /* FinishedVC.swift in Sources */,
 				3269DF411F7B3FD200C14FC3 /* PolicyCells.swift in Sources */,
 				321FE4FD1F73C7C3002FA78B /* Field6EditorCell.swift in Sources */,
+				32BE0E7E1F98579F00525E6C /* CreateCompanyVC.swift in Sources */,
 				32DB0A911F92702A0099481A /* String+Extension.swift in Sources */,
 				32EE31E71F70FB5800939EE8 /* PolicyVC.swift in Sources */,
 				321115C51F792D41005EA426 /* 0fflineVC.swift in Sources */,

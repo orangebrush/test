@@ -35,6 +35,4 @@ extension String {
         }
         return output as String
     }
-    
-    
 }

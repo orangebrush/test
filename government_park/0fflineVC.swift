@@ -58,22 +58,23 @@ class OfflineVC: UIViewController {
         //地图
         let imageLength = width / 2 - .edge8
         let imageFrame = CGRect(x: .edge8, y: label1Frame.origin.y + label1.frame.height + .edge8, width: imageLength, height: imageLength)
-//        let imageView = UIImageView(frame: imageFrame)
-//        imageView.image = UIImage(named: "/resource/me/map")
-//        scrollView.addSubview(imageView)
+        let imageView = UIImageView(frame: imageFrame)
+        imageView.image = UIImage(named: "/resource/me/location")
+        imageView.contentMode = .scaleAspectFit
+        scrollView.addSubview(imageView)
         
-        let mapview = MKMapView(frame: imageFrame)
-        mapview.layer.cornerRadius = .cornerRadius
-        mapview.mapType = .standard
-        mapview.isRotateEnabled = false
-        mapview.showsBuildings = false
-        mapview.userTrackingMode = .follow
-        
-
-        let annotation = MKPointAnnotation()
-        
-        mapview.addAnnotation(annotation)
-        scrollView.addSubview(mapview)
+//        let mapview = MKMapView(frame: imageFrame)
+//        mapview.layer.cornerRadius = .cornerRadius
+//        mapview.mapType = .standard
+//        mapview.isRotateEnabled = false
+//        mapview.showsBuildings = false
+//        mapview.userTrackingMode = .follow
+//
+//
+//        let annotation = MKPointAnnotation()
+//
+//        mapview.addAnnotation(annotation)
+//        scrollView.addSubview(mapview)
         
         //地址
         let label2Frame = CGRect(x: view_size.width / 2, y: imageFrame.origin.y, width: imageLength, height: imageLength)

@@ -160,6 +160,9 @@ class DataEncode {
         }
         item.instanceId = itemData["instanceId"] as? Int
         item.title = itemData["title"] as? String
+        if let maxLength = itemData["maxLength"] as? Int{
+            item.maxLength = maxLength
+        }
         if let type = itemData["itemType"] as? String{
             if type == "G"{         //组
                 item.isGroup = true
@@ -169,22 +172,32 @@ class DataEncode {
             }else if type == "F"{   //字段
                 item.isGroup = false
                 if let fieldType = itemData["fieldType"] as? Int{
+                    item.fieldTypeValue = fieldType
                     switch fieldType{
-                    case 1210, 1220, 1241, 1243, 1244, 1245, 1246, 1247:        //短文本
+                    case (1200..<1300):                                         //短文本
                         item.fieldType = .short
-                    case 1110, 1120:                                            //长文本
+                        //判断数值类型
+                        if (1241..<1250).contains(fieldType){
+                            item.maxLength = 500
+                            if let maxLength = itemData["maxLength"] as? Int{
+                                item.maxValue = maxLength
+                            }
+                        }
+                        //1220～1239数字类型(暂忽略)
+                        //1200~1219普通类型(无需处理)
+                    case (1110...1120):                                         //长文本
                         item.fieldType = .long
-                    case 2000:                                                  //图片
+                    case (2000..<3000):                                         //图片
                         item.fieldType = .image
-                    case 3100:                                                  //附件
+                    case (3100..<3200):                                         //附件
                         item.fieldType = .enclosure
-                    case 9110, 9120, 9130:                                      //单选
+                    case (9100..<9200):                                         //单选
                         item.fieldType = .single
-                    case 9310, 9320, 9330, 9340, 9350, 9390:                    //多选
+                    case (9300..<9400):                                         //多选
                         item.fieldType = .multi
-                    case 9210:                                                  //联动
+                    case (9200..<9300):                                         //联动
                         item.fieldType = .linkage
-                    default:                                                    //时间
+                    default://(4100..<4200)                                     //时间
                         item.fieldType = .time
                     }
                 }
@@ -206,9 +219,6 @@ class DataEncode {
         }
         if let number = itemData["itemNumber"] as? Int{
             item.number = number
-        }
-        if let maxLength = itemData["maxLength"] as? Int{
-            item.maxLength = maxLength
         }
         item.prefix = itemData["fieldPrefix"] as? String
         item.suffix = itemData["fieldSuffix"] as? String
@@ -251,5 +261,33 @@ class DataEncode {
         }
         value.hint = valueData["hint"] as? String
         return value
+    }
+    
+    //MARK: 解析option
+    class func option(withOptionData optionData: [String: Any]) -> Option{
+        let option = Option()
+        if let id = optionData["id"] as? Int{
+            option.id = id
+        }
+        option.title = optionData["title"] as? String
+        if let childrenDataList = optionData["children"] as? [[String: Any]]{
+            for childrenData in childrenDataList{
+                let children = DataEncode.option(withOptionData: childrenData)
+                option.optionList.append(children)
+            }
+        }
+        if let extraFieldData = optionData["extraField"] as? [String: Any]{
+            let extraField = ExtraField()
+            extraField.title = extraFieldData["title"] as? String
+            if let fieldTypeValue = extraFieldData["fieldType"] as? Int{
+                extraField.fieldTypeValue = fieldTypeValue
+                extraField.maxLength = extraFieldData["maxLength"] as? Int
+                extraField.maxValue = extraField.maxLength
+            }
+            extraField.prefix = extraFieldData["fieldPrefix"] as? String
+            extraField.suffix = extraFieldData["fieldSuffix"] as? String
+            option.extraField = extraField
+        }
+        return option
     }
 }

@@ -12,13 +12,15 @@ class Field6Editor: FieldEditor {
     
     @IBOutlet weak var tableView: UITableView!
     
-    fileprivate var textfieldMap = [Int: UITextField]()
+    fileprivate var optionList = [Option]()         //全部列表    
     
-    var valueList = [Value]()
-    var maxLength = 20
+    var policyId: Int?
+    var valueList = [Value]()                       //已选列表
+    
     
     //MARK:- init-----------------------------------------
     override func viewDidLoad() {
+        super.viewDidLoad()
         config()
     }
     
@@ -29,10 +31,31 @@ class Field6Editor: FieldEditor {
     
     private func config(){
         
+        tableView.isHidden = true
     }
     
     private func createContents(){
-        tableView.reloadData()
+        
+        //拉取列表
+        if let polId = policyId{
+            NetworkHandler.share().field.pullPrizeList(withPolicyId: polId, closure: pullListClosure(_:_:_:))
+        }else{
+            NetworkHandler.share().field.pullOptionList(withFieldTypeValue: fieldTypeValue, closure: pullListClosure(_:_:_:))
+        }
+    }
+    
+    //MARK: 拉取列表回调
+    private func pullListClosure(_ resultCode: ResultCode, _ message: String, _ optionList: [Option]){
+        DispatchQueue.main.async {
+            guard resultCode == .success else{
+                self.notif(withTitle: message, closure: nil)
+                return
+            }
+            
+            self.optionList = optionList
+            self.tableView.isHidden = false
+            self.tableView.reloadData()
+        }
     }
     
     //MARK: 保存选择
@@ -61,10 +84,11 @@ class Field6Editor: FieldEditor {
         var dataDicList = [[String: Any]]()
         for indexPath in indexPathList{
             var dataDic = [String: Any]()
-            let value = valueList[indexPath.row]
-            dataDic["id"] = value.id
-            dataDic["title"] = value.title ?? ""
-            if !value.extraValue.isEmpty{
+            let option = optionList[indexPath.row]
+            dataDic["id"] = option.id
+            dataDic["title"] = option.title ?? ""
+            
+            if option.extraField != nil{
                 let cell1 = tableView.cellForRow(at: indexPath) as! Field6EditorCell1
                 dataDic["extraValue"] = cell1.textField.text ?? ""
             }
@@ -93,108 +117,59 @@ extension Field6Editor: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return valueList.count
+        return optionList.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let row = indexPath.row
+        let option = optionList[row]
+        return option.extraField == nil ? .cellHeight : 88
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
-        let value = valueList[row]
+        let option = optionList[row]
         var cell: UITableViewCell
-        if value.extraValue.isEmpty{
+        
+        let filterList = valueList.filter{$0.id == option.id}
+        let value = filterList.first
+        
+        if option.extraField == nil{
             cell = tableView.dequeueReusableCell(withIdentifier: "cell0")!
+
             let cell0 = cell as! Field6EditorCell0
-            cell0.value = value
+            cell0.option = option
             return cell0
         }else{
             cell = tableView.dequeueReusableCell(withIdentifier: "cell1")!
+            cell.selectionStyle = .blue
+            
             let cell1 = cell as! Field6EditorCell1
-            cell1.value = value
+            cell1.option = option
+            if let val = value{
+                cell1.textField.placeholder = val.hint
+            }
             return cell1
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = indexPath.row
         
         let cell = tableView.cellForRow(at: indexPath)
         if cell?.accessoryType != .checkmark {
             cell?.accessoryType = .checkmark
-        }else{
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        if cell?.accessoryType == .checkmark{
             cell?.accessoryType = .none
         }
     }
 }
 
 
-//MARK:- text field delegate
-extension Field6Editor: UITextFieldDelegate{
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        let rowIndex = textField.tag
-        
-        textfieldMap[rowIndex] = textField
-    }
-    
-    //点击return事件
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return false
-    }
-    
-    //键盘弹出
-    func keyboardWillShow(notif:NSNotification){
-        let userInfo = notif.userInfo
-        
-        let keyboardBounds = (userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let duration = (userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        
-        let offset = keyboardBounds.size.height
-        
-        /*
-         let animations = {
-         let keyboardTransform = CGAffineTransform(translationX: 0, y: -offset)
-         self.lowNiavigation.transform = keyboardTransform
-         }
-         
-         if duration > 0 {
-         let options = UIViewAnimationOptions(rawValue: UInt((userInfo![UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue << 16))
-         UIView.animate(withDuration: duration, delay: 0, options: options, animations: animations, completion: nil)
-         }else{
-         animations()
-         }
-         */
-    }
-    
-    //键盘回收
-    func keyboardWillHide(notif:NSNotification){
-        let userInfo = notif.userInfo
-        
-        let duration = (userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        
-        /*
-         let animations = {
-         let keyboardTransform = CGAffineTransform.identity
-         self.lowNiavigation.transform = keyboardTransform
-         }
-         
-         if duration > 0 {
-         let options = UIViewAnimationOptions(rawValue: UInt((userInfo![UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue << 16))
-         UIView.animate(withDuration: duration, delay: 0, options: options, animations: animations, completion: nil)
-         }else{
-         animations()
-         }
-         */
-    }
-    
-    //复制判断
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let existedLength = textField.text?.lengthOfBytes(using: .utf8)
-        let selectedLength = range.length
-        let replaceLength = string.lengthOfBytes(using: .utf8)
-        
-        if existedLength! - selectedLength + replaceLength > maxLength{
-            return false
-        }
-        
-        return true
-    }
-}
+

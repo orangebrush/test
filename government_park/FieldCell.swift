@@ -20,7 +20,9 @@ class FieldCell: UITableViewCell {
     }
     
     private func config(){
-        
+        firstLabel.font = .middle
+        secondLabel.font = .small
+        secondLabel.textColor = .gray
     }
     
     private func createContents(){

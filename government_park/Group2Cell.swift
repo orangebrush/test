@@ -7,6 +7,10 @@
 //
 
 import UIKit
-class Group2Cell: GroupCell {    
+class Group2Cell: GroupCell {
     
+    @IBOutlet weak var instanceTextfield: UITextField!
+    
+    var instanceId: Int?
+    var addedInstanceButtons = false 
 }
