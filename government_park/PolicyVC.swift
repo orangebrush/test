@@ -296,8 +296,21 @@ extension PolicyVC: UITableViewDelegate, UITableViewDataSource{
             
             
             return .edge8 + .labelHeight + .edge8 + rect.height + .edge8
-        default:
-            return 44
+        default:        //正文
+            var text = ""
+            if let pol = policy{
+                if row < pol.documentList.count {
+                    let document = pol.documentList[row]
+                    text = document.title ?? ""
+                }else{
+                    let prize = pol.prizeList[row - pol.documentList.count]
+                    text = prize.title ?? ""
+                }
+            }
+            
+            let size = CGSize(width: view_size.width - .edge8 * 2, height: view_size.width)
+            let rect = NSString(string: text).boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont(name: UIFont.mainName, size: .labelHeight)!], context: nil)
+            return .edge8 + rect.height + .edge8
         }
     }
     
@@ -339,21 +352,47 @@ extension PolicyVC: UITableViewDelegate, UITableViewDataSource{
             if let applicantList = policy?.applicantList{
                 let applicant = applicantList[row]
                 muteCell.titleLabel.text = "扶持对象  " + (applicant.name ?? "")
+                muteCell.titleLabel.font = .middle
                 muteCell.detailLabel.text = applicant.detailText
+                muteCell.detailLabel.font = .small
             }
             cell = muteCell
         case 4:     //正文内容
-            let muteCell = tableView.dequeueReusableCell(withIdentifier: "mute") as! PolicyMuteLineCell
+            let contentCell = tableView.dequeueReusableCell(withIdentifier: "single") as! PolicySingleLineCell
             if let pol = policy{
                 if row < pol.documentList.count {
                     let document = pol.documentList[row]
-                    muteCell.titleLabel.text = document.title
+                    contentCell.label.text = document.title
+                    if let type = document.type{
+                        switch type{
+                        case .chapter:
+                            contentCell.label.font = .big
+                            contentCell.label.textColor = .black
+                        case .item:
+                            contentCell.label.font = .middle
+                            contentCell.label.textColor = .gray
+                        case .paragraph:
+                            contentCell.label.font = .middle
+                            contentCell.label.textColor = .lightGray
+                        }
+                    }
+                    if let contentType = document.contentType{
+                        contentCell.label.font = .middle
+                        switch contentType{
+                        case .fold:
+                            contentCell.label.textColor = .green
+                        case .requirement:
+                            contentCell.label.textColor = .red
+                        case .text:
+                            contentCell.label.textColor = .gray
+                        }
+                    }
                 }else{
                     let prize = pol.prizeList[row - pol.documentList.count]
-                    muteCell.titleLabel.text = prize.title
+                    contentCell.label.text = prize.title
                 }
             }
-            cell = muteCell
+            cell = contentCell
         default:
             cell = UITableViewCell(style: .default, reuseIdentifier: identifier)
         }

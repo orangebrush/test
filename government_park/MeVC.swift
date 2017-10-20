@@ -275,6 +275,14 @@ extension MeVC: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        cell.layer.transform = CATransform3DMakeScale(0.9, 0.95, 1)
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.9, 0.95, 1)
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = indexPath.section
         let row = indexPath.row

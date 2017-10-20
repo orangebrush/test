@@ -16,9 +16,11 @@ class GroupCell: UITableViewCell {
     @IBOutlet weak var firstButton: UIButton!
     @IBOutlet weak var secondButton: UIButton!
     
+    @IBOutlet weak var hintLabel: UILabel!
+    
     //MARK:- init---------------------------
     override func didMoveToSuperview() {
-        
+        super.didMoveToSuperview()
         config()
         createContents()
     }
@@ -28,7 +30,7 @@ class GroupCell: UITableViewCell {
         firstLabel.font = .middle
         if firstButton != nil{            
             if firstButton.currentTitle == "Button" {
-                firstButton.setTitle("进入编辑组>>", for: .normal)
+                firstButton.setTitle("点击编辑", for: .normal)
             }
         }
     }

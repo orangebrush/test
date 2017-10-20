@@ -61,7 +61,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0uf-LI-qDE">
-                                                    <rect key="frame" x="8" y="37" width="326" height="21"/>
+                                                    <rect key="frame" x="20" y="37" width="314" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="X6M-SK-WUB"/>
                                                     </constraints>
@@ -70,7 +70,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fyS-oX-hBL">
-                                                    <rect key="frame" x="8" y="66" width="326" height="41.5"/>
+                                                    <rect key="frame" x="20" y="66" width="314" height="41.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -82,8 +82,8 @@
                                                 <constraint firstItem="0uf-LI-qDE" firstAttribute="top" secondItem="d6e-AH-HDk" secondAttribute="bottom" constant="8" id="Bgy-Mq-6MT"/>
                                                 <constraint firstItem="fyS-oX-hBL" firstAttribute="top" secondItem="0uf-LI-qDE" secondAttribute="bottom" constant="8" id="C5l-bV-Sdy"/>
                                                 <constraint firstAttribute="trailing" secondItem="d6e-AH-HDk" secondAttribute="trailing" constant="8" id="Hza-Gf-rKt"/>
-                                                <constraint firstItem="fyS-oX-hBL" firstAttribute="leading" secondItem="84T-ZE-dZn" secondAttribute="leading" constant="8" id="Ipt-uy-soy"/>
-                                                <constraint firstItem="0uf-LI-qDE" firstAttribute="leading" secondItem="84T-ZE-dZn" secondAttribute="leading" constant="8" id="Kj0-vY-bdK"/>
+                                                <constraint firstItem="fyS-oX-hBL" firstAttribute="leading" secondItem="84T-ZE-dZn" secondAttribute="leading" constant="20" id="Ipt-uy-soy"/>
+                                                <constraint firstItem="0uf-LI-qDE" firstAttribute="leading" secondItem="84T-ZE-dZn" secondAttribute="leading" constant="20" id="Kj0-vY-bdK"/>
                                                 <constraint firstItem="d6e-AH-HDk" firstAttribute="leading" secondItem="84T-ZE-dZn" secondAttribute="leading" constant="8" id="WYe-AB-mrq"/>
                                                 <constraint firstAttribute="bottom" secondItem="fyS-oX-hBL" secondAttribute="bottom" constant="8" id="age-eT-ZRu"/>
                                                 <constraint firstItem="d6e-AH-HDk" firstAttribute="top" secondItem="84T-ZE-dZn" secondAttribute="top" constant="8" id="qmP-HQ-rq5"/>

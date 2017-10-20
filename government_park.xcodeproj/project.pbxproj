@@ -33,6 +33,7 @@
 		324A91A51F73E9A700A1F721 /* Field5SubEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A91A41F73E9A700A1F721 /* Field5SubEditor.swift */; };
 		3254603E1F98ECC20091D65D /* TableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3254603D1F98ECC20091D65D /* TableViewCell+Extension.swift */; };
 		3254603F1F98F92B0091D65D /* resource in Resources */ = {isa = PBXBuildFile; fileRef = 322BD3131F95B28E003C650E /* resource */; };
+		325460411F99E0EE0091D65D /* TableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325460401F99E0EE0091D65D /* TableView+Extension.swift */; };
 		3269DF3A1F7A825700C14FC3 /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3269DF391F7A825700C14FC3 /* List.storyboard */; };
 		3269DF3E1F7A826D00C14FC3 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3269DF3D1F7A826D00C14FC3 /* ListVC.swift */; };
 		3269DF411F7B3FD200C14FC3 /* PolicyCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3269DF401F7B3FD200C14FC3 /* PolicyCells.swift */; };
@@ -162,6 +163,7 @@
 		324A91A21F73DD4600A1F721 /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
 		324A91A41F73E9A700A1F721 /* Field5SubEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field5SubEditor.swift; sourceTree = "<group>"; };
 		3254603D1F98ECC20091D65D /* TableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableViewCell+Extension.swift"; sourceTree = "<group>"; };
+		325460401F99E0EE0091D65D /* TableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableView+Extension.swift"; sourceTree = "<group>"; };
 		3269DF391F7A825700C14FC3 /* List.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = List.storyboard; sourceTree = "<group>"; };
 		3269DF3D1F7A826D00C14FC3 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		3269DF401F7B3FD200C14FC3 /* PolicyCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyCells.swift; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 				32DB0A901F92702A0099481A /* String+Extension.swift */,
 				322F48621F946511006C724B /* Date+Extension.swift */,
 				3254603D1F98ECC20091D65D /* TableViewCell+Extension.swift */,
+				325460401F99E0EE0091D65D /* TableView+Extension.swift */,
 			);
 			name = "扩展";
 			sourceTree = "<group>";
@@ -782,6 +785,7 @@
 				329B127E1F70BAA10061C38E /* Float+Extension.swift in Sources */,
 				324A91A51F73E9A700A1F721 /* Field5SubEditor.swift in Sources */,
 				32F6137A1F752E4400F72FB7 /* NewsVC.swift in Sources */,
+				325460411F99E0EE0091D65D /* TableView+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

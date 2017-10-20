@@ -14,7 +14,7 @@ class FieldCell: UITableViewCell {
     
     //MARK:- init
     override func didMoveToSuperview() {
-        
+        super.didMoveToSuperview()
         config()
         createContents()
     }
@@ -22,7 +22,7 @@ class FieldCell: UITableViewCell {
     private func config(){
         firstLabel.font = .middle
         secondLabel.font = .small
-        secondLabel.textColor = .gray
+//        secondLabel.textColor = .gray
     }
     
     private func createContents(){

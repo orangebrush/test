@@ -361,6 +361,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
             if groupCell.secondLabel != nil{
                 groupCell.secondLabel.text = base.hint
             }
+            groupCell.hintLabel.text = base.hint
             groupCell.closure = {
                 instanceId in
                 self.clickGroup(withInstanceId: instanceId == 0 ? self.instanceId : instanceId, withComponentId: self.apply!.catalogList[section].baseItemList[row].id, withGroupId: nil)
@@ -383,6 +384,9 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                     if groupCell.secondLabel != nil{
                         groupCell.secondLabel.text = base.hint
                     }
+                    if groupCell.hintLabel != nil{
+                        groupCell.hintLabel.text = base.hint
+                    }
                     groupCell.closure = {
                         instanceId in
                         self.clickGroup(withInstanceId: self.instanceId, withComponentId: self.componentId!, withGroupId: base.id)
@@ -391,7 +395,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 case .multi:        //done
                     let group2Cell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! Group2Cell
                     group2Cell.firstLabel.text = base.title
-                    group2Cell.secondLabel.text = base.hint
+                    group2Cell.hintLabel.text = base.hint
                     group2Cell.firstButton.tag = 0              //add按钮
                     group2Cell.firstButton.layer.cornerRadius = .cornerRadius
                     //添加条目按钮
@@ -456,7 +460,10 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                     let group3Cell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! Group3Cell
                     group3Cell.firstLabel.text = base.title
                     let maxValueCount = base.maxValueCount
-                    group3Cell.secondLabel.text = "限\(maxValueCount)张"
+                    //group3Cell.secondLabel.text = "限\(maxValueCount)张"
+                    if group3Cell.hintLabel != nil{
+                        group3Cell.hintLabel.text = "限\(maxValueCount)张"
+                    }
                     let curCount = base.valueList.count
                     
                     //创建图片列表
@@ -573,6 +580,18 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                         instanceId in
                         self.clickGroup(withInstanceId: instanceId == 0 ? self.instanceId : instanceId, withComponentId: self.componentId!, withGroupId: base.id)
                     }
+                    
+                    //设置文字颜色
+                    if let baseStatus = base.status{
+                        switch baseStatus{
+                        case .finished:
+                            groupCell.hintLabel.textColor = UIColor(colorHex: 0xa8fe82)
+                        case .unfinished:
+                            groupCell.hintLabel.textColor = UIColor(colorHex: 0xfda8a8)
+                        case .each:
+                            groupCell.hintLabel.textColor = .gray
+                        }
+                    }
                     cell = groupCell
                 }
             }else{
@@ -583,22 +602,35 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 assemblyCell.firstLabel.text = base.title
                 assemblyCell.secondLabel.text = base.hint
                 assemblyCell.secondLabel.sizeToFit()
+                
+                //设置文字颜色
+                if let baseStatus = base.status{
+                    switch baseStatus{
+                    case .finished:
+                        assemblyCell.secondLabel.textColor = UIColor(colorHex: 0xa8fe82)
+                    case .unfinished:
+                        assemblyCell.secondLabel.textColor = UIColor(colorHex: 0xfda8a8)
+                    case .each:
+                        assemblyCell.secondLabel.textColor = UIColor(colorHex: 0xe8e8de)
+                    }
+                }
+                
                 cell = assemblyCell
                 cell.sizeToFit()
             }
         }
         
         //通过颜色区分完成度
-        if let baseStatus = base.status{
-            switch baseStatus{
-            case .finished:
-                cell.backgroundColor = UIColor(colorHex: 0xa8fe82)
-            case .unfinished:
-                cell.backgroundColor = UIColor(colorHex: 0xfda8a8)
-            case .each:
-                cell.backgroundColor = UIColor(colorHex: 0xe8e8de)
-            }
-        }
+//        if let baseStatus = base.status{
+//            switch baseStatus{
+//            case .finished:
+//                cell.backgroundColor = UIColor(colorHex: 0xa8fe82)
+//            case .unfinished:
+//                cell.backgroundColor = UIColor(colorHex: 0xfda8a8)
+//            case .each:
+//                cell.backgroundColor = UIColor(colorHex: 0xe8e8de)
+//            }
+//        }
         return cell
     }
     

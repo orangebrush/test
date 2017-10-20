@@ -19,8 +19,8 @@ extension CGFloat{
     static let field7: CGFloat = 8 + 21 + 8 + 21 + 8            //时间        66
     
     //组高度
-    static let group0: CGFloat = 8 + 21 + 8 + 30 + 8            //普通组less   75
-    static let group1: CGFloat = 8 + 21 + 8 + 30 + 8 + 30 + 8   //时间组       113
+    static let group0: CGFloat = 8 + 21 + 8 + 21 + 8 + 30 + 8            //普通组less   104
+    static let group1: CGFloat = 8 + 21 + 8 + 21 + 8 + 30 + 8 + 30 + 8   //时间组       142
     static let group2: CGFloat = 8 + 21 + 8 + 30 + 8 + 30 + 8   //多条组less   113
     static let group3: CGFloat = 8 + 21 + 8 + 21 + 8 + 96 + 8   //图片组       162
 }

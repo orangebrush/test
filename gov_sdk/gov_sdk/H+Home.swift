@@ -43,10 +43,16 @@ public enum DocumentFieldType: String{          //政策段落类型
     case item       = "S"                //条
     case paragraph  = "P"                //段
 }
+public enum DocumentContentType: String{
+    case text = "B"                     //正文
+    case requirement = "C"              //要求
+    case fold = "H"                     //折叠
+}
 public class Document: NSObject{                //政策文件
     public var id = 0
     public var title: String?
     public var type: DocumentFieldType?
+    public var contentType: DocumentContentType?
 }
 public class Prize: NSObject{                   //资助
     public var id = 0                       //资助id

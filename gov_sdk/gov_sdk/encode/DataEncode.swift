@@ -32,17 +32,33 @@ class DataEncode {
             policy.endDate = TimeInterval(deadline).date()
         }
         if let applyTos = policyData["applyTo"] as? [[String: Any]]{
-            let applicant = Applicant()
             for applyTo in applyTos{
+                let applicant = Applicant()
                 if let id = applyTo["id"] as? Int{
                     applicant.id = id
                 }
                 applicant.name = applyTo["target"] as? String
                 applicant.detailText = applyTo["description"] as? String
+                policy.applicantList.append(applicant)
             }
-            policy.applicantList.append(applicant)
         }
-        
+        if let documents = policyData["document"] as? [[String: Any]]{
+            for documentData in documents{
+                let document = Document()
+                if let documentId = documentData["id"] as? Int{
+                    document.id = documentId
+                }
+                document.title = documentData["type"] as? String
+                if let documentTypeRawValue = documentData["type"] as? String{
+                    document.type = DocumentFieldType(rawValue: documentTypeRawValue)
+                }
+                if let documentContentRawValue = documentData["contentType"] as? String{
+                    document.contentType = DocumentContentType(rawValue: documentContentRawValue)
+                }
+                document.title = documentData["title"] as? String
+                policy.documentList.append(document)
+            }
+        }
         return policy
     }
     

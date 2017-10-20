@@ -16,7 +16,11 @@ class MeCell0: UITableViewCell {
     
     //MARK:- init--------------------------
     override func didMoveToSuperview() {
-        
+        super.didMoveToSuperview()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        layer.transform = CATransform3DMakeScale(0.9, 0.95, 1)
     }
 }
 
@@ -28,5 +32,9 @@ class MeCell1: UITableViewCell {
     
     @IBAction func click(_ sender: Any){
         closure?()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        layer.transform = CATransform3DMakeScale(0.9, 0.95, 1)
     }
 }
