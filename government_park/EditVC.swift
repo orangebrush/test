@@ -543,6 +543,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                     if groupCell.secondLabel != nil{
                         groupCell.secondLabel.text = base.hint ?? ""
                     }
+                    groupCell.hintLabel.text = base.hint
                     let valueList = base.valueList
                     groupCell.firstButton.isHidden = true
                     groupCell.secondButton.isHidden = true
@@ -565,6 +566,7 @@ extension EditVC: UITableViewDelegate, UITableViewDataSource{
                 default:    //timepoint done
                     let groupCell = tableView.dequeueReusableCell(withIdentifier: groupType!.identifier()) as! GroupCell
                     groupCell.firstLabel.text = base.title
+                    groupCell.hintLabel.text = base.hint
                     
                     for (index, value) in base.valueList.enumerated(){
                         if index == 0{

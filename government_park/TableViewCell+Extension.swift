@@ -29,7 +29,6 @@ extension UITableViewCell{
 //        cell.layer.shadowOffset = CGSizeMake(0, 0);
 //        [UIView commitAnimations];
 //
-        self.contentView.layer.transform = CATransform3DMakeScale(0.9, 0.95, 1)
+//        self.contentView.layer.transform = CATransform3DMakeScale(0.9, 0.95, 1)
     }
-    
 }
